@@ -7,14 +7,7 @@ interface Props {
 }
 
 function LibraryLayout({ children }: Props) {
-  return (
-    <div>
-      <Header>
-        <h1>Library</h1>
-      </Header>
-      {children}
-    </div>
-  );
+  return <div>{children}</div>;
 }
 
 export default LibraryLayout;
