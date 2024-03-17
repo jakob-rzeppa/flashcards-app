@@ -16,9 +16,9 @@ function ListItem({ title, descriptions, href }: Props) {
         {Object.keys(descriptions).map((info) => (
           <p className="text-gray-600">{info + ": " + descriptions[info]}</p>
         ))}
-        <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+        {/* TODO progress bar: <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
           <div className="bg-blue-500 h-full rounded-full w-1/2"></div>
-        </div>
+        </div>*/}
       </Link>
     </li>
   );
