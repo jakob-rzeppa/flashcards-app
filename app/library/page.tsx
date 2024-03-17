@@ -6,7 +6,7 @@ function Library() {
   // Course Functionality (link)
   // Order => most used, alphabeticly, date created, date last used
   // Delete course (Only in the course not this page)
-  return <div>Library</div>;
+  return <div>content</div>;
 }
 
 export default Library;
