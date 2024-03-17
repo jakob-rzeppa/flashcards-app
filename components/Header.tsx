@@ -5,7 +5,11 @@ interface Props {
 }
 
 function Header({ children }: Props) {
-  return <div>{children}</div>;
+  return (
+    <div className="flex flex-nowrap justify-between items-center p-2">
+      {children}
+    </div>
+  );
 }
 
 export default Header;
