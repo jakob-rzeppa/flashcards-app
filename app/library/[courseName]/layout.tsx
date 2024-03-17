@@ -6,12 +6,7 @@ interface Props {
 }
 
 function CourseLayout({ children, params }: Props) {
-  return (
-    <div>
-      <h1 className="text-center text-3xl font-bold">{params.courseName}</h1>
-      {children}
-    </div>
-  );
+  return <div>{children}</div>;
 }
 
 export default CourseLayout;
