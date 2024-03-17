@@ -17,7 +17,8 @@ function Library() {
       <Button onClick={() => {}}>Create New Course</Button>
       <ul className="mt-2">
         <ListItem
-          title="Course 1"
+          title="test"
+          href="/library/test"
           descriptions={{ Sets: 3, Cards: 42 }}
         ></ListItem>
       </ul>
