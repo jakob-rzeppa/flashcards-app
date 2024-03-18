@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 import Header from "@/components/Header";
 import AccountButton from "@/components/AccountButton";
-import SettingsButton from "@/components/SettingsButton";
+import BackButton from "@/components/BackButton";
 
 export const metadata: Metadata = {
   title: "flashcards-app",
@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Header>
-          <SettingsButton />
+          <BackButton />
           <AccountButton />
         </Header>
         {children}
