@@ -12,7 +12,7 @@ interface Props {
 
 function Folder({ params }: Props) {
   // TODO options like delete Folder, ...
-  const [sets, setSets] = useState([
+  const [sets, setStacks] = useState([
     {
       title: "testSet",
       href: "/library/test/testFolder/testSet",
@@ -20,14 +20,14 @@ function Folder({ params }: Props) {
     },
   ]);
 
-  const addSet = () => {
+  const addStack = () => {
     // TODO pick name
   };
 
   return (
     <BackgroundBox>
       <h1 className="text-2xl font-bold mb-4">{params.folderName}</h1>
-      <Button onClick={addSet}>Create New Set</Button>
+      <Button onClick={addStack}>Create New Set</Button>
       <List list={sets} />
     </BackgroundBox>
   );

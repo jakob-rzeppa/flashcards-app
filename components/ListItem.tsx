@@ -10,7 +10,7 @@ interface Props {
 function ListItem({ title, descriptions, href }: Props) {
   //TODO functionality; progress Bar
   return (
-    <li className="flex flex-col py-3 px-2 border-b border-gray-200 rounded-md hover:bg-gray-200">
+    <li className="flex flex-col py-3 px-2 shadow-md rounded-md hover:bg-gray-200">
       <Link href={href}>
         <span className="text-lg">{title}</span>
         {Object.keys(descriptions).map((info) => (
