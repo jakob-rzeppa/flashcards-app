@@ -10,14 +10,20 @@ interface Props {
 
 function Card({ card }: Props) {
   return (
-    <li className="flex flex-col py-3 px-2 rounded-md shadow-md relative">
-      <span className="text-lg font-semibold">{card.word}</span>
-      <span className="text-lg text-gray-700">{card.definition}</span>
-      <Button
-        onClick={() => {}}
-        shape="round"
-        classes="absolute right-4 top-1/2 -translate-y-1/2"
-      >
+    <li className="flex flex-row py-3 px-4 rounded-md shadow-md justify-between items-center gap-4">
+      <div className="flex flex-col w-full">
+        <input
+          type="text"
+          defaultValue={card.word}
+          className="text-lg font-semibold p-1 outline-none focus:bg-gray-200 rounded-md"
+        />
+        <input
+          type="text"
+          defaultValue={card.definition}
+          className="text-lg text-gray-700 p-1 outline-none focus:bg-gray-200 rounded-md"
+        />
+      </div>
+      <Button onClick={() => {}} shape="round" classes="">
         <MdDelete />
       </Button>
     </li>

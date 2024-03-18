@@ -11,7 +11,7 @@ const Button = ({ children, onClick, shape, classes }: Props) => {
   return (
     <button
       className={`${classes} px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 focus:outline-none ${
-        shape === "round" ? "w-min rounded-full" : ""
+        shape === "round" ? "w-12 h-12 rounded-full" : ""
       }`}
       onClick={onClick}
     >
