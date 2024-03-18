@@ -15,7 +15,7 @@ function Folder({ params }: Props) {
   const [sets, setStacks] = useState([
     {
       title: "testSet",
-      href: "/library/test/testFolder/testSet",
+      href: "/library/test/testFolder/testStack",
       descriptions: { Sets: 4, Cards: 94 },
     },
   ]);
