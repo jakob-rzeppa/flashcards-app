@@ -3,17 +3,16 @@ import React, { ReactNode } from "react";
 interface Props {
   children: ReactNode;
   onClick: () => void;
-  type: "round" | "normal";
+  shape: "round" | "normal";
+  classes?: string;
 }
 
-const Button = ({ children, onClick, type }: Props) => {
-  if (type === "round") {
-    return <button onClick={onClick}></button>;
-  }
-
+const Button = ({ children, onClick, shape, classes }: Props) => {
   return (
     <button
-      className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 focus:outline-none"
+      className={`${classes} px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 focus:outline-none ${
+        shape === "round" ? "w-min rounded-full" : ""
+      }`}
       onClick={onClick}
     >
       {children}
