@@ -42,8 +42,8 @@ function Folder({ params }: Props) {
       <ul className="mt-2">
         {cards.map((card) => (
           <li className="flex flex-col py-3 px-2 rounded-md shadow-md">
-            <span className="text-lg font-semibold">{card.word}</span>
-            <span className="text-lg text-gray-700">{card.definition}</span>
+            <span className="text-2xl font-semibold">{card.word}</span>
+            <span className="text-lg">{card.definition}</span>
           </li>
         ))}
       </ul>

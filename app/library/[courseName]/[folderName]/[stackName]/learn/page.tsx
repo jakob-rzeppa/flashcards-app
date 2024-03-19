@@ -34,10 +34,7 @@ function Learn() {
         </Button>
       </div>
       <BackgroundBox>
-        <div
-          onClick={onTurn}
-          className="w-full h-[75vh] relative bg-gray-100 rounded"
-        >
+        <div onClick={onTurn} className="w-full h-[75vh] relative rounded">
           <span className="text-3xl absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
             test
           </span>

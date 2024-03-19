@@ -15,12 +15,12 @@ function Card({ card }: Props) {
         <input
           type="text"
           defaultValue={card.word}
-          className="text-lg font-semibold p-1 outline-none focus:bg-gray-200 rounded-md"
+          className="text-lg font-semibold p-1 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-md"
         />
         <input
           type="text"
           defaultValue={card.definition}
-          className="text-lg text-gray-700 p-1 outline-none focus:bg-gray-200 rounded-md"
+          className="text-lg p-1 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-md"
         />
       </div>
       <Button onClick={() => {}} shape="round" classes="">
