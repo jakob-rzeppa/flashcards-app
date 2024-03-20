@@ -6,7 +6,7 @@ interface Props {
 
 function BackgroundBox({ children }: Props) {
   return (
-    <div className="w-full max-w-x bg-neutral-900 p-8 rounded mx-auto">
+    <div className="w-max max-w-x bg-neutral-900 p-8 rounded mx-auto">
       {children}
     </div>
   );

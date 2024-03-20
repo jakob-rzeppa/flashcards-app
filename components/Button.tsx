@@ -3,7 +3,7 @@ import React, { ReactNode } from "react";
 interface Props {
   children: ReactNode;
   onClick: () => void;
-  shape: "round" | "normal";
+  shape: "round" | "box";
   classes?: string;
 }
 
