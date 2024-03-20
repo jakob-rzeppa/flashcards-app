@@ -1,7 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import React, { useEffect, useState } from "react";
+import {
+  createClientComponentClient,
+  User,
+} from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 
 import BackgroundBox from "@/components/BackgroundBox";
@@ -13,6 +16,21 @@ function LoginPage() {
   const router = useRouter();
 
   const supabase = createClientComponentClient();
+
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function getUser() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+      setLoading(false);
+    }
+
+    getUser();
+  });
 
   const handleSignUp = async () => {
     const res = await supabase.auth.signUp({
@@ -40,6 +58,27 @@ function LoginPage() {
       router.push("/");
     }
   };
+
+  const handleLogOut = async () => {
+    await supabase.auth.signOut();
+    router.refresh();
+    setUser(null);
+  };
+
+  if (loading) {
+    return <h1>loading...</h1>;
+  }
+
+  if (user) {
+    return (
+      <BackgroundBox>
+        <h1>Already logged in</h1>
+        <Button shape="box" onClick={handleLogOut}>
+          Log out
+        </Button>
+      </BackgroundBox>
+    );
+  }
 
   return (
     <BackgroundBox>
