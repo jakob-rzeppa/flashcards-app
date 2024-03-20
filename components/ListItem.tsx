@@ -14,7 +14,9 @@ function ListItem({ title, descriptions, href }: Props) {
       <Link href={href}>
         <span className="text-lg">{title}</span>
         {Object.keys(descriptions).map((info) => (
-          <p className="text-gray-400">{info + ": " + descriptions[info]}</p>
+          <p key={info} className="text-gray-400">
+            {info + ": " + descriptions[info]}
+          </p>
         ))}
         {/* TODO progress bar: <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
           <div className="bg-blue-500 h-full rounded-full w-1/2"></div>

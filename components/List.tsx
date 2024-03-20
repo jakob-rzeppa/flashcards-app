@@ -21,6 +21,7 @@ function List({ list }: Props) {
         <ListItem
           title={folder.title}
           href={folder.href}
+          key={folder.title}
           descriptions={folder.descriptions}
         />
       ))}

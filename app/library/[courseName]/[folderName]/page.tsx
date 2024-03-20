@@ -27,7 +27,9 @@ function Folder({ params }: Props) {
   return (
     <BackgroundBox>
       <h1 className="text-2xl font-bold mb-4">{params.folderName}</h1>
-      <Button onClick={addStack}>Create New Set</Button>
+      <Button shape="box" onClick={addStack}>
+        Create New Set
+      </Button>
       <List list={sets} />
     </BackgroundBox>
   );
