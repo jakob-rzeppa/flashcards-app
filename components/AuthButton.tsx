@@ -1,8 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-
-import Button from "./Button";
+import { MdAccountCircle } from "react-icons/md";
 
 export default async function AuthButton() {
   const supabase = createClient();
@@ -19,18 +18,38 @@ export default async function AuthButton() {
     return redirect("/login");
   };
 
+  // TODO
+  const profilePictureUrl = null;
+
   return user ? (
-    <div className="flex items-center gap-4">
-      Hey, {user.email}!
-      <form action={signOut}>
-        <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">
-          Logout
-        </button>
-      </form>
+    <div className="dropdown dropdown-end">
+      <div tabIndex={0} className="w-10 h-10 rounded-full bg-primary">
+        {profilePictureUrl !== null ? (
+          <img src={profilePictureUrl} />
+        ) : (
+          <MdAccountCircle size={40} color="0000" />
+        )}
+      </div>
+      <ul
+        tabIndex={0}
+        className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-neutral rounded-box w-52"
+      >
+        <li>
+          <Link href={"/profile"}>Profile</Link>
+        </li>
+        <li>
+          <Link href={"/settings"}>Settings</Link>
+        </li>
+        <li>
+          <form action={signOut}>
+            <button>Sign out</button>
+          </form>
+        </li>
+      </ul>
     </div>
   ) : (
     <Link href="/login">
-      <Button>Login</Button>
+      <button className="btn btn-primary">Login</button>
     </Link>
   );
 }

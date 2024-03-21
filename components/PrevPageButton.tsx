@@ -4,7 +4,6 @@ import React from "react";
 
 import { IoIosArrowBack } from "react-icons/io";
 
-import Button from "./Button";
 import { useRouter } from "next/navigation";
 
 function PrevPageButton() {
@@ -15,9 +14,9 @@ function PrevPageButton() {
   };
 
   return (
-    <Button onClick={handleReturnToPrevPage}>
+    <button onClick={handleReturnToPrevPage} className="btn btn-link">
       <IoIosArrowBack />
-    </Button>
+    </button>
   );
 }
 
