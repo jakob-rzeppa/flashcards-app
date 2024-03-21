@@ -1,44 +1,39 @@
 "use client";
 
-import { useState } from "react";
-import {
-  createClientComponentClient,
-  User,
-} from "@supabase/auth-helpers-nextjs";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 import BackgroundBox from "@/components/BackgroundBox";
-import List from "@/components/List";
 import Button from "@/components/Button";
+import getUserId from "@/utils/supabase/getUserId";
+import { useRouter } from "next/navigation";
+import { Database } from "@/supabase";
 
 interface Props {
   params: { courseName: string };
 }
 
-async function CoursePage({ params }: Props) {
+function CoursePage({ params }: Props) {
   const supabase = createClientComponentClient();
+  const router = useRouter();
 
-  const user = await supabase.auth.getUser();
-  const user_id = user.data.user!.id;
+  const getData = async () => {
+    const userId = getUserId();
 
-  const { data: courses, error } = await supabase
-    .from("courses")
-    .select("*")
-    .eq("owner_id", user_id);
+    if (userId === null) {
+      router.push("/login");
+      return;
+    }
 
-  console.log(courses);
+    const { data: courses, error } = await supabase
+      .from("courses")
+      .select("*")
+      .eq("owner_id", userId)
+      .returns<Database>();
 
-  const [folders, setFolders] = useState([
-    {
-      title: "testFolder",
-      href: "/library/test/testFolder",
-      descriptions: { Sets: 4, Cards: 94 },
-    },
-    {
-      title: "testFolder",
-      href: "/library/test/testFolder",
-      descriptions: { Sets: 4, Cards: 94 },
-    },
-  ]);
+    return courses;
+  };
+
+  const data = getData();
 
   const addFolder = () => {
     // TODO pick name
@@ -50,7 +45,7 @@ async function CoursePage({ params }: Props) {
       <Button shape="box" onClick={addFolder}>
         Create New Folder
       </Button>
-      <List list={folders} />
+      {/*<List list={folders} />*/}
     </BackgroundBox>
   );
 }
