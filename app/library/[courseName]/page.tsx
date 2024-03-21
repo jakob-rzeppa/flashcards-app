@@ -13,7 +13,7 @@ interface Props {
 }
 
 function CoursePage({ params }: Props) {
-  const supabase = createClientComponentClient();
+  const supabase = createClientComponentClient<Database>();
   const router = useRouter();
 
   const getData = async () => {
@@ -27,8 +27,7 @@ function CoursePage({ params }: Props) {
     const { data: courses, error } = await supabase
       .from("courses")
       .select("*")
-      .eq("owner_id", userId)
-      .returns<Database>();
+      .eq("owner_id", userId);
 
     return courses;
   };
