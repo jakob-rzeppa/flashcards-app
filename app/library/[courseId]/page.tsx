@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { createClient } from "@/utils/supabase/client";
+import Folder from "./folder";
+import { data } from "autoprefixer";
 
 interface Props {
   params: { courseId: string };
@@ -63,12 +65,9 @@ function CoursePage({ params: { courseId } }: Props) {
         <button className="btn btn-primary sm:w-1/5 w-full">Button</button>
       </div>
       <div className="flex flex-row gap-4 w-4/5">
-        <div className="card w-full shadow-xl bg-neutral hover:brightness-75">
-          <div className="card-body">
-            <h2 className="card-title">name</h2>
-            <p>description</p>
-          </div>
-        </div>
+        {folders?.map((data) => (
+          <Folder data={data} key={data.id} />
+        ))}
       </div>
     </div>
   );

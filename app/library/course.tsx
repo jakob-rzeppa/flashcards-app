@@ -14,9 +14,7 @@ interface Props {
   };
 }
 
-function Course({
-  data: { created_at, description, id, image_url, name, owner_id },
-}: Props) {
+function Course({ data: { description, id, image_url, name } }: Props) {
   return (
     <Card
       href={"/library/" + id}
