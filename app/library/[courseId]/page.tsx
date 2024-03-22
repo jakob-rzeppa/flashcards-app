@@ -62,7 +62,7 @@ function CoursePage({ params: { courseId } }: Props) {
         <button className="btn btn-primary sm:w-1/5 w-full">Button</button>
         <button className="btn btn-primary sm:w-1/5 w-full">Button</button>
       </div>
-      <div className="flex flex-col gap-4 w-4/5">
+      <div className="flex flex-row gap-4 w-4/5">
         <div className="card w-full shadow-xl bg-neutral hover:brightness-75">
           <div className="card-body">
             <h2 className="card-title">name</h2>

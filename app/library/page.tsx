@@ -49,7 +49,7 @@ function LibraryPage() {
         <button className="btn btn-primary sm:w-1/5 w-full">Button</button>
       </div>
       <h2 className="text-3xl">Courses</h2>
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-row gap-4 ">
         {courses ? (
           courses.map((course) => <Course data={course} key={course.id} />)
         ) : (

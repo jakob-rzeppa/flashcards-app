@@ -23,7 +23,10 @@ export default async function AuthButton() {
 
   return user ? (
     <div className="dropdown dropdown-end">
-      <div tabIndex={0} className="w-10 h-10 rounded-full bg-primary">
+      <div
+        tabIndex={0}
+        className="w-10 h-10 rounded-full bg-primary hover:cursor-pointer"
+      >
         {profilePictureUrl !== null ? (
           <img src={profilePictureUrl} />
         ) : (

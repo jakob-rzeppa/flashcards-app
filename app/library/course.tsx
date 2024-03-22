@@ -17,7 +17,7 @@ function Course({
 }: Props) {
   return (
     <Link href={"/library/" + id}>
-      <div className="card w-60 bg-base-100 shadow-xl hover:bg-neutral">
+      <div className="card card-compact w-60 bg-base-100 shadow-xl hover:bg-neutral">
         <figure className="h-28">
           <img
             src={
