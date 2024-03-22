@@ -1,6 +1,17 @@
 import React from "react";
 
-function Course() {
+interface Props {
+  data: {
+    created_at: string;
+    description: string | null;
+    id: number;
+    image_url: string | null;
+    name: string;
+    owner_id: string;
+  };
+}
+
+function Course({ data }: Props) {
   return (
     <div className="card w-60 bg-base-100 shadow-xl hover:bg-neutral">
       <figure className="h-28">

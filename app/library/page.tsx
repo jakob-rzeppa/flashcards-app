@@ -1,10 +1,44 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
 import Course from "./course";
+import { createClient } from "@/utils/supabase/client";
+import { Database } from "@/supabase";
 
 function LibraryPage() {
+  const supabase = createClient();
+
+  const [courses, setCourses] = useState<
+    {
+      created_at: string;
+      description: string | null;
+      id: number;
+      image_url: string | null;
+      name: string;
+      owner_id: string;
+    }[]
+  >();
+
+  const getCourses = async () => {
+    const user = await supabase.auth.getUser();
+
+    const userId = user.data.user!.id;
+
+    const { data, error } = await supabase
+      .from("courses")
+      .select("*")
+      .eq("owner_id", userId);
+
+    if (error) {
+      throw error;
+    } else {
+      setCourses(data);
+    }
+  };
+
+  getCourses();
+
   return (
     <div className="flex flex-col justify-center items-center gap-8 mt-8">
       <div className="flex gap-4 w-full max-w-6xl justify-center">
@@ -15,8 +49,11 @@ function LibraryPage() {
       </div>
       <h2 className="text-3xl">Courses</h2>
       <div className="flex flex-row gap-4">
-        <Course />
-        <Course />
+        {courses ? (
+          courses.map((course) => <Course data={course} />)
+        ) : (
+          <p>Loading Courses...</p>
+        )}
       </div>
     </div>
   );
