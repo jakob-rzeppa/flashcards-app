@@ -50,7 +50,7 @@ function LibraryPage() {
       <h2 className="text-3xl">Courses</h2>
       <div className="flex flex-row gap-4">
         {courses ? (
-          courses.map((course) => <Course data={course} />)
+          courses.map((course) => <Course data={course} key={course.id} />)
         ) : (
           <p>Loading Courses...</p>
         )}

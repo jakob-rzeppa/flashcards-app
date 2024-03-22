@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 interface Props {
@@ -11,22 +12,28 @@ interface Props {
   };
 }
 
-function Course({ data }: Props) {
+function Course({
+  data: { created_at, description, id, image_url, name, owner_id },
+}: Props) {
   return (
-    <div className="card w-60 bg-base-100 shadow-xl hover:bg-neutral">
-      <figure className="h-28">
-        <img
-          src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-          alt=""
-        />
-      </figure>
-      <div className="card-body">
-        <h2 className="card-title">Course Name</h2>
-        <div className="card-actions justify-end">
-          <button className="btn btn-primary">Learn</button>
+    <Link href={"/library/" + id}>
+      <div className="card w-60 bg-base-100 shadow-xl hover:bg-neutral">
+        <figure className="h-28">
+          <img
+            src={
+              image_url
+                ? image_url
+                : "https://mobisoftinfotech.com/resources/wp-content/uploads/2022/04/next-JS-framework.png"
+            }
+            alt="Image cant be loaded"
+          />
+        </figure>
+        <div className="card-body">
+          <h2 className="card-title">{name}</h2>
+          <p>{description}</p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
