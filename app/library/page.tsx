@@ -4,7 +4,6 @@ import React, { useState } from "react";
 
 import Course from "./course";
 import { createClient } from "@/utils/supabase/client";
-import { Database } from "@/supabase";
 
 function LibraryPage() {
   const supabase = createClient();
