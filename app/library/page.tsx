@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { redirect } from "next/navigation";
 
 import Course from "./course";
 import { createClient } from "@/utils/supabase/client";
@@ -22,7 +23,11 @@ function LibraryPage() {
   const getCourses = async () => {
     const user = await supabase.auth.getUser();
 
-    const userId = user.data.user!.id;
+    if (!user.data.user) {
+      redirect("/login");
+    }
+
+    const userId = user.data.user.id;
 
     const { data, error } = await supabase
       .from("courses")
