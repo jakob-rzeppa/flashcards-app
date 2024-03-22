@@ -56,12 +56,13 @@ function LibraryPage() {
         <button className="btn btn-primary sm:w-1/5 w-full">Button</button>
       </div>
       <h2 className="text-3xl">Courses</h2>
-      <div className="w-4/5 flex flex-row gap-4 justify-center overflow-y-scroll">
+      <div className="w-4/5 flex flex-row gap-4 justify-center items-center overflow-y-scroll">
         {courses ? (
           courses.map((course) => <Course data={course} key={course.id} />)
         ) : (
           <p>Loading Courses...</p>
         )}
+        <button className="btn btn-primary">Create a new Course</button>
       </div>
     </div>
   );
