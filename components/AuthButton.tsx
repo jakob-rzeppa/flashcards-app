@@ -1,7 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { MdAccountCircle } from "react-icons/md";
 
 export default async function AuthButton() {
   const supabase = createClient();
@@ -25,12 +24,12 @@ export default async function AuthButton() {
     <div className="dropdown dropdown-end">
       <div
         tabIndex={0}
-        className="w-10 h-10 rounded-full bg-primary hover:cursor-pointer"
+        className="hover:cursor-pointer avatar rounded-full w-10 h-10 bg-primary"
       >
-        {profilePictureUrl !== null ? (
+        {profilePictureUrl ? (
           <img src={profilePictureUrl} />
         ) : (
-          <MdAccountCircle size={40} color="0000" />
+          <span className="text-3xl m-auto">P</span>
         )}
       </div>
       <ul
