@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import Course from "./course";
 import { createClient } from "@/utils/supabase/client";
 
 function LibraryPage() {
+  const router = useRouter();
   const supabase = createClient();
 
   const [courses, setCourses] = useState<
@@ -24,7 +25,8 @@ function LibraryPage() {
     const user = await supabase.auth.getUser();
 
     if (!user.data.user) {
-      redirect("/login");
+      router.push("/login");
+      return;
     }
 
     const userId = user.data.user.id;

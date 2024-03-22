@@ -3,13 +3,14 @@
 import React, { useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import Folder from "./folder";
-import { data } from "autoprefixer";
+import { useRouter } from "next/navigation";
 
 interface Props {
   params: { courseId: string };
 }
 
 function CoursePage({ params: { courseId } }: Props) {
+  const router = useRouter();
   const supabase = createClient();
 
   const [folders, setFolders] = useState<
@@ -25,6 +26,12 @@ function CoursePage({ params: { courseId } }: Props) {
   const [courseName, setCourseName] = useState("");
 
   const getData = async () => {
+    const user = await supabase.auth.getUser();
+    if (!user.data.user) {
+      router.push("/login");
+      return;
+    }
+
     {
       const { data, error } = await supabase
         .from("folders")
