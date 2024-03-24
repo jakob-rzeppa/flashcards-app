@@ -29,7 +29,7 @@ export default async function AuthButton() {
         {profilePictureUrl ? (
           <img src={profilePictureUrl} />
         ) : (
-          <span className="text-3xl m-auto">P</span>
+          <span className="text-3xl m-auto">J</span>
         )}
       </div>
       <ul

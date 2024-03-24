@@ -1,15 +1,14 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 import Link from "next/link";
 
 interface Props {
   href: string;
   imageUrl: string;
-  title: string;
-  description: string | null;
+  children: ReactNode;
 }
 
-function Card({ href, imageUrl, title, description }: Props) {
+function Card({ href, imageUrl, children }: Props) {
   return (
     <Link href={href}>
       <div className="card card-compact w-60 bg-base-100 shadow-xl hover:bg-neutral">
@@ -18,10 +17,7 @@ function Card({ href, imageUrl, title, description }: Props) {
             <img src={imageUrl} alt="" />
           </figure>
         )}
-        <div className="card-body">
-          <h2 className="card-title">{title}</h2>
-          <p>{description}</p>
-        </div>
+        <div className="card-body">{children}</div>
       </div>
     </Link>
   );

@@ -13,12 +13,9 @@ interface Props {
 
 function Folder({ data: { id, name, course_id } }: Props) {
   return (
-    <Card
-      href={"/library/" + course_id + "/" + id}
-      imageUrl=""
-      title={name}
-      description={""}
-    />
+    <Card href={"/library/" + course_id + "/" + id} imageUrl="">
+      <h1>{name}</h1>
+    </Card>
   );
 }
 
