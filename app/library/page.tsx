@@ -76,14 +76,16 @@ function LibraryPage() {
         <button className="btn btn-primary flex-1">Button</button>
       </div>
       <h2 className="text-3xl">Courses</h2>
-      <div className="w-4/5 flex flex-row gap-4 justify-start items-center overflow-y-scroll">
+      <div className="w-4/5 carousel space-x-4 items-center">
         {courses ? (
           courses.map((course, index) => (
-            <Course
-              data={course}
-              key={course.id}
-              numOfFolders={numOfFoldersPerCourse[index]}
-            />
+            <div className="carousel-item">
+              <Course
+                data={course}
+                key={course.id}
+                numOfFolders={numOfFoldersPerCourse[index]}
+              />
+            </div>
           ))
         ) : (
           <p>Loading Courses...</p>
