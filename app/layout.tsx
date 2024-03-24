@@ -13,9 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={GeistSans.className} data-theme="sunset">
-      <body className="bg-background text-foreground overflow-y-hidden">
-        {children}
-      </body>
+      <body className="bg-background text-foreground">{children}</body>
     </html>
   );
 }

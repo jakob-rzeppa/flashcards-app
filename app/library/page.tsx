@@ -10,6 +10,8 @@ function LibraryPage() {
   const router = useRouter();
   const supabase = createClient();
 
+  const [isLoading, setLoading] = useState(false);
+
   const [courses, setCourses] = useState<
     {
       created_at: string;
@@ -70,17 +72,43 @@ function LibraryPage() {
   const [newCourseTitle, setNewCourseTitle] = useState("");
   const [newCourseDescription, setNewCourseDescription] = useState("");
 
-  const handleCreateCourse = () => {
-    console.log(newCourseTitle);
+  const handleCreateCourse = async () => {
+    if (newCourseTitle === "") {
+      alert("you need to put in a title!");
+      return;
+    }
+
+    setLoading(true);
+    const userId = (await supabase.auth.getUser()).data.user?.id;
+    // TODO Image
+    const { data, error } = await supabase
+      .from("courses")
+      .insert([
+        {
+          name: newCourseTitle,
+          description: newCourseDescription,
+          owner_id: userId!,
+        },
+      ])
+      .select();
+
+    if (error) {
+      throw error;
+    } else {
+      console.log(data);
+    }
+
+    router.push("/library/" + data[0].id);
+    setLoading(false);
   };
 
   return (
     <div className="flex flex-col justify-center items-center gap-8 mt-8">
-      <div className="flex gap-4 w-full max-w-6xl justify-center flex-wrap">
-        <button className="btn btn-primary flex-1">Learn all Cards</button>
-        <button className="btn btn-primary flex-1">Button</button>
-        <button className="btn btn-primary flex-1">Button</button>
-        <button className="btn btn-primary flex-1">Button</button>
+      <div className="grid grid-cols-1 grid-rows-4 sm:grid-cols-4 sm:grid-rows-1 w-4/5 max-w-6xl ">
+        <button className="btn btn-primary m-2">Learn all Cards</button>
+        <button className="btn btn-primary m-2">Button</button>
+        <button className="btn btn-primary m-2">Button</button>
+        <button className="btn btn-primary m-2">Button</button>
       </div>
       <h2 className="text-3xl">Courses</h2>
       <div className="w-4/5 carousel space-x-4 items-center">
@@ -97,7 +125,7 @@ function LibraryPage() {
           <p>Loading Courses...</p>
         )}
         <button
-          className="btn btn-primary"
+          className="btn btn-primary carousel-item"
           onClick={() =>
             (
               document.getElementById("create_course_modal") as HTMLFormElement
@@ -108,32 +136,41 @@ function LibraryPage() {
         </button>
         <dialog id="create_course_modal" className="modal">
           <div className="modal-box">
-            <form method="dialog">
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                ✕
-              </button>
-            </form>
-            <h3 className="font-bold text-lg">Create a Course</h3>
-            <input
-              type="text"
-              className="input input-primary mt-4"
-              placeholder="title"
-              onChange={(event) => setNewCourseTitle(event.target.value)}
-            />
-            <br />
-            <input
-              type="text"
-              className="input input-primary mt-2"
-              placeholder="description"
-              onChange={(event) => setNewCourseDescription(event.target.value)}
-            />
-            <br />
-            <button
-              className="btn btn-primary mt-4"
-              onClick={handleCreateCourse}
-            >
-              Create
-            </button>
+            {!isLoading ? (
+              <>
+                <form method="dialog">
+                  <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                    ✕
+                  </button>
+                </form>
+                <h3 className="font-bold text-lg">Create a Course</h3>
+                <input
+                  type="text"
+                  className="input input-primary mt-4"
+                  placeholder="title"
+                  id="title"
+                  onChange={(event) => setNewCourseTitle(event.target.value)}
+                />
+                <br />
+                <input
+                  type="text"
+                  className="input input-primary mt-2"
+                  placeholder="description"
+                  onChange={(event) =>
+                    setNewCourseDescription(event.target.value)
+                  }
+                />
+                <br />
+                <button
+                  className="btn btn-primary mt-4"
+                  onClick={handleCreateCourse}
+                >
+                  Create
+                </button>
+              </>
+            ) : (
+              <h1 className="text-3xl font-bold">Create Course...</h1>
+            )}
           </div>
         </dialog>
       </div>
