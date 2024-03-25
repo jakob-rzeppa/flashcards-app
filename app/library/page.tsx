@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { createClient } from "@/utils/supabase/client";
 
 import Course from "./course";
-import { createClient } from "@/utils/supabase/client";
-import Modal from "@/components/Modal";
+import NewCourseModal from "./newCourseModal";
 
 function LibraryPage() {
   const router = useRouter();
@@ -70,39 +70,6 @@ function LibraryPage() {
       getNumOfFolders(course.id);
     });
 
-  const [newCourseTitle, setNewCourseTitle] = useState("");
-  const [newCourseDescription, setNewCourseDescription] = useState("");
-
-  const handleCreateCourse = async () => {
-    if (newCourseTitle === "") {
-      alert("you need to put in a title!");
-      return;
-    }
-
-    setLoading(true);
-    const userId = (await supabase.auth.getUser()).data.user?.id;
-    // TODO Image
-    const { data, error } = await supabase
-      .from("courses")
-      .insert([
-        {
-          name: newCourseTitle,
-          description: newCourseDescription,
-          owner_id: userId!,
-        },
-      ])
-      .select();
-
-    if (error) {
-      throw error;
-    } else {
-      console.log(data);
-    }
-
-    router.push("/library/" + data[0].id);
-    setLoading(false);
-  };
-
   return (
     <div className="flex flex-col justify-center items-center gap-8 mt-8">
       <div className="grid grid-cols-1 grid-rows-4 sm:grid-cols-4 sm:grid-rows-1 w-4/5 max-w-6xl ">
@@ -135,38 +102,7 @@ function LibraryPage() {
         >
           Create a new Course
         </button>
-        <Modal id="create_course_modal">
-          {!isLoading ? (
-            <>
-              <h3 className="font-bold text-lg">Create a Course</h3>
-              <input
-                type="text"
-                className="input input-primary mt-4"
-                placeholder="title"
-                id="title"
-                onChange={(event) => setNewCourseTitle(event.target.value)}
-              />
-              <br />
-              <input
-                type="text"
-                className="input input-primary mt-2"
-                placeholder="description"
-                onChange={(event) =>
-                  setNewCourseDescription(event.target.value)
-                }
-              />
-              <br />
-              <button
-                className="btn btn-primary mt-4"
-                onClick={handleCreateCourse}
-              >
-                Create
-              </button>
-            </>
-          ) : (
-            <h1 className="text-3xl font-bold">Create Course...</h1>
-          )}
-        </Modal>
+        <NewCourseModal id="create_course_modal" />
       </div>
     </div>
   );
