@@ -11,8 +11,6 @@ function LibraryPage() {
   const router = useRouter();
   const supabase = createClient();
 
-  const [isLoading, setLoading] = useState(false);
-
   const [courses, setCourses] = useState<
     {
       created_at: string;
@@ -26,9 +24,14 @@ function LibraryPage() {
 
   const getCourses = async () => {
     const user = await supabase.auth.getUser();
+    //TODO handle error
+
+    if (user.error) {
+      throw user.error;
+    }
 
     if (!user.data.user) {
-      router.push("/login");
+      router.push("/login/");
       return;
     }
 
