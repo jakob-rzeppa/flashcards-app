@@ -1,10 +1,53 @@
 "use client";
 
-import React from "react";
-import TinderCard from "react-tinder-card";
+import React, { useState } from "react";
+import { createClient } from "@/utils/supabase/client";
+// import TinderCard from "react-tinder-card";
 
 function LearnPage() {
-  return (
+  const supabase = createClient();
+
+  // definition_lang, word_lang, ...
+  const [settings, setSettings] = useState({});
+
+  const [cards, setCards] = useState([]);
+
+  const fetchCardsAndSettings = async () => {
+    // setSettings
+    // setCards
+  };
+
+  const nextCard = () => {
+    // go to next card
+  };
+
+  const prevCard = () => {
+    // go to previous card
+  };
+
+  // negative difference when wrong else positive
+  const changeMasteryLevelOfCard = (difference: number) => {};
+
+  const onLeftSwipe = () => {
+    // difference = -2
+    nextCard();
+  };
+
+  const onDownSwipe = () => {
+    // difference = -1
+    nextCard();
+  };
+
+  const onRightSwipe = () => {
+    // difference = 1
+    nextCard();
+  };
+
+  const flipCard = () => {
+    // if word change to definition else to word
+  };
+
+  /*return (
     <>
       <div className="relative mx-auto mt-[15vh] h-[70vh] aspect-[2/3]">
         <TinderCard>
@@ -16,7 +59,8 @@ function LearnPage() {
         </TinderCard>
       </div>
     </>
-  );
+  );*/
+  return <div>LearnPage</div>;
 }
 
 export default LearnPage;
