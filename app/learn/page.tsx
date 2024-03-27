@@ -96,7 +96,7 @@ function LearnPage() {
             >
               <div className="card bg-white absolute top-[15vh] left-1/2 -translate-x-1/2 h-[70vh] aspect-[2/3]">
                 <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl">
-                  Word
+                  {data.word}
                 </p>
               </div>
             </TinderCard>
