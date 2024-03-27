@@ -41,49 +41,6 @@ export type Database = {
           },
         ]
       }
-      cards_in_stacks: {
-        Row: {
-          card_id: number
-          mastery_level: number
-          owner_id: string | null
-          stack_id: number
-        }
-        Insert: {
-          card_id: number
-          mastery_level?: number
-          owner_id?: string | null
-          stack_id: number
-        }
-        Update: {
-          card_id?: number
-          mastery_level?: number
-          owner_id?: string | null
-          stack_id?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "public_cards_in_stacks_card_id_fkey"
-            columns: ["card_id"]
-            isOneToOne: false
-            referencedRelation: "cards"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "public_cards_in_stacks_owner_id_fkey"
-            columns: ["owner_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "public_cards_in_stacks_stack_id_fkey"
-            columns: ["stack_id"]
-            isOneToOne: true
-            referencedRelation: "stacks"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       courses: {
         Row: {
           created_at: string
@@ -152,6 +109,39 @@ export type Database = {
           {
             foreignKeyName: "public_folders_owner_id_fkey"
             columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mastery_level: {
+        Row: {
+          card_id: number
+          level: number
+          user_id: string
+        }
+        Insert: {
+          card_id: number
+          level?: number
+          user_id: string
+        }
+        Update: {
+          card_id?: number
+          level?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_mastery_level_card_id_fkey"
+            columns: ["card_id"]
+            isOneToOne: false
+            referencedRelation: "cards"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_mastery_level_user_id_fkey"
+            columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
