@@ -3,6 +3,8 @@
 import React, { useState, createRef, Ref, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import TinderCard from "react-tinder-card";
+import FlipCard from "@/components/FlipCard";
+import SwipeCard from "@/components/SwipeCard";
 
 function LearnPage() {
   const supabase = createClient();
@@ -17,8 +19,6 @@ function LearnPage() {
       word: string;
     }[]
   >([]);
-
-  const swiper = createRef<any>();
 
   // Handle different senarios
   const fetchCards = async () => {
@@ -36,7 +36,7 @@ function LearnPage() {
     fetchCards();
   }, []);
 
-  const cardRefs = cards.map(() => createRef<any>());
+  const [cardRefs, setCardRefs] = useState(cards.map(() => createRef<any>()));
 
   const nextCard = () => {
     const nextIndex = currentIndex + 1;
@@ -48,6 +48,7 @@ function LearnPage() {
   };
 
   const prevCard = async () => {
+    //TODO references not working
     if (currentIndex > 0) {
       const prevIndex = currentIndex - 1;
 
@@ -89,17 +90,14 @@ function LearnPage() {
         <button onClick={prevCard}>back</button>
         {cards.map((data, index) => (
           <div key={index}>
-            <TinderCard
-              onSwipe={(dir) => onSwipe(dir, index)}
-              preventSwipe={["up"]}
-              ref={cardRefs[index]}
-            >
-              <div className="card bg-white absolute top-[15vh] left-1/2 -translate-x-1/2 h-[70vh] aspect-[2/3]">
-                <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl">
-                  {data.word}
-                </p>
-              </div>
-            </TinderCard>
+            <SwipeCard
+              word={data.word}
+              definition={data.definition}
+              visible={currentIndex === index ? true : false}
+              index={index}
+              onSwipe={onSwipe}
+              reference={cardRefs[index]}
+            />
           </div>
         ))}
       </div>
