@@ -4,7 +4,7 @@ import React, { useState, createRef, Ref, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import TinderCard from "react-tinder-card";
 import FlipCard from "@/components/FlipCard";
-import SwipeCard from "@/components/SwipeCard";
+import SwipeCard from "@/components/learn/SwipeCard";
 
 function LearnPage() {
   const supabase = createClient();
@@ -84,7 +84,7 @@ function LearnPage() {
     // if word change to definition else to word
   };
 
-  return (
+  /*return (
     <>
       <div className="w-screen h-screen">
         <button onClick={prevCard}>back</button>
@@ -102,6 +102,11 @@ function LearnPage() {
         ))}
       </div>
     </>
+  );*/
+  return (
+    <div>
+      <SwipeCard />
+    </div>
   );
 }
 
