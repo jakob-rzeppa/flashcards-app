@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from "react";
 import FlipCard from "./FlipCard";
+import useWindowDimensions from "@/hooks/useWindowDimensions";
 
 const SwipeCard = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+  }, []);
+
+  const { width: windowWidth, height: windowHeight } = useWindowDimensions();
+
   const [mouseDown, setMouseDown] = useState(false);
 
   const [cardPos, setCardPos] = useState({
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2,
+    x: windowWidth! / 2,
+    y: windowHeight! / 2,
   });
 
   const [offset, setOffset] = useState({ x: 0, y: 0 });
@@ -24,14 +33,14 @@ const SwipeCard = () => {
     }
 
     const borders = {
-      right: (window.innerWidth * 2) / 3,
-      left: window.innerWidth / 3,
-      bottom: (window.innerHeight * 2) / 3,
+      right: (windowWidth! * 2) / 3,
+      left: windowWidth! / 3,
+      bottom: (windowHeight! * 4) / 5,
     };
 
     const offsetToBorders = {
       right: e.clientX + offset.x - borders.right,
-      left: borders.left - e.clientX + offset.x,
+      left: borders.left - e.clientX - offset.x,
       bottom: e.clientY + offset.y - borders.right,
     };
 
@@ -59,8 +68,8 @@ const SwipeCard = () => {
     }
 
     setCardPos({
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2,
+      x: windowWidth! / 2,
+      y: windowHeight! / 2,
     });
   }
 
@@ -74,7 +83,7 @@ const SwipeCard = () => {
     };
   }, [mouseDown]);
 
-  return (
+  return isLoading ? (
     <>
       <div
         className="h-screen w-screen"
@@ -90,8 +99,8 @@ const SwipeCard = () => {
           onMouseDown={(e) => {
             setMouseDown(true);
             setOffset({
-              x: window.innerWidth / 2 - e.clientX,
-              y: window.innerHeight / 2 - e.clientY,
+              x: windowWidth! / 2 - e.clientX,
+              y: windowHeight! / 2 - e.clientY,
             });
           }}
         >
@@ -99,6 +108,8 @@ const SwipeCard = () => {
         </div>
       </div>
     </>
+  ) : (
+    <div>Loading...</div>
   );
 };
 
