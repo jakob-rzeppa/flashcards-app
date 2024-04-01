@@ -17,7 +17,7 @@ function FlipCard({ word, definition }: Props) {
     <div
       onClick={onClick}
       id="flip-card"
-      className="absolute flip-card h-[70vh] aspect-[2/3]"
+      className="flip-card h-[70vh] aspect-[2/3]"
     >
       <div className="flip-card-inner">
         <div className="flip-card-front">
