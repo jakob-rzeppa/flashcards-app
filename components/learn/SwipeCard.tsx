@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import FlipCard from "./FlipCard";
-import useWindowDimensions from "@/hooks/useWindowDimensions";
 
 const SwipeCard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -9,7 +8,9 @@ const SwipeCard = () => {
     setIsLoading(true);
   }, []);
 
-  const { width: windowWidth, height: windowHeight } = useWindowDimensions();
+  // TODO better window dimensions handling (resizing / loadup)
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
 
   const [mouseDown, setMouseDown] = useState(false);
 
