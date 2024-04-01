@@ -1,4 +1,4 @@
-import React from "react";
+import React, { RefObject } from "react";
 
 import BaseCard from "./BaseCard";
 import "./FlipCardStyles.css";
@@ -17,7 +17,7 @@ function FlipCard({ word, definition }: Props) {
     <div
       onClick={onClick}
       id="flip-card"
-      className="flip-card absolute top-[15vh] left-1/2 -translate-x-1/2 h-[70vh] aspect-[2/3]"
+      className="absolute flip-card h-[70vh] aspect-[2/3]"
     >
       <div className="flip-card-inner">
         <div className="flip-card-front">
