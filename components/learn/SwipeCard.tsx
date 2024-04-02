@@ -44,7 +44,7 @@ const SwipeCard = () => {
     const borders = {
       right: (windowWidth! * 2) / 3,
       left: windowWidth! / 3,
-      bottom: (windowHeight! * 4) / 5,
+      bottom: (windowHeight! * 3) / 5,
     };
 
     const offsetToBorders = {
@@ -80,6 +80,7 @@ const SwipeCard = () => {
       x: windowWidth! / 2,
       y: windowHeight! / 2,
     });
+    setCardRotation(0);
   }
 
   useEffect(() => {
