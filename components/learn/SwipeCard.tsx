@@ -19,10 +19,18 @@ const SwipeCard = () => {
     y: windowHeight! / 2,
   });
 
+  const [cardRotation, setCardRotation] = useState(0);
+
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
   function move(e: any) {
     setCardPos({ x: e.clientX + offset.x, y: e.clientY + offset.y });
+
+    const xPosInPercent = e.clientX / (windowWidth / 100);
+    const xPosOffsetInPercent = xPosInPercent - 50;
+
+    // TODO translate so that center is right again
+    setCardRotation(xPosOffsetInPercent / 2);
   }
 
   function handleDrop(e: any) {
@@ -96,7 +104,11 @@ const SwipeCard = () => {
         <div
           id="card-wrapper"
           className="h-min w-min absolute -translate-x-1/2 -translate-y-1/2"
-          style={{ top: cardPos.y, left: cardPos.x }}
+          style={{
+            top: cardPos.y,
+            left: cardPos.x,
+            rotate: cardRotation + "deg",
+          }}
           onMouseDown={(e) => {
             setMouseDown(true);
             setOffset({
