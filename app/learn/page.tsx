@@ -2,8 +2,6 @@
 
 import React, { useState, createRef, Ref, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
-import TinderCard from "react-tinder-card";
-import FlipCard from "@/components/FlipCard";
 import SwipeCard from "@/components/learn/SwipeCard";
 
 function LearnPage() {
@@ -104,7 +102,7 @@ function LearnPage() {
     </>
   );*/
   return (
-    <div>
+    <div className="w-screen h-screen">
       <SwipeCard />
     </div>
   );

@@ -1,65 +1,62 @@
 import React, { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
 import FlipCard from "./FlipCard";
 
 const SwipeCard = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setIsLoading(true);
-  }, []);
-
-  // TODO better window dimensions handling (resizing / loadup)
-  const windowWidth = window.innerWidth;
-  const windowHeight = window.innerHeight;
+  const containerWidth = window.innerWidth;
+  const containerHeight = window.innerHeight;
 
   const [mouseDown, setMouseDown] = useState(false);
-
   const [cardPos, setCardPos] = useState({
-    x: windowWidth! / 2,
-    y: windowHeight! / 2,
+    x: containerWidth! / 2,
+    y: containerHeight! / 2,
   });
-
   const [cardRotation, setCardRotation] = useState(0);
-
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
-  function move(e: any) {
-    setCardPos({ x: e.clientX + offset.x, y: e.clientY + offset.y });
+  function move(x: number, y: number) {
+    setCardPos({ x: x + offset.x, y: y + offset.y });
 
-    const xPosInPercent = e.clientX / (windowWidth / 100);
+    const xPosInPercent = x / (containerWidth / 100);
     const xPosOffsetInPercent = xPosInPercent - 50;
-
-    // TODO translate so that center is right again
     setCardRotation(xPosOffsetInPercent / 2);
   }
 
-  function handleDrop(e: any) {
-    const card = document.getElementById("card-wrapper");
+  function moveTouch(e: TouchEventInit) {
+    if (!e.touches || e.touches.length === 0) return;
+    move(e.touches[0].clientX, e.touches[0].clientY);
+  }
 
-    if (!card) {
-      console.log("Cant find card-wrapper!");
-      return;
-    }
+  function moveMouse(e: MouseEventInit) {
+    if (e.clientX === undefined || e.clientY === undefined) return;
+    move(e.clientX, e.clientY);
+  }
+
+  function handleDrop() {
+    const card = document.getElementById("card-wrapper");
+    if (!card) return;
 
     const borders = {
-      right: (windowWidth! * 2) / 3,
-      left: windowWidth! / 3,
-      bottom: (windowHeight! * 3) / 5,
+      right: (containerWidth! * 2) / 3,
+      left: containerWidth! / 3,
+      bottom: (containerHeight! * 2) / 3,
     };
-
     const offsetToBorders = {
-      right: e.clientX + offset.x - borders.right,
-      left: borders.left - e.clientX - offset.x,
-      bottom: e.clientY + offset.y - borders.right,
+      right: cardPos.x - borders.right,
+      left: borders.left - cardPos.x,
+      bottom: cardPos.y - borders.bottom,
     };
-
-    console.log(offsetToBorders);
 
     if (
       offsetToBorders.right >= 0 &&
       offsetToBorders.bottom < offsetToBorders.right
     ) {
       console.log("right");
+      setCardPos({
+        x: containerWidth + card.clientWidth,
+        y: containerHeight / 2,
+      });
+      setCardRotation(0);
       return;
     }
 
@@ -68,62 +65,85 @@ const SwipeCard = () => {
       offsetToBorders.bottom < offsetToBorders.left
     ) {
       console.log("left");
+      setCardPos({ x: -card.clientWidth, y: containerHeight / 2 });
+      setCardRotation(0);
       return;
     }
 
     if (offsetToBorders.bottom >= 0) {
       console.log("bottom");
+      setCardPos({
+        x: containerWidth / 2,
+        y: containerHeight + card.clientHeight,
+      });
+      setCardRotation(0);
       return;
     }
 
-    setCardPos({
-      x: windowWidth! / 2,
-      y: windowHeight! / 2,
-    });
+    setCardPos({ x: containerWidth! / 2, y: containerHeight! / 2 });
     setCardRotation(0);
   }
 
   useEffect(() => {
+    const moveEvent = isMobile ? "touchmove" : "mousemove";
+
     if (mouseDown) {
-      document.addEventListener("mousemove", move, true);
+      document.addEventListener(
+        moveEvent,
+        isMobile ? moveTouch : moveMouse,
+        true
+      );
     }
+
     return () => {
-      // Cleanup function to remove event listener when component unmounts or mouseDown changes.
-      document.removeEventListener("mousemove", move, true);
+      document.removeEventListener(
+        moveEvent,
+        isMobile ? moveTouch : moveMouse,
+        true
+      );
     };
   }, [mouseDown]);
 
-  return isLoading ? (
-    <>
+  return (
+    <div
+      className="w-full h-full relative overflow-hidden"
+      onMouseUp={(e) => {
+        setMouseDown(false);
+        handleDrop();
+      }}
+      onTouchEnd={(e) => {
+        setMouseDown(false);
+        handleDrop();
+      }}
+    >
       <div
-        className="h-screen w-screen"
-        onMouseUp={(e) => {
-          setMouseDown(false);
-          handleDrop(e);
+        id="card-wrapper"
+        className="h-min w-min absolute -translate-x-1/2 -translate-y-1/2"
+        style={{
+          top: cardPos.y,
+          left: cardPos.x,
+          rotate: cardRotation + "deg",
+          transition: "0.05s linear",
+          transformOrigin: "top left",
+        }}
+        onMouseDown={(e) => {
+          setMouseDown(true);
+          setOffset({
+            x: containerWidth! / 2 - e.clientX,
+            y: containerHeight! / 2 - e.clientY,
+          });
+        }}
+        onTouchStart={(e) => {
+          setMouseDown(true);
+          setOffset({
+            x: containerWidth! / 2 - e.touches[0].clientX,
+            y: containerHeight! / 2 - e.touches[0].clientY,
+          });
         }}
       >
-        <div
-          id="card-wrapper"
-          className="h-min w-min absolute -translate-x-1/2 -translate-y-1/2"
-          style={{
-            top: cardPos.y,
-            left: cardPos.x,
-            rotate: cardRotation + "deg",
-          }}
-          onMouseDown={(e) => {
-            setMouseDown(true);
-            setOffset({
-              x: windowWidth! / 2 - e.clientX,
-              y: windowHeight! / 2 - e.clientY,
-            });
-          }}
-        >
-          <FlipCard word="word" definition="definition" />
-        </div>
+        <FlipCard word="word" definition="definition" />
       </div>
-    </>
-  ) : (
-    <div>Loading...</div>
+    </div>
   );
 };
 
