@@ -25,6 +25,12 @@ const SwipeCard = ({ data, onSwipe }: Props) => {
     y: 0,
   });
 
+  // function that can be called from the higher level component to reset the card
+  function resetCard() {
+    setCardPos({ x: 50, y: 50 });
+    setCardRotation(0);
+  }
+
   // Function to handle movement of the card
   const move = (x: number, y: number) => {
     const relativePos = {
@@ -45,7 +51,7 @@ const SwipeCard = ({ data, onSwipe }: Props) => {
     move(e.clientX, e.clientY);
   };
 
-  function handleSwipe(dir: "left" | "right" | "bottom") {
+  const handleSwipe = (dir: "left" | "right" | "bottom") => {
     setCardRotation(0);
 
     switch (dir) {
@@ -61,9 +67,9 @@ const SwipeCard = ({ data, onSwipe }: Props) => {
     }
 
     onSwipe(dir);
-  }
+  };
 
-  function handleDrop() {
+  const handleDrop = () => {
     const card = document.getElementById("card-wrapper");
     if (!card) return;
 
@@ -97,7 +103,7 @@ const SwipeCard = ({ data, onSwipe }: Props) => {
 
     setCardPos({ x: 50, y: 50 });
     setCardRotation(0);
-  }
+  };
 
   useEffect(() => {
     const moveEvent = isMobile ? "touchmove" : "mousemove";
