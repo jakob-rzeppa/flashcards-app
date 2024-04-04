@@ -1,46 +1,73 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import FlipCard from "./FlipCard";
 
-const SwipeCard = () => {
-  const containerWidth = window.innerWidth;
-  const containerHeight = window.innerHeight;
+interface Props {
+  data: { word: string; definition: string };
+  onSwipe: (dir: "left" | "right" | "bottom") => void;
+}
 
+const SwipeCard = ({ data, onSwipe }: Props) => {
+  // State to track mouse down event (includes touch start event)
   const [mouseDown, setMouseDown] = useState(false);
-  const [cardPos, setCardPos] = useState({
-    x: containerWidth! / 2,
-    y: containerHeight! / 2,
+
+  // State to manage card position relative to the screen
+  const [cardPos, setCardPos] = useState<{ x: number; y: number }>({
+    x: 50,
+    y: 50,
   });
+
   const [cardRotation, setCardRotation] = useState(0);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
 
-  function move(x: number, y: number) {
-    setCardPos({ x: x + offset.x, y: y + offset.y });
+  // State to manage offset from position clicked to center of card
+  const [offset, setOffset] = useState<{ x: number; y: number }>({
+    x: 0,
+    y: 0,
+  });
 
-    const xPosInPercent = x / (containerWidth / 100);
-    const xPosOffsetInPercent = xPosInPercent - 50;
-    setCardRotation(xPosOffsetInPercent / 2);
-  }
+  // Function to handle movement of the card
+  const move = (x: number, y: number) => {
+    const relativePos = {
+      x: ((x + offset.x) / window.innerWidth) * 100,
+      y: ((y + offset.y) / window.innerHeight) * 100,
+    };
+    setCardPos(relativePos);
+    setCardRotation((relativePos.x - 50) / 2);
+  };
 
-  function moveTouch(e: TouchEventInit) {
+  const moveTouch = (e: TouchEventInit) => {
     if (!e.touches || e.touches.length === 0) return;
     move(e.touches[0].clientX, e.touches[0].clientY);
-  }
+  };
 
-  function moveMouse(e: MouseEventInit) {
+  const moveMouse = (e: MouseEventInit) => {
     if (e.clientX === undefined || e.clientY === undefined) return;
     move(e.clientX, e.clientY);
+  };
+
+  function handleSwipe(dir: "left" | "right" | "bottom") {
+    setCardRotation(0);
+
+    switch (dir) {
+      case "right":
+        setCardPos({ x: 150, y: 50 });
+        break;
+      case "left":
+        setCardPos({ x: -50, y: 50 });
+        break;
+      case "bottom":
+        setCardPos({ x: 50, y: 150 });
+        break;
+    }
+
+    onSwipe(dir);
   }
 
   function handleDrop() {
     const card = document.getElementById("card-wrapper");
     if (!card) return;
 
-    const borders = {
-      right: (containerWidth! * 2) / 3,
-      left: containerWidth! / 3,
-      bottom: (containerHeight! * 2) / 3,
-    };
+    const borders = { right: 70, left: 30, bottom: 60 };
     const offsetToBorders = {
       right: cardPos.x - borders.right,
       left: borders.left - cardPos.x,
@@ -51,12 +78,7 @@ const SwipeCard = () => {
       offsetToBorders.right >= 0 &&
       offsetToBorders.bottom < offsetToBorders.right
     ) {
-      console.log("right");
-      setCardPos({
-        x: containerWidth + card.clientWidth,
-        y: containerHeight / 2,
-      });
-      setCardRotation(0);
+      handleSwipe("right");
       return;
     }
 
@@ -64,23 +86,16 @@ const SwipeCard = () => {
       offsetToBorders.left >= 0 &&
       offsetToBorders.bottom < offsetToBorders.left
     ) {
-      console.log("left");
-      setCardPos({ x: -card.clientWidth, y: containerHeight / 2 });
-      setCardRotation(0);
+      handleSwipe("left");
       return;
     }
 
     if (offsetToBorders.bottom >= 0) {
-      console.log("bottom");
-      setCardPos({
-        x: containerWidth / 2,
-        y: containerHeight + card.clientHeight,
-      });
-      setCardRotation(0);
+      handleSwipe("bottom");
       return;
     }
 
-    setCardPos({ x: containerWidth! / 2, y: containerHeight! / 2 });
+    setCardPos({ x: 50, y: 50 });
     setCardRotation(0);
   }
 
@@ -106,6 +121,7 @@ const SwipeCard = () => {
 
   return (
     <div
+      id="main"
       className="w-full h-full relative overflow-hidden"
       onMouseUp={(e) => {
         setMouseDown(false);
@@ -120,28 +136,28 @@ const SwipeCard = () => {
         id="card-wrapper"
         className="h-min w-min absolute -translate-x-1/2 -translate-y-1/2"
         style={{
-          top: cardPos.y,
-          left: cardPos.x,
-          rotate: cardRotation + "deg",
+          top: `${cardPos.y}vh`,
+          left: `${cardPos.x}vw`,
+          rotate: `${cardRotation}deg`,
           transition: "0.05s linear",
           transformOrigin: "top left",
         }}
         onMouseDown={(e) => {
           setMouseDown(true);
           setOffset({
-            x: containerWidth! / 2 - e.clientX,
-            y: containerHeight! / 2 - e.clientY,
+            x: window.innerWidth! / 2 - e.clientX,
+            y: window.innerHeight! / 2 - e.clientY,
           });
         }}
         onTouchStart={(e) => {
           setMouseDown(true);
           setOffset({
-            x: containerWidth! / 2 - e.touches[0].clientX,
-            y: containerHeight! / 2 - e.touches[0].clientY,
+            x: window.innerWidth! / 2 - e.touches[0].clientX,
+            y: window.innerHeight! / 2 - e.touches[0].clientY,
           });
         }}
       >
-        <FlipCard word="word" definition="definition" />
+        <FlipCard word={data.word} definition={data.definition} />
       </div>
     </div>
   );

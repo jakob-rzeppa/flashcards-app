@@ -101,9 +101,13 @@ function LearnPage() {
       </div>
     </>
   );*/
+
   return (
     <div className="w-screen h-screen">
-      <SwipeCard />
+      <SwipeCard
+        data={{ word: "word", definition: "definition" }}
+        onSwipe={() => console.log("swipe")}
+      />
     </div>
   );
 }
