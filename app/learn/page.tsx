@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, createRef, Ref, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { IoChevronBack } from "react-icons/io5";
 import SwipeCard from "@/components/learn/SwipeCard";
@@ -35,69 +35,46 @@ function LearnPage() {
     fetchCards();
   }, []);
 
-  const [cardRefs, setCardRefs] = useState(cards.map(() => createRef<any>()));
+  const cardRef = useRef<{ resetCard: () => void }>(null);
 
-  const nextCard = () => {
+  const [currentWord, setCurrentWord] = useState("word");
+  const [currentDefinition, setCurrentDefinition] = useState("definition");
+
+  const onSwipe = async (dir: "left" | "right" | "bottom") => {
     const nextIndex = currentIndex + 1;
+
+    // TODO handle card change depending on dir
+
+    // Next card
+    setCurrentWord(cards[nextIndex].word);
+    setCurrentDefinition(cards[nextIndex].definition);
+
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+    await sleep(500);
+    cardRef.current?.resetCard();
+
+    // update index
     setCurrentIndex(nextIndex);
-
-    if (nextIndex >= cards.length) {
-      console.log("no more cards");
-    }
   };
-
-  const prevCard = async () => {
-    //TODO references not working
-    if (currentIndex > 0) {
-      const prevIndex = currentIndex - 1;
-
-      await cardRefs[prevIndex].current.restoreCard();
-      setCurrentIndex(prevIndex);
-    }
-  };
-
-  const changeMastery = (change: number, index: number) => {
-    // cant go under 0
-    console.log(change);
-  };
-
-  const onSwipe = (direction: string, index: number) => {
-    switch (direction) {
-      case "left":
-        changeMastery(-1, index);
-        break;
-
-      case "right":
-        changeMastery(1, index);
-        break;
-
-      default:
-        // dont change the mastery level of the card
-        break;
-    }
-
-    nextCard();
-  };
-
-  const ref = useRef<{ resetCard: () => void }>(null);
 
   return (
     <div>
       <button
         className="btn btn-circle z-50 absolute top-3 left-3"
         onClick={() => {
-          if (ref.current) {
-            ref.current.resetCard();
+          if (cardRef.current) {
+            cardRef.current.resetCard();
           }
         }}
       >
         <IoChevronBack />
       </button>
-      <div className="-z-50">
+      <div>
         <SwipeCard
-          data={{ word: "word", definition: "definition" }}
-          onSwipe={() => console.log("swipe")}
-          ref={ref}
+          data={{ word: currentWord, definition: currentDefinition }}
+          onSwipe={onSwipe}
+          ref={cardRef}
         />
       </div>
     </div>
