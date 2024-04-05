@@ -1,4 +1,5 @@
-import React, { RefObject } from "react";
+import React from "react";
+import ReactTouchEvents from "react-touch-events";
 
 import BaseCard from "./BaseCard";
 import "./FlipCardStyles.css";
@@ -14,20 +15,18 @@ function FlipCard({ word, definition }: Props) {
   };
 
   return (
-    <div
-      onClick={onClick}
-      id="flip-card"
-      className="flip-card h-[70vh] aspect-[2/3]"
-    >
-      <div className="flip-card-inner">
-        <div className="flip-card-front">
-          <BaseCard content={word} />
-        </div>
-        <div className="flip-card-back">
-          <BaseCard content={definition} />
+    <ReactTouchEvents onTap={onClick}>
+      <div id="flip-card" className="flip-card h-[70vh] aspect-[2/3]">
+        <div className="flip-card-inner">
+          <div className="flip-card-front">
+            <BaseCard content={word} />
+          </div>
+          <div className="flip-card-back">
+            <BaseCard content={definition} />
+          </div>
         </div>
       </div>
-    </div>
+    </ReactTouchEvents>
   );
 }
 
