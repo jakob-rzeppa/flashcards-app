@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, createRef, Ref, useEffect } from "react";
+import React, { useState, createRef, Ref, useEffect, useRef } from "react";
 import { createClient } from "@/utils/supabase/client";
+import { IoChevronBack } from "react-icons/io5";
 import SwipeCard from "@/components/learn/SwipeCard";
 
 function LearnPage() {
@@ -78,36 +79,27 @@ function LearnPage() {
     nextCard();
   };
 
-  const flipCard = () => {
-    // if word change to definition else to word
-  };
-
-  /*return (
-    <>
-      <div className="w-screen h-screen">
-        <button onClick={prevCard}>back</button>
-        {cards.map((data, index) => (
-          <div key={index}>
-            <SwipeCard
-              word={data.word}
-              definition={data.definition}
-              visible={currentIndex === index ? true : false}
-              index={index}
-              onSwipe={onSwipe}
-              reference={cardRefs[index]}
-            />
-          </div>
-        ))}
-      </div>
-    </>
-  );*/
+  const ref = useRef<{ resetCard: () => void }>(null);
 
   return (
-    <div className="w-screen h-screen">
-      <SwipeCard
-        data={{ word: "word", definition: "definition" }}
-        onSwipe={() => console.log("swipe")}
-      />
+    <div>
+      <button
+        className="btn btn-circle z-50 absolute top-3 left-3"
+        onClick={() => {
+          if (ref.current) {
+            ref.current.resetCard();
+          }
+        }}
+      >
+        <IoChevronBack />
+      </button>
+      <div className="-z-50">
+        <SwipeCard
+          data={{ word: "word", definition: "definition" }}
+          onSwipe={() => console.log("swipe")}
+          ref={ref}
+        />
+      </div>
     </div>
   );
 }

@@ -1,4 +1,10 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, {
+  forwardRef,
+  Ref,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
 import { isMobile } from "react-device-detect";
 import FlipCard from "./FlipCard";
 
@@ -7,7 +13,7 @@ interface Props {
   onSwipe: (dir: "left" | "right" | "bottom") => void;
 }
 
-const SwipeCard = ({ data, onSwipe }: Props) => {
+const SwipeCard = forwardRef(({ data, onSwipe }: Props, ref) => {
   // State to track mouse down event (includes touch start event)
   const [mouseDown, setMouseDown] = useState(false);
 
@@ -19,6 +25,8 @@ const SwipeCard = ({ data, onSwipe }: Props) => {
 
   const [cardRotation, setCardRotation] = useState(0);
 
+  const [onScreen, setOnScreen] = useState(true);
+
   // State to manage offset from position clicked to center of card
   const [offset, setOffset] = useState<{ x: number; y: number }>({
     x: 0,
@@ -27,9 +35,12 @@ const SwipeCard = ({ data, onSwipe }: Props) => {
 
   // function that can be called from the higher level component to reset the card
   function resetCard() {
+    setOnScreen(true);
     setCardPos({ x: 50, y: 50 });
     setCardRotation(0);
   }
+
+  useImperativeHandle(ref, () => ({ resetCard }));
 
   // Function to handle movement of the card
   const move = (x: number, y: number) => {
@@ -66,10 +77,15 @@ const SwipeCard = ({ data, onSwipe }: Props) => {
         break;
     }
 
+    setOnScreen(false);
     onSwipe(dir);
   };
 
   const handleDrop = () => {
+    if (!onScreen) {
+      return;
+    }
+
     const card = document.getElementById("card-wrapper");
     if (!card) return;
 
@@ -108,7 +124,7 @@ const SwipeCard = ({ data, onSwipe }: Props) => {
   useEffect(() => {
     const moveEvent = isMobile ? "touchmove" : "mousemove";
 
-    if (mouseDown) {
+    if (mouseDown && onScreen) {
       document.addEventListener(
         moveEvent,
         isMobile ? moveTouch : moveMouse,
@@ -128,7 +144,7 @@ const SwipeCard = ({ data, onSwipe }: Props) => {
   return (
     <div
       id="main"
-      className="w-full h-full relative overflow-hidden"
+      className="w-screen h-screen absolute top-0 left-0 overflow-hidden touch-none"
       onMouseUp={(e) => {
         setMouseDown(false);
         handleDrop();
@@ -167,6 +183,6 @@ const SwipeCard = ({ data, onSwipe }: Props) => {
       </div>
     </div>
   );
-};
+});
 
 export default SwipeCard;
