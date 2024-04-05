@@ -1,17 +1,18 @@
 import React from "react";
 
+import getCourses from "@/actions/getCourses";
+
+import NewCourseModal from "@/app/library/newCourseModal";
 import Course from "./Course";
 
-async function getCourses(userId: string) {}
-
 async function CourseList() {
-  const data = await Promise.all([getCourses]);
+  const courses = await getCourses();
 
   return (
     <div className="w-4/5 carousel space-x-4 items-center">
-      {courses.map((course, index) => (
+      {courses?.map((course) => (
         <div className="carousel-item" key={course.id}>
-          <Course data={course} numOfFolders={numOfFoldersPerCourse[index]} />
+          <Course data={course} />
         </div>
       ))}
       <button

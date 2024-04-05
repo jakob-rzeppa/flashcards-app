@@ -12,7 +12,18 @@ import getUserId from "./getUserId";
 }[]
 */
 
-async function getCourses() {
+async function getCourses(): Promise<
+  | {
+      created_at: string;
+      description: string | null;
+      id: number;
+      image_url: string | null;
+      name: string;
+      owner_id: string;
+      numOfFolders: number;
+    }[]
+  | null
+> {
   const supabase = createClient();
 
   const userId = getUserId();
@@ -28,8 +39,6 @@ async function getCourses() {
   }
 
   // Num Of Folders In Course
-  const numOfFolders = [data.length];
-
   for (let i = 0; i < data.length; i++) {
     const foldersInCourse = await supabase
       .from("folders")
@@ -37,13 +46,13 @@ async function getCourses() {
       .eq("course_id", data[i].id);
 
     if (!foldersInCourse) {
-      numOfFolders[i] = 0;
+      data[i].numOfFolders = 0;
     } else {
-      numOfFolders[i] = (await Promise.all([foldersInCourse])).length;
+      data[i].numOfFolders = (await Promise.all([foldersInCourse])).length;
     }
   }
 
-  return { data, numOfFolders };
+  return data;
 }
 
 export default getCourses;

@@ -10,13 +10,12 @@ interface Props {
     image_url: string | null;
     name: string;
     owner_id: string;
+    numOfFolders: number;
   };
-  numOfFolders: number;
 }
 
 function Course({
-  data: { description, id, image_url, name },
-  numOfFolders,
+  data: { description, id, image_url, name, numOfFolders },
 }: Props) {
   return (
     <Card
