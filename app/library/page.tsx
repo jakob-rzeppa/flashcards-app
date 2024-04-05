@@ -4,14 +4,13 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 
-import Course from "./course";
-import NewCourseModal from "./newCourseModal";
+import CourseList from "@/components/CourseList";
 
 function LibraryPage() {
   const router = useRouter();
   const supabase = createClient();
 
-  const [courses, setCourses] = useState<
+  const [coursess, setCourses] = useState<
     {
       created_at: string;
       description: string | null;
@@ -21,35 +20,6 @@ function LibraryPage() {
       owner_id: string;
     }[]
   >();
-
-  const getCourses = async () => {
-    const user = await supabase.auth.getUser();
-    //TODO handle error
-
-    if (user.error) {
-      throw user.error;
-    }
-
-    if (!user.data.user) {
-      router.push("/login/");
-      return;
-    }
-
-    const userId = user.data.user.id;
-
-    const { data, error } = await supabase
-      .from("courses")
-      .select("*")
-      .eq("owner_id", userId);
-
-    if (error) {
-      throw error;
-    } else {
-      setCourses(data);
-    }
-  };
-
-  getCourses();
 
   const [numOfFoldersPerCourse, setNumOfFoldersPerCourse] = useState<number[]>(
     []
@@ -82,31 +52,7 @@ function LibraryPage() {
         <button className="btn btn-primary m-2">Button</button>
       </div>
       <h2 className="text-3xl">Courses</h2>
-      <div className="w-4/5 carousel space-x-4 items-center">
-        {courses ? (
-          courses.map((course, index) => (
-            <div className="carousel-item" key={course.id}>
-              <Course
-                data={course}
-                numOfFolders={numOfFoldersPerCourse[index]}
-              />
-            </div>
-          ))
-        ) : (
-          <p>Loading Courses...</p>
-        )}
-        <button
-          className="btn btn-primary carousel-item"
-          onClick={() =>
-            (
-              document.getElementById("create_course_modal") as HTMLFormElement
-            ).showModal()
-          }
-        >
-          Create a new Course
-        </button>
-        <NewCourseModal id="create_course_modal" />
-      </div>
+      <CourseList />
     </div>
   );
 }

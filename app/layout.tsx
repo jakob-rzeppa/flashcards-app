@@ -1,5 +1,6 @@
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
+import getUserId from "@/actions/getUserId";
 
 export const metadata = {
   title: "flashcards-app",
