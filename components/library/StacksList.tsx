@@ -11,8 +11,6 @@ interface Props {
 async function FoldersList({ folderId }: Props) {
   const data = await getStacks(parseInt(folderId));
 
-  console.log(data);
-
   const stacks: {
     href: string;
     name: string;
