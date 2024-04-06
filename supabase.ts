@@ -15,6 +15,7 @@ export type Database = {
           definition: string
           id: number
           owner_id: string | null
+          stack_id: number
           word: string
         }
         Insert: {
@@ -22,6 +23,7 @@ export type Database = {
           definition?: string
           id?: number
           owner_id?: string | null
+          stack_id: number
           word?: string
         }
         Update: {
@@ -29,6 +31,7 @@ export type Database = {
           definition?: string
           id?: number
           owner_id?: string | null
+          stack_id?: number
           word?: string
         }
         Relationships: [
@@ -37,6 +40,13 @@ export type Database = {
             columns: ["owner_id"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_cards_stack_id_fkey"
+            columns: ["stack_id"]
+            isOneToOne: false
+            referencedRelation: "stacks"
             referencedColumns: ["id"]
           },
         ]
@@ -148,30 +158,24 @@ export type Database = {
       stacks: {
         Row: {
           created_at: string
-          definition_lang: string
           folder_id: number
           id: number
           name: string
           owner_id: string
-          word_lang: string
         }
         Insert: {
           created_at?: string
-          definition_lang: string
           folder_id: number
           id?: number
           name: string
           owner_id: string
-          word_lang: string
         }
         Update: {
           created_at?: string
-          definition_lang?: string
           folder_id?: number
           id?: number
           name?: string
           owner_id?: string
-          word_lang?: string
         }
         Relationships: [
           {
