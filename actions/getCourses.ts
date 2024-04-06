@@ -1,6 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
 import getUserId from "./getUserId";
-import { SupabaseClient } from "@supabase/supabase-js";
 
 async function getCourses() {
   const supabase = createClient();
