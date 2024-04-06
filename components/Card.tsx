@@ -9,8 +9,8 @@ interface Props {
 
 function Card({ href, children }: Props) {
   return (
-    <Link href={href}>
-      <div className="card card-compact w-60 bg-base-100 shadow-xl hover:bg-neutral">
+    <Link href={href} className="flex-grow">
+      <div className="card card-compact min-w-min bg-base-100 shadow-xl hover:bg-neutral">
         <div className="card-body">{children}</div>
       </div>
     </Link>
