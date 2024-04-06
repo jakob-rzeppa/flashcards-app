@@ -15,7 +15,7 @@ function LibraryList({ data }: Props) {
   return (
     <div className="w-full">
       <div className="w-4/5 mx-auto flex flex-wrap justify-between items-center gap-4">
-        {data ? (
+        {data && data?.length >= 1 ? (
           data.map((element, index) => (
             <div className="min-w-max flex-1" key={index}>
               <LibraryElement
@@ -27,7 +27,7 @@ function LibraryList({ data }: Props) {
             </div>
           ))
         ) : (
-          <div>No Courses</div>
+          <div className="text-center w-full text-3xl">No Elements</div>
         )}
       </div>
     </div>
