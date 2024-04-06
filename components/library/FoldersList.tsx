@@ -9,25 +9,25 @@ interface Props {
 }
 
 async function FoldersList({ courseId }: Props) {
-  const folders = await getFolders(courseId);
+  const data = await getFolders(courseId);
 
-  const data: {
+  const folders: {
     href: string;
     name: string;
     description: string | null;
     badgeText: string;
-  }[] = folders
-    ? folders.map((folder) => ({
-        href: "/library/" + courseId + "/" + folder.id,
-        name: folder.name,
+  }[] = data!.data
+    ? data!.data.map((element, index) => ({
+        href: "/library/" + courseId + "/" + element.id,
+        name: element.name,
         description: null,
-        badgeText: "",
+        badgeText: "Stacks: " + data!.numOfStacks[index],
       }))
     : [];
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <LibraryList data={data} />
+      <LibraryList data={folders} />
     </Suspense>
   );
 }
