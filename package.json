@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "update-types": "npx supabase gen types typescript --project-id \"thuuymitstzfotzwerap\" > supabase.ts"
   },
   "dependencies": {
     "@react-spring/web": "^9.7.3",
