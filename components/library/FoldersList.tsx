@@ -18,7 +18,7 @@ async function FoldersList({ courseId }: Props) {
     badgeText: string;
   }[] = data!.data
     ? data!.data.map((element, index) => ({
-        href: "/library/" + courseId + "/" + element.id,
+        href: "/library/folder?id=" + element.id,
         name: element.name,
         description: null,
         badgeText: "Stacks: " + data!.numOfStacks[index],

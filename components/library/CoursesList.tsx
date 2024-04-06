@@ -13,7 +13,7 @@ async function CourseList() {
     description: string | null;
     badgeText: string;
   }[] = courses!.data.map((course, index) => ({
-    href: "/library/" + course.id,
+    href: "/library/course?id=" + course.id,
     name: course.name,
     description: course.description,
     badgeText: "Folders: " + courses?.numOfFolders[index],
