@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 
 interface Props {
   cards: {
@@ -17,7 +19,52 @@ interface Props {
 }
 
 function EditCards({ cards, masteryLevel }: Props) {
-  return <div>EditCards</div>;
+  const [rows, setRows] = useState<
+    { id: number; word: string; definition: string }[]
+  >(
+    cards.map((card) => ({
+      id: card.id,
+      word: card.word,
+      definition: card.definition,
+    }))
+  );
+
+  useEffect(() => {
+    return () => updateCards(rows);
+  }, []);
+
+  return (
+    <div>
+      <ul>
+        {rows.map((row, index) => (
+          <li key={row.id}>
+            <input
+              type="text"
+              name="word"
+              placeholder="word"
+              value={rows[index].word}
+              onChange={(e) => {
+                const newRows = rows.map((row) => row);
+                newRows[index].word = e.target.value;
+                setRows(newRows);
+              }}
+            />
+            <input
+              type="text"
+              name="definition"
+              placeholder="definition"
+              value={rows[index].definition}
+              onChange={(e) => {
+                const newRows = rows.map((row) => row);
+                newRows[index].definition = e.target.value;
+                setRows(newRows);
+              }}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 export default EditCards;
