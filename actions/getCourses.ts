@@ -18,7 +18,7 @@ async function getCourses() {
     .eq("owner_id", userId);
 
   if (error) {
-    console.error(error);
+    console.error("getCourses", error);
     return null;
   }
 
@@ -32,7 +32,7 @@ async function getCourses() {
       .eq("course_id", data[i].id);
 
     if (!foldersInCourse.data || foldersInCourse.error) {
-      console.error(foldersInCourse.error);
+      console.error("foldersInCourse", foldersInCourse.error);
       numOfFolders[i] = 0;
     } else {
       numOfFolders[i] = foldersInCourse.data!.length;

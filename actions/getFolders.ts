@@ -9,7 +9,7 @@ async function getFolders(courseId: string) {
     .eq("course_id", courseId);
 
   if (!data || error) {
-    console.error(error);
+    console.error("getFolders", error);
     return null;
   }
 
@@ -28,7 +28,7 @@ async function getFolders(courseId: string) {
       .eq("folder_id", data[i].id);
 
     if (!stacksInFolder.data || stacksInFolder.error) {
-      console.error(stacksInFolder.error);
+      console.error("stacksInFolder", stacksInFolder.error);
       numOfStacks[i] = 0;
     } else {
       numOfStacks[i] = stacksInFolder.data!.length;

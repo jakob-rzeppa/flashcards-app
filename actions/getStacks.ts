@@ -23,7 +23,7 @@ async function getFolders(folderId: number) {
       .eq("stack_id", data[i].id);
 
     if (!cardsInStack.data || cardsInStack.error) {
-      console.error(cardsInStack.error);
+      console.error("getStacks", cardsInStack.error);
       numOfCards[i] = 0;
     } else {
       numOfCards[i] = cardsInStack.data!.length;

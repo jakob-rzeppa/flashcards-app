@@ -18,7 +18,7 @@ async function getCards(stackId: number) {
     .eq("stack_id", stackId);
 
   if (error) {
-    console.error(error);
+    console.error("getCards", error);
     return null;
   }
 

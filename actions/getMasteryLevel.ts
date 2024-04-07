@@ -18,7 +18,7 @@ async function getMasteryLevel(cardIds: number[]) {
     .eq("user_id", userId);
 
   if (!data || error) {
-    console.error(error);
+    console.error("mastery_level", error);
     return null;
   }
 
