@@ -7,7 +7,7 @@ async function getCards(stackId: number) {
   const userId = await getUserId();
 
   if (!userId) {
-    console.log("no user");
+    console.error("no user");
     return null;
   }
 
