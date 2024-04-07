@@ -16,7 +16,7 @@ async function StackPage({ searchParams: { id } }: Props) {
       <h2 className="text-3xl font-semibold">Cards</h2>
       <div className="flex flex-col w-3/5 gap-3">
         {cards?.map((card, index) => (
-          <div className="bg-neutral rounded-md p-2 w-full">
+          <div className="bg-neutral rounded-md p-2 w-full" key={index}>
             <h3 className="text-xl">{card.word}</h3>
             <h4 className="text-md">{card.definition}</h4>
           </div>
