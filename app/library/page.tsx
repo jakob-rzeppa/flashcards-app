@@ -1,6 +1,6 @@
 import React from "react";
 
-import CourseList from "@/components/library/CoursesList";
+import CourseList from "@/app/library/CoursesList";
 
 function LibraryPage() {
   return (

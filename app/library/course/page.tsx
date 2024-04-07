@@ -1,6 +1,6 @@
 import React from "react";
 
-import FoldersList from "@/components/library/FoldersList";
+import FoldersList from "@/app/library/course/FoldersList";
 
 interface Props {
   searchParams: { id: string };

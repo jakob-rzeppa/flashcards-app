@@ -1,5 +1,5 @@
-import AuthButton from "../components/AuthButton";
-import PrevPageButton from "@/components/PrevPageButton";
+import AuthButton from "./AuthButton";
+import PrevPageButton from "@/components/header/PrevPageButton";
 
 export default function Header() {
   return (

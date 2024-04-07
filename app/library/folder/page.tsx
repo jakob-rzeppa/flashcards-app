@@ -1,6 +1,6 @@
 import React from "react";
 
-import StacksList from "@/components/library/StacksList";
+import StacksList from "@/app/library/folder/StacksList";
 
 interface Props {
   searchParams: {
