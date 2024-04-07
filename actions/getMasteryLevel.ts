@@ -14,7 +14,7 @@ async function getMasteryLevel(cardIds: number[]) {
   const { data, error } = await supabase
     .from("mastery_level")
     .select("*")
-    .eq("card_id", cardIds)
+    .in("card_id", cardIds)
     .eq("user_id", userId);
 
   if (!data || error) {
