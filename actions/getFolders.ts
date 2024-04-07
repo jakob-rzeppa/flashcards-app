@@ -1,5 +1,4 @@
 import { createClient } from "@/utils/supabase/server";
-import React from "react";
 
 async function getFolders(courseId: string) {
   const supabase = createClient();

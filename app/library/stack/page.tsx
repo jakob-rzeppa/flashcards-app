@@ -1,7 +1,6 @@
 import React from "react";
 
 import getCards from "@/actions/getCards";
-import Card from "@/components/Card";
 
 interface Props {
   searchParams: { id: string };

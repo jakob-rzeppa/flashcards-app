@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { createClient } from "@/utils/supabase/client";
 import { IoChevronBack } from "react-icons/io5";
+
+import { createClient } from "@/utils/supabase/client";
+
 import SwipeCard from "@/components/learn/SwipeCard";
 
 function LearnPage() {

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { createClient } from "@/utils/supabase/server";
 import getUserId from "./getUserId";
 

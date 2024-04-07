@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+
 import { createClient } from "@/utils/supabase/client";
 
 import Modal from "@/components/Modal";
-import { useRouter } from "next/navigation";
 
 interface Props {
   id: string;

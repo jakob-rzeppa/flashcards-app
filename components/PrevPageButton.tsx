@@ -1,9 +1,7 @@
 "use client";
 
 import React from "react";
-
 import { IoIosArrowBack } from "react-icons/io";
-
 import { useRouter } from "next/navigation";
 
 function PrevPageButton() {
