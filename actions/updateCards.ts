@@ -13,6 +13,8 @@ async function updateCards(
   }
 
   const userId = user.data.user.id;
+
+  // IDEA I could create a update card modal, that opens from the learn and edit page and instantly inserts into the database. Inserts could be handled in the edit page and uploaded when page closes or on save button.
 }
 
 export default updateCards;
