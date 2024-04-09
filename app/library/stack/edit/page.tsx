@@ -21,6 +21,7 @@ async function StackEditPage({ searchParams: { id } }: Props) {
       <EditCards
         cards={cards ? cards : []}
         masteryLevel={masteryLevel ? masteryLevel : []}
+        stackId={parseInt(id)}
       />
     </div>
   );

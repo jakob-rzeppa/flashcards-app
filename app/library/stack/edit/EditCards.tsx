@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 
+import updateCards from "@/actions/updateCards";
+
 interface Props {
   cards: {
     created_at: string;
@@ -16,9 +18,10 @@ interface Props {
     level: number;
     user_id: string;
   }[];
+  stackId: number;
 }
 
-function EditCards({ cards, masteryLevel }: Props) {
+function EditCards({ cards, masteryLevel, stackId }: Props) {
   const [rows, setRows] = useState<
     { id: number; word: string; definition: string }[]
   >(
@@ -30,7 +33,9 @@ function EditCards({ cards, masteryLevel }: Props) {
   );
 
   useEffect(() => {
-    return () => updateCards(rows);
+    return () => {
+      updateCards(rows, stackId);
+    };
   }, []);
 
   return (
