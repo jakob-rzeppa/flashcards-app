@@ -57,7 +57,7 @@ function EditCards({ data, masteryLevel, stackId }: Props) {
     )
       return;
 
-    updateCard(stackId, cards[indexToEdit].id, word, definition);
+    updateCard(cards[indexToEdit].id, word, definition);
 
     const tempCards = cards.map((card) => card);
     tempCards[indexToEdit].word = word;

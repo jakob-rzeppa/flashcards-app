@@ -1,22 +1,19 @@
 import { createClient } from "@/utils/supabase/client";
 
-async function updateCard(
-  stackId: number,
-  cardId: number,
-  word: string,
-  definition: string
-) {
+async function updateCard(cardId: number, word: string, definition: string) {
   const supabase = createClient();
-  const user = await supabase.auth.getUser();
 
-  if (!user.data.user || user.error) {
-    console.log("user", user.error);
-    return null;
+  const { data, error } = await supabase
+    .from("cards")
+    .update({ word: word, definition: definition })
+    .eq("id", cardId)
+    .select();
+
+  if (error) {
+    throw error;
   }
 
-  const userId = user.data.user.id;
-
-  console.log({ stackId, cardId, word, definition });
+  console.log("Sucessfully updated", { cardId, word, definition });
 }
 
 export default updateCard;
