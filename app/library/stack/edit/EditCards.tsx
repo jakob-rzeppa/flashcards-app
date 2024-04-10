@@ -2,8 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 
+import { FaRegTrashAlt } from "react-icons/fa";
+
 import updateCard from "@/actions/updateCard";
 import createCard from "@/actions/createCard";
+import deleteCard from "@/actions/deleteCard";
 
 interface Props {
   data: {
@@ -51,6 +54,21 @@ function EditCards({ data, masteryLevel, stackId }: Props) {
   const handleNewCard = () => {
     setNewCard(true);
     handleEditCard(cards.length);
+  };
+
+  const handleDeleteCard = () => {
+    if (indexToEdit === null) {
+      console.log("indexToEdit not defined");
+      return;
+    }
+
+    deleteCard(cards[indexToEdit].id);
+
+    const tempCards = cards.map((card) => card);
+    tempCards.splice(indexToEdit, 1);
+    setCards(tempCards);
+
+    resetModal();
   };
 
   const saveEditedCard = async () => {
@@ -117,6 +135,12 @@ function EditCards({ data, masteryLevel, stackId }: Props) {
                 onClick={resetModal}
               >
                 ✕
+              </button>
+              <button
+                className="btn btn-sm btn-circle btn-ghost absolute top-2 left-2"
+                onClick={handleDeleteCard}
+              >
+                <FaRegTrashAlt />
               </button>
             </form>
             <input
