@@ -17,7 +17,7 @@ async function StackEditPage({ searchParams: { id } }: Props) {
 
   return (
     <div>
-      <h1>StackEditPage</h1>
+      <h1 className="w-full text-4xl text-center my-6">StackEditPage</h1>
       <EditCards
         cards={cards ? cards : []}
         masteryLevel={masteryLevel ? masteryLevel : []}

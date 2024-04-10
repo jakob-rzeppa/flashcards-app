@@ -39,35 +39,16 @@ function EditCards({ cards, masteryLevel, stackId }: Props) {
   }, []);
 
   return (
-    <div>
-      <ul>
-        {rows.map((row, index) => (
-          <li key={row.id}>
-            <input
-              type="text"
-              name="word"
-              placeholder="word"
-              value={rows[index].word}
-              onChange={(e) => {
-                const newRows = rows.map((row) => row);
-                newRows[index].word = e.target.value;
-                setRows(newRows);
-              }}
-            />
-            <input
-              type="text"
-              name="definition"
-              placeholder="definition"
-              value={rows[index].definition}
-              onChange={(e) => {
-                const newRows = rows.map((row) => row);
-                newRows[index].definition = e.target.value;
-                setRows(newRows);
-              }}
-            />
-          </li>
-        ))}
-      </ul>
+    <div className="flex flex-col justify-center items-center gap-4 w-3/5 mx-auto">
+      {rows.map((row, index) => (
+        <button
+          className="btn w-full btn-neutral text-start items-center justify-start"
+          key={index}
+        >
+          <h3 className="text-xl w-1/2">{row.word}</h3>
+          <h4 className="text-xl">{row.definition}</h4>
+        </button>
+      ))}
     </div>
   );
 }
