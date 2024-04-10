@@ -111,15 +111,19 @@ function EditCards({ data, masteryLevel, stackId }: Props) {
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-center gap-4 w-3/5 mx-auto">
+      <div className="flex flex-col justify-center items-center gap-4 md:w-3/5 w-4/5 mx-auto">
         {cards.map((card, index) => (
           <button
             onClick={() => handleEditCard(index)}
-            className="btn w-full btn-neutral text-start items-center justify-start"
+            className="btn w-full h-fit btn-neutral text-start items-center justify-start py-2 px-4"
             key={card.id}
           >
-            <h3 className="text-xl w-1/2">{card.word}</h3>
-            <h4 className="text-xl">{card.definition}</h4>
+            <h3 className="text-xl md:w-1/2 w-full whitespace-normal break-words">
+              {card.word}
+            </h3>
+            <h4 className="md:text-xl text-md whitespace-normal break-words">
+              {card.definition}
+            </h4>
           </button>
         ))}
         <button className="btn btn-primary w-full" onClick={handleNewCard}>
