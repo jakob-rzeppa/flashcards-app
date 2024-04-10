@@ -7,7 +7,7 @@ interface Props {
 
 function StackActions({ id }: Props) {
   return (
-    <div className="flex flex-col gap-4 w-3/5 md:flex-row">
+    <div className="flex flex-col gap-4 md:w-3/5 w-4/5 md:flex-row">
       <Link
         href={"/learn?scope=stack&id=" + id}
         className="btn btn-primary flex-1"
