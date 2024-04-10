@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 
 import updateCard from "@/actions/updateCard";
+import createCard from "@/actions/createCard";
 
 interface Props {
   data: {
@@ -28,10 +29,11 @@ function EditCards({ data, masteryLevel, stackId }: Props) {
   const [word, setWord] = useState("");
   const [definition, setDefinition] = useState("");
   const [indexToEdit, setIndexToEdit] = useState<number | null>(null);
+  const [newCard, setNewCard] = useState(false);
 
   const handleEditCard = (index: number) => {
-    setWord(cards[index].word);
-    setDefinition(cards[index].definition);
+    setWord(cards[index] ? cards[index].word : "");
+    setDefinition(cards[index] ? cards[index].definition : "");
     setIndexToEdit(index);
 
     (
@@ -43,19 +45,41 @@ function EditCards({ data, masteryLevel, stackId }: Props) {
     setWord("");
     setDefinition("");
     setIndexToEdit(null);
+    setNewCard(false);
   };
 
-  const saveEditedCard = () => {
+  const handleNewCard = () => {
+    setNewCard(true);
+    handleEditCard(cards.length);
+  };
+
+  const saveEditedCard = async () => {
     if (indexToEdit === null) {
       console.log("indexToEdit not defined");
       return;
     }
 
     if (
-      word === cards[indexToEdit].word &&
-      definition === cards[indexToEdit].definition
+      word === (cards[indexToEdit] ? cards[indexToEdit].word : "") &&
+      definition === (cards[indexToEdit] ? cards[indexToEdit].definition : "")
     )
       return;
+
+    if (newCard) {
+      const newCardData = await createCard(stackId, word, definition);
+
+      if (!newCardData) {
+        console.error("Some error happened while trying to insert a new card!");
+        return;
+      }
+
+      const tempCards = cards.map((card) => card);
+      tempCards[tempCards.length] = newCardData[0];
+      setCards(tempCards);
+
+      resetModal();
+      return;
+    }
 
     updateCard(cards[indexToEdit].id, word, definition);
 
@@ -80,6 +104,9 @@ function EditCards({ data, masteryLevel, stackId }: Props) {
             <h4 className="text-xl">{card.definition}</h4>
           </button>
         ))}
+        <button className="btn btn-primary w-full" onClick={handleNewCard}>
+          New Card
+        </button>
       </div>
       <dialog id="edit_card_modal" className="modal">
         <div className="modal-box">
