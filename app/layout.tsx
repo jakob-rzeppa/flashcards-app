@@ -12,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={GeistSans.className} data-theme="sunset">
+    <html lang="en" className={GeistSans.className} data-theme="dark">
       <body>{children}</body>
     </html>
   );
