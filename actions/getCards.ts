@@ -15,7 +15,8 @@ async function getCards(stackId: number) {
   const { data, error } = await supabase
     .from("cards")
     .select("*")
-    .eq("stack_id", stackId);
+    .eq("stack_id", stackId)
+    .order("created_at");
 
   if (error) {
     console.error("getCards", error);

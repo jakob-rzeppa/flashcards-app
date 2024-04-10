@@ -25,7 +25,8 @@ async function getFolders(courseId: string) {
     const stacksInFolder = await supabase
       .from("stacks")
       .select("id")
-      .eq("folder_id", data[i].id);
+      .eq("folder_id", data[i].id)
+      .order("created_at");
 
     if (!stacksInFolder.data || stacksInFolder.error) {
       console.error("stacksInFolder", stacksInFolder.error);

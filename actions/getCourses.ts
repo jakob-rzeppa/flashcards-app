@@ -29,7 +29,8 @@ async function getCourses() {
     const foldersInCourse = await supabase
       .from("folders")
       .select("id")
-      .eq("course_id", data[i].id);
+      .eq("course_id", data[i].id)
+      .order("created_at");
 
     if (!foldersInCourse.data || foldersInCourse.error) {
       console.error("foldersInCourse", foldersInCourse.error);

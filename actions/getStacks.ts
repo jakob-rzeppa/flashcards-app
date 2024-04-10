@@ -20,7 +20,8 @@ async function getFolders(folderId: number) {
     const cardsInStack = await supabase
       .from("cards")
       .select("id")
-      .eq("stack_id", data[i].id);
+      .eq("stack_id", data[i].id)
+      .order("created_at");
 
     if (!cardsInStack.data || cardsInStack.error) {
       console.error("getStacks", cardsInStack.error);
