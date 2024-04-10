@@ -15,8 +15,7 @@ async function getMasteryLevel(cardIds: number[]) {
     .from("mastery_level")
     .select("*")
     .in("card_id", cardIds)
-    .eq("user_id", userId)
-    .order("created_at");
+    .eq("user_id", userId);
 
   if (!data || error) {
     console.error("mastery_level", error);
