@@ -7,6 +7,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import updateCard from "@/actions/updateCard";
 import createCard from "@/actions/createCard";
 import deleteCard from "@/actions/deleteCard";
+import { useRouter } from "next/navigation";
 
 interface Props {
   data: {
@@ -26,6 +27,12 @@ interface Props {
 }
 
 function EditCards({ data, masteryLevel, stackId }: Props) {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.refresh();
+  }, []);
+
   const [cards, setCards] = useState(data);
 
   // Variables used in the modal, will be reset on save or close of Modal

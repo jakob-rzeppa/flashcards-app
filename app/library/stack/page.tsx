@@ -4,6 +4,8 @@ import getCards from "@/actions/getCards";
 import StackActions from "./StackActions";
 import getName from "@/actions/getName";
 
+export const revalidate = 0;
+
 interface Props {
   searchParams: { id: string };
 }
