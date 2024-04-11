@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 
 import getCourses from "@/actions/getCourses";
 
-import LibraryList from "../../components/library/LibraryList";
+import LibraryList from "../../../components/library/LibraryList";
 
 async function CourseList() {
   const courses = await getCourses();

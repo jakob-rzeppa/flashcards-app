@@ -1,6 +1,6 @@
 import React from "react";
 
-import CourseList from "@/app/library/CoursesList";
+import CourseList from "@/app/(site)/library/CoursesList";
 
 async function LibraryPage() {
   return (

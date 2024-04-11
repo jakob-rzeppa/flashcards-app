@@ -6,7 +6,7 @@ interface Props {
   children: ReactNode;
 }
 
-function LibraryLayout({ children }: Props) {
+function SiteLayout({ children }: Props) {
   return (
     <div>
       <LoginCheck>{children}</LoginCheck>
@@ -14,4 +14,4 @@ function LibraryLayout({ children }: Props) {
   );
 }
 
-export default LibraryLayout;
+export default SiteLayout;

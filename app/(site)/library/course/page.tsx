@@ -1,6 +1,6 @@
 import React from "react";
 
-import FoldersList from "@/app/library/course/FoldersList";
+import FoldersList from "@/app/(site)/library/course/FoldersList";
 import getName from "@/actions/getName";
 
 interface Props {

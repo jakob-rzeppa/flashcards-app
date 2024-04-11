@@ -1,6 +1,6 @@
 import React from "react";
 
-import StacksList from "@/app/library/folder/StacksList";
+import StacksList from "@/app/(site)/library/folder/StacksList";
 import getName from "@/actions/getName";
 
 interface Props {
