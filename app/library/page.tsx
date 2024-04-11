@@ -1,7 +1,6 @@
 import React from "react";
 
 import CourseList from "@/app/library/CoursesList";
-import getName from "@/actions/getName";
 
 async function LibraryPage() {
   return (
