@@ -1,5 +1,5 @@
 import React from "react";
-import AuthButton from "./header/AuthButton";
+import AuthButton from "./AuthButton";
 
 function NeedToLogin() {
   return (
