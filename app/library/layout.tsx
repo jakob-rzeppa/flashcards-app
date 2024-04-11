@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 
 import Header from "@/components/header/Header";
+import LoginCheck from "@/components/LoginCheck";
 
 interface Props {
   children: ReactNode;
@@ -9,8 +10,10 @@ interface Props {
 function LibraryLayout({ children }: Props) {
   return (
     <div>
-      <Header />
-      {children}
+      <LoginCheck>
+        <Header />
+        {children}
+      </LoginCheck>
     </div>
   );
 }
