@@ -10,7 +10,7 @@ interface Props {
 function SiteLayout({ children }: Props) {
   return (
     <div>
-      <Header></Header>
+      <Header />
       <LoginCheck>{children}</LoginCheck>
     </div>
   );

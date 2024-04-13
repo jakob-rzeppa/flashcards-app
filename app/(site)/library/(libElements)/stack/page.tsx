@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import getCards from "@/actions/getCards";
 import StackActions from "./StackActions";

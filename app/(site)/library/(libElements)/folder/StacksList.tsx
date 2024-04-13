@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 
 import getStacks from "@/actions/getStacks";
 
-import LibraryList from "../../../../components/library/LibraryList";
+import LibraryList from "../../../../../components/library/LibraryList";
 
 interface Props {
   folderId: string;

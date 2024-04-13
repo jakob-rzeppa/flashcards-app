@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 
 import getFolders from "@/actions/getFolders";
 
-import LibraryList from "../../../../components/library/LibraryList";
+import LibraryList from "../../../../../components/library/LibraryList";
 
 interface Props {
   courseId: string;

@@ -14,7 +14,7 @@ export type Database = {
           created_at: string
           definition: string
           id: number
-          owner_id: string | null
+          owner_id: string
           stack_id: number
           word: string
         }
@@ -22,7 +22,7 @@ export type Database = {
           created_at?: string
           definition?: string
           id?: number
-          owner_id?: string | null
+          owner_id?: string
           stack_id: number
           word?: string
         }
@@ -30,7 +30,7 @@ export type Database = {
           created_at?: string
           definition?: string
           id?: number
-          owner_id?: string | null
+          owner_id?: string
           stack_id?: number
           word?: string
         }
