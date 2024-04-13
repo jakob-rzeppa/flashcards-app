@@ -1,27 +1,17 @@
-"use client";
-
-import { useRouter } from "next/navigation";
 import React from "react";
 import { FiArrowLeft } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 interface Props {
   className?: string;
+  href: string;
 }
 
-function NavButton({ className }: Props) {
-  const router = useRouter();
-
-  const handleClick = () => {
-    router.back();
-  };
-
+function NavButton({ className, href }: Props) {
   return (
-    <button
-      className={`btn btn-circle btn-primary ${className}`}
-      onClick={handleClick}
-    >
+    <Link to={href} className={`btn btn-circle btn-primary ${className}`}>
       <FiArrowLeft />
-    </button>
+    </Link>
   );
 }
 

@@ -22,12 +22,6 @@ interface Props {
 }
 
 function EditCards({ data, stackId }: Props) {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.refresh();
-  }, []);
-
   const [cards, setCards] = useState(data);
 
   // Variables used in the modal, will be reset on save or close of Modal

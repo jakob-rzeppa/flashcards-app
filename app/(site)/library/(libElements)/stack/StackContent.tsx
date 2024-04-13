@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import EditCards from "./EditCards";
+import { useRouter } from "next/navigation";
 
 interface Props {
   cardsData: {
@@ -17,6 +18,12 @@ interface Props {
 }
 
 function StackContent({ cardsData, id }: Props) {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.refresh();
+  }, []);
+
   return (
     <main className="md:w-3/5 w-4/5 mx-auto mt-4">
       <Link
