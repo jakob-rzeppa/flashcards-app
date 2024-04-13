@@ -18,15 +18,10 @@ interface Props {
     stack_id: number;
     word: string;
   }[];
-  masteryLevel: {
-    card_id: number;
-    level: number;
-    user_id: string;
-  }[];
   stackId: number;
 }
 
-function EditCards({ data, masteryLevel, stackId }: Props) {
+function EditCards({ data, stackId }: Props) {
   const router = useRouter();
 
   useEffect(() => {
@@ -118,7 +113,7 @@ function EditCards({ data, masteryLevel, stackId }: Props) {
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-center gap-4 md:w-3/5 w-4/5 mx-auto">
+      <div className="flex flex-col justify-center items-center gap-4 w-full">
         {cards.map((card, index) => (
           <button
             onClick={() => handleEditCard(index)}
@@ -133,7 +128,10 @@ function EditCards({ data, masteryLevel, stackId }: Props) {
             </h4>
           </button>
         ))}
-        <button className="btn btn-primary w-full" onClick={handleNewCard}>
+        <button
+          className="btn btn-primary btn-outline w-full"
+          onClick={handleNewCard}
+        >
           New Card
         </button>
       </div>
