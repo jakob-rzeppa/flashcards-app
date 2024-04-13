@@ -64,11 +64,13 @@ function EditCards({ data, stackId }: Props) {
       return;
     }
 
-    deleteCard(cards[indexToEdit].id);
+    if (cards[indexToEdit]) {
+      deleteCard(cards[indexToEdit].id);
 
-    const tempCards = cards.map((card) => card);
-    tempCards.splice(indexToEdit, 1);
-    setCards(tempCards);
+      const tempCards = cards.map((card) => card);
+      tempCards.splice(indexToEdit, 1);
+      setCards(tempCards);
+    }
 
     resetModal();
   };
