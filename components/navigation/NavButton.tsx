@@ -1,6 +1,6 @@
+import Link from "next/link";
 import React from "react";
 import { FiArrowLeft } from "react-icons/fi";
-import { Link } from "react-router-dom";
 
 interface Props {
   className?: string;
@@ -9,7 +9,7 @@ interface Props {
 
 function NavButton({ className, href }: Props) {
   return (
-    <Link to={href} className={`btn btn-circle btn-primary ${className}`}>
+    <Link href={href} className={`btn btn-circle btn-primary ${className}`}>
       <FiArrowLeft />
     </Link>
   );

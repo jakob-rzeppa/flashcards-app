@@ -13,7 +13,10 @@ async function StackPage({ searchParams: { id } }: Props) {
 
   return (
     <div className="mt-8">
-      <NavButton href={`/library/folder?id=${data?.folder_id}`} />
+      <NavButton
+        href={`/library/folder?id=${data?.folder_id}`}
+        className="absolute left-8"
+      />
       <h1 className="text-4xl font-bold w-full text-center">{data?.name}</h1>
       <StackContent cardsData={cards ? cards : []} id={parseInt(id)} />
     </div>
