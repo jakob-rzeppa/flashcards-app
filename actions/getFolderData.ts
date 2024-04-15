@@ -22,5 +22,5 @@ export async function getFolderData(id: number) {
     return { data: folder.data[0], stacks: null };
   }
 
-  return { data: folder.data[0], cards: stacks.data };
+  return { data: folder.data[0], stacks: stacks.data };
 }

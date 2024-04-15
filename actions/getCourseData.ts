@@ -25,5 +25,5 @@ export async function getCourseData(id: number) {
     return { data: course.data[0], folders: null };
   }
 
-  return { data: course.data[0], cards: folders.data };
+  return { data: course.data[0], folders: folders.data };
 }

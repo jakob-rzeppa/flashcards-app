@@ -1,9 +1,8 @@
 import React from "react";
 
-import FoldersList from "@/app/(site)/library/course/FoldersList";
-import getName from "@/actions/getName";
 import NavButton from "@/components/navigation/NavButton";
 import { getCourseData } from "@/actions/getCourseData";
+import LibraryList from "@/components/library/LibraryList";
 
 interface Props {
   searchParams: { id: string };
@@ -11,12 +10,25 @@ interface Props {
 
 async function CoursePage({ searchParams: { id } }: Props) {
   //TODO error handling
-  const data = await getCourseData(parseInt(id));
+  const { data, folders } = await getCourseData(parseInt(id));
+
+  const foldersDisplay: {
+    href: string;
+    name: string;
+    description: string | null;
+    badgeText: string;
+  }[] = folders!.map((folder) => ({
+    href: `/library/folder?id=${folder.id}`,
+    name: folder.name,
+    description: null,
+    badgeText: "Folders: ?",
+  }));
 
   return (
     <div className="flex flex-col gap-8 justify-center items-center mt-8 relative">
-      <h1 className="text-4xl font-bold">{data.data!.name}</h1>
-      <FoldersList courseId={id} />
+      <NavButton href={`/library/`} className="absolute top-0 left-8" />
+      <h1 className="text-4xl font-bold">{data!.name}</h1>
+      <LibraryList data={foldersDisplay} />
     </div>
   );
 }
