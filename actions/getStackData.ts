@@ -9,17 +9,17 @@ export async function getStackData(id: number) {
 
   if (stack.error) {
     console.error(stack.error);
-    return { data: null, cards: [] };
+    return { data: null, cards: null };
   }
 
   if (stack.data.length === 0) {
     console.error("StackId not found!");
-    return { data: null, cards: [] };
+    return { data: null, cards: null };
   }
 
   if (cards.error) {
     console.error(cards.error);
-    return { data: stack.data[0], cards: [] };
+    return { data: stack.data[0], cards: null };
   }
 
   return { data: stack.data[0], cards: cards.data };
