@@ -1,10 +1,15 @@
 import { createClient } from "@/utils/supabase/server";
-import getUserId from "./getUserId";
 
 async function getCourses() {
   const supabase = createClient();
+  const user = await supabase.auth.getUser();
 
-  const userId = await getUserId();
+  if (!user.data.user || user.error) {
+    console.log("user", user.error);
+    return null;
+  }
+
+  const userId = user.data.user.id;
 
   if (!userId) {
     console.log("no user");
