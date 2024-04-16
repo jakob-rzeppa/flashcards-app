@@ -2,7 +2,7 @@ import React from "react";
 
 import StackContent from "./StackContent";
 import NavButton from "@/components/navigation/NavButton";
-import { getStackData } from "@/actions/getStackData";
+import { getStackData } from "@/actions/library/getStackData";
 
 interface Props {
   searchParams: { id: string };

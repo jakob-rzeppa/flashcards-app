@@ -1,7 +1,7 @@
 import React from "react";
 
 import NavButton from "@/components/navigation/NavButton";
-import { getCourseData } from "@/actions/getCourseData";
+import { getCourseData } from "@/actions/library/getCourseData";
 import LibraryList from "@/components/library/LibraryList";
 
 interface Props {
