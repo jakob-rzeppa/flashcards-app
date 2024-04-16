@@ -13,18 +13,18 @@ interface Props {
 
 async function FolderPage({ searchParams: { id } }: Props) {
   //TODO error handling
-  const { data, stacks } = await getFolderData(parseInt(id));
+  const { data, stacks, numOfCards } = await getFolderData(parseInt(id));
 
   const stacksDisplay: {
     href: string;
     name: string;
     description: string | null;
     badgeText: string;
-  }[] = stacks!.map((stack) => ({
+  }[] = stacks!.map((stack, index) => ({
     href: `/library/stack?id=${stack.id}`,
     name: stack.name,
     description: null,
-    badgeText: "Stacks: ?",
+    badgeText: "Stacks: " + numOfCards![index],
   }));
 
   return (

@@ -22,5 +22,21 @@ export async function getFolderData(id: number) {
     return { data: folder.data[0], stacks: null };
   }
 
-  return { data: folder.data[0], stacks: stacks.data };
+  const numOfCards: number[] = [];
+
+  for (let i = 0; i < stacks.data.length; i++) {
+    const cardsInStack = await supabase
+      .from("cards")
+      .select("id")
+      .eq("stack_id", stacks.data[i].id);
+
+    if (!cardsInStack.data || cardsInStack.error) {
+      console.error("cardsInStack", cardsInStack.error);
+      numOfCards[i] = 0;
+    } else {
+      numOfCards[i] = cardsInStack.data!.length;
+    }
+  }
+
+  return { data: folder.data[0], stacks: stacks.data, numOfCards };
 }
