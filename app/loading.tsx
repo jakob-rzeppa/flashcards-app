@@ -1,7 +1,7 @@
 import React from "react";
 
 function Loading() {
-  return <div className="text-center m-auto">Loading...</div>;
+  return <div className="loading loading-spinner loading-md"></div>;
 }
 
 export default Loading;
