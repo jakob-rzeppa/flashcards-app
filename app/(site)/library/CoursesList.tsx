@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 
-import getCourses from "@/actions/getCourses";
+import getCourses from "@/actions/getLibraryData";
 
 import LibraryList from "../../../components/library/LibraryList";
 

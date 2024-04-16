@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 
-async function getCourses() {
+async function getLibraryData() {
   const supabase = createClient();
   const user = await supabase.auth.getUser();
 
@@ -23,7 +23,7 @@ async function getCourses() {
     .eq("owner_id", userId);
 
   if (error) {
-    console.error("getCourses", error);
+    console.error("getLibraryData", error);
     return null;
   }
 
@@ -48,4 +48,4 @@ async function getCourses() {
   return { data, numOfFolders };
 }
 
-export default getCourses;
+export default getLibraryData;
