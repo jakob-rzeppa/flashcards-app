@@ -64,7 +64,7 @@ export type Database = {
           description?: string | null
           id?: number
           name: string
-          owner_id: string
+          owner_id?: string
         }
         Update: {
           created_at?: string
@@ -87,6 +87,7 @@ export type Database = {
         Row: {
           course_id: number
           created_at: string
+          description: string
           id: number
           name: string
           owner_id: string
@@ -94,13 +95,15 @@ export type Database = {
         Insert: {
           course_id: number
           created_at?: string
+          description?: string
           id?: number
           name: string
-          owner_id: string
+          owner_id?: string
         }
         Update: {
           course_id?: number
           created_at?: string
+          description?: string
           id?: number
           name?: string
           owner_id?: string
@@ -131,7 +134,7 @@ export type Database = {
         Insert: {
           card_id: number
           level?: number
-          user_id: string
+          user_id?: string
         }
         Update: {
           card_id?: number
@@ -158,6 +161,7 @@ export type Database = {
       stacks: {
         Row: {
           created_at: string
+          description: string
           folder_id: number
           id: number
           name: string
@@ -165,13 +169,15 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          description?: string
           folder_id: number
           id?: number
           name: string
-          owner_id: string
+          owner_id?: string
         }
         Update: {
           created_at?: string
+          description?: string
           folder_id?: number
           id?: number
           name?: string

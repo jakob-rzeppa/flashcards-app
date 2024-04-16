@@ -30,7 +30,7 @@ async function CoursePage({ searchParams: { id } }: Props) {
       <NavButton href={`/library/`} className="absolute top-0 left-8" />
       <h1 className="text-4xl font-bold">{data!.name}</h1>
       <LibraryList data={foldersDisplay} />
-      <NewElement type="folder" />
+      <NewElement type="folder" id={parseInt(id)} />
     </div>
   );
 }

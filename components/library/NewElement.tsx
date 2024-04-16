@@ -1,24 +1,29 @@
 "use client";
 
+import createElement from "@/actions/library/createElement";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 interface Props {
   type: "course" | "folder" | "stack";
+  id?: number;
 }
 
-function NewElement({ type }: Props) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+function NewElement({ type, id }: Props) {
+  const router = useRouter();
+
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
 
   const resetModal = () => {
     setTitle("");
     setDescription("");
   };
 
-  const createElement = () => {
-    // TODO
-    console.log(type, title, description);
+  const handleOnSave = () => {
+    createElement(type, id, title, description);
     resetModal();
+    router.refresh();
   };
 
   return (
@@ -59,10 +64,7 @@ function NewElement({ type }: Props) {
               onChange={(e) => setDescription(e.target.value)}
             />
             <form method="dialog">
-              <button
-                className="btn btn-neutral w-full"
-                onClick={createElement}
-              >
+              <button className="btn btn-neutral w-full" onClick={handleOnSave}>
                 Save
               </button>
             </form>

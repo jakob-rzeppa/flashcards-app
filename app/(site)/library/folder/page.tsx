@@ -36,7 +36,7 @@ async function FolderPage({ searchParams: { id } }: Props) {
       />
       <h1 className="text-4xl font-bold">{data!.name}</h1>
       <LibraryList data={stacksDisplay} />
-      <NewElement type="stack" />
+      <NewElement type="stack" id={parseInt(id)} />
     </div>
   );
 }
