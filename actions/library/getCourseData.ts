@@ -25,5 +25,21 @@ export async function getCourseData(id: number) {
     return { data: course.data[0], folders: null };
   }
 
-  return { data: course.data[0], folders: folders.data };
+  const numOfStacks: number[] = [];
+
+  for (let i = 0; i < folders.data.length; i++) {
+    const stacksInFolder = await supabase
+      .from("stacks")
+      .select("id")
+      .eq("folder_id", folders.data[i].id);
+
+    if (!stacksInFolder.data || stacksInFolder.error) {
+      console.error("stacksInFolder", stacksInFolder.error);
+      numOfStacks[i] = 0;
+    } else {
+      numOfStacks[i] = stacksInFolder.data!.length;
+    }
+  }
+
+  return { data: course.data[0], folders: folders.data, numOfStacks };
 }

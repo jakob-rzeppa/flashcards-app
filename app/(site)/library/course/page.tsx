@@ -10,18 +10,18 @@ interface Props {
 
 async function CoursePage({ searchParams: { id } }: Props) {
   //TODO error handling
-  const { data, folders } = await getCourseData(parseInt(id));
+  const { data, folders, numOfStacks } = await getCourseData(parseInt(id));
 
   const foldersDisplay: {
     href: string;
     name: string;
     description: string | null;
     badgeText: string;
-  }[] = folders!.map((folder) => ({
+  }[] = folders!.map((folder, index) => ({
     href: `/library/folder?id=${folder.id}`,
     name: folder.name,
     description: null,
-    badgeText: "Folders: ?",
+    badgeText: "Stacks: " + numOfStacks![index],
   }));
 
   return (
