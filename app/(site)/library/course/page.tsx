@@ -3,6 +3,7 @@ import React from "react";
 import NavButton from "@/components/navigation/NavButton";
 import { getCourseData } from "@/actions/library/getCourseData";
 import LibraryList from "@/components/library/LibraryList";
+import NewElement from "@/components/library/NewElement";
 
 interface Props {
   searchParams: { id: string };
@@ -29,6 +30,7 @@ async function CoursePage({ searchParams: { id } }: Props) {
       <NavButton href={`/library/`} className="absolute top-0 left-8" />
       <h1 className="text-4xl font-bold">{data!.name}</h1>
       <LibraryList data={foldersDisplay} />
+      <NewElement type="folder" />
     </div>
   );
 }
