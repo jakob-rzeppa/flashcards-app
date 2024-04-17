@@ -1,22 +1,25 @@
 import { createClient } from "@/utils/supabase/server";
 
-export async function getCards() {
+export async function getCards(scope: "stack", stackId: number) {
   const supabase = createClient();
 
   const user = await supabase.auth.getUser();
 
   if (user.error) {
     console.error("No User");
-    return [];
+    return { cards: [], cardIdLevel: [] };
   }
 
   const userId = user.data.user!.id;
 
-  const cards = await supabase.from("cards").select("*");
+  const cards = await supabase
+    .from("cards")
+    .select("*")
+    .eq("stack_id", stackId);
 
   if (cards.error) {
     console.error(cards.error);
-    return [];
+    return { cards: [], cardIdLevel: [] };
   }
 
   const cardIdLevel: { cardId: number; level: number }[] = cards.data.map(
@@ -41,5 +44,5 @@ export async function getCards() {
     cardIdLevel[i].level = level.data[0].level;
   }
 
-  return cards.data;
+  return { cards: cards.data, cardIdLevel };
 }

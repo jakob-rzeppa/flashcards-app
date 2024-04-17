@@ -3,8 +3,16 @@ import { getCardsToUse } from "@/actions/cards/getCardsToUse";
 import SwipeCard from "@/components/learn/SwipeCard";
 import React from "react";
 
-async function LearnPage() {
-  const allCards = await getCards();
+interface Props {
+  searchParams: {
+    scope: string;
+    id: string;
+  };
+}
+
+async function LearnPage({ searchParams: { scope, id } }: Props) {
+  const cardsData = await getCards("stack", parseInt(id));
+  const { cards: allCards, cardIdLevel } = cardsData;
 
   const reducedCards = allCards.map((card) => {
     return { id: card.id, box: 0 }; // TODO
