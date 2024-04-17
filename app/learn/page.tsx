@@ -1,7 +1,7 @@
 "use client";
 
 import SwipeCard from "@/components/learn/SwipeCard";
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import { IoChevronBack } from "react-icons/io5";
 
 function LearnPage() {
