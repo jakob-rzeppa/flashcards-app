@@ -9,7 +9,7 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      box_level: {
+      card_level: {
         Row: {
           card_id: number
           level: number
