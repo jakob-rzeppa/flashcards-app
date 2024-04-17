@@ -1,5 +1,5 @@
 export function getCardsToUse(
-  allCards: { id: number; box: number }[],
+  allCards: { cardId: number; level: number }[],
   currentBox: number
 ) {
   let zerothBoxMax = 0;
@@ -36,28 +36,28 @@ export function getCardsToUse(
   const cards: number[] = [];
 
   allCards.forEach((card) => {
-    switch (card.box) {
+    switch (card.level) {
       case 0:
         if (zerothBox < zerothBoxMax) {
-          cards.push(card.id);
+          cards.push(card.cardId);
           zerothBox++;
         }
         break;
       case 1:
         if (firstBox < firstBoxMax) {
-          cards.push(card.id);
+          cards.push(card.cardId);
           firstBox++;
         }
         break;
       case 2:
         if (secoundBox < secoundBoxMax) {
-          cards.push(card.id);
+          cards.push(card.cardId);
           secoundBox++;
         }
         break;
       case 3:
         if (thirdBox < thirdBoxMax) {
-          cards.push(card.id);
+          cards.push(card.cardId);
           thirdBox++;
         }
         break;

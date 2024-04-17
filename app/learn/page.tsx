@@ -14,11 +14,7 @@ async function LearnPage({ searchParams: { scope, id } }: Props) {
   const cardsData = await getCards("stack", parseInt(id));
   const { cards: allCards, cardIdLevel } = cardsData;
 
-  const reducedCards = allCards.map((card) => {
-    return { id: card.id, box: 0 }; // TODO
-  });
-
-  const cards = getCardsToUse(reducedCards, 0);
+  const cards = getCardsToUse(cardIdLevel, 0);
 
   return <SwipeCard data={{ word: "word", definition: "definition" }} />;
 }
