@@ -25,7 +25,7 @@ async function FolderPage({ searchParams: { id } }: Props) {
     href: `/library/stack?id=${stack.id}`,
     name: stack.name,
     description: null,
-    badgeText: "Stacks: " + numOfCards![index],
+    badgeText: "Cards: " + numOfCards![index],
   }));
 
   return (

@@ -154,6 +154,7 @@ function EditCards({ data, stackId }: Props) {
               placeholder="word"
               value={word}
               onChange={(e) => setWord(e.target.value)}
+              autoFocus
             />
             <input
               className="input input-primary"

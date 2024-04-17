@@ -54,6 +54,7 @@ function NewElement({ type, id }: Props) {
               placeholder="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              autoFocus
             />
             <input
               className="input input-primary"
