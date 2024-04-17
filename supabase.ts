@@ -9,6 +9,39 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      box_level: {
+        Row: {
+          card_id: number
+          level: number
+          user_id: string
+        }
+        Insert: {
+          card_id: number
+          level?: number
+          user_id?: string
+        }
+        Update: {
+          card_id?: number
+          level?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_mastery_level_card_id_fkey"
+            columns: ["card_id"]
+            isOneToOne: false
+            referencedRelation: "cards"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_mastery_level_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cards: {
         Row: {
           created_at: string
@@ -119,39 +152,6 @@ export type Database = {
           {
             foreignKeyName: "public_folders_owner_id_fkey"
             columns: ["owner_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      mastery_level: {
-        Row: {
-          card_id: number
-          level: number
-          user_id: string
-        }
-        Insert: {
-          card_id: number
-          level?: number
-          user_id?: string
-        }
-        Update: {
-          card_id?: number
-          level?: number
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "public_mastery_level_card_id_fkey"
-            columns: ["card_id"]
-            isOneToOne: false
-            referencedRelation: "cards"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "public_mastery_level_user_id_fkey"
-            columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]

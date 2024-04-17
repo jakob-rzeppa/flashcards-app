@@ -1,3 +1,5 @@
+"use client";
+
 import React, {
   forwardRef,
   useEffect,
@@ -6,13 +8,13 @@ import React, {
 } from "react";
 import { isMobile } from "react-device-detect";
 import FlipCard from "./FlipCard";
+import { IoChevronBack } from "react-icons/io5";
 
 interface Props {
   data: { word: string; definition: string };
-  onSwipe: (dir: "left" | "right" | "bottom") => void;
 }
 
-const SwipeCard = forwardRef(({ data, onSwipe }: Props, ref) => {
+const SwipeCard = forwardRef(({ data }: Props, ref) => {
   // State to track mouse down event (includes touch start event)
   const [mouseDown, setMouseDown] = useState(false);
 
@@ -77,7 +79,7 @@ const SwipeCard = forwardRef(({ data, onSwipe }: Props, ref) => {
     }
 
     setOnScreen(false);
-    onSwipe(dir);
+    //onSwipe(dir);
   };
 
   const handleDrop = () => {
@@ -141,46 +143,51 @@ const SwipeCard = forwardRef(({ data, onSwipe }: Props, ref) => {
   }, [mouseDown]);
 
   return (
-    <div
-      id="main"
-      className="w-screen h-screen absolute top-0 left-0 overflow-hidden touch-none"
-      onMouseUp={(e) => {
-        setMouseDown(false);
-        handleDrop();
-      }}
-      onTouchEnd={(e) => {
-        setMouseDown(false);
-        handleDrop();
-      }}
-    >
+    <>
+      <button className="btn btn-circle z-50 absolute top-3 left-3">
+        <IoChevronBack />
+      </button>
       <div
-        id="card-wrapper"
-        className="h-min w-min absolute -translate-x-1/2 -translate-y-1/2"
-        style={{
-          top: `${cardPos.y}vh`,
-          left: `${cardPos.x}vw`,
-          rotate: `${cardRotation}deg`,
-          transition: "0.05s linear",
-          transformOrigin: "top left",
+        id="main"
+        className="w-screen h-screen absolute top-0 left-0 overflow-hidden touch-none"
+        onMouseUp={(e) => {
+          setMouseDown(false);
+          handleDrop();
         }}
-        onMouseDown={(e) => {
-          setMouseDown(true);
-          setOffset({
-            x: window.innerWidth! / 2 - e.clientX,
-            y: window.innerHeight! / 2 - e.clientY,
-          });
-        }}
-        onTouchStart={(e) => {
-          setMouseDown(true);
-          setOffset({
-            x: window.innerWidth! / 2 - e.touches[0].clientX,
-            y: window.innerHeight! / 2 - e.touches[0].clientY,
-          });
+        onTouchEnd={(e) => {
+          setMouseDown(false);
+          handleDrop();
         }}
       >
-        <FlipCard word={data.word} definition={data.definition} />
+        <div
+          id="card-wrapper"
+          className="h-min w-min absolute -translate-x-1/2 -translate-y-1/2"
+          style={{
+            top: `${cardPos.y}vh`,
+            left: `${cardPos.x}vw`,
+            rotate: `${cardRotation}deg`,
+            transition: "0.05s linear",
+            transformOrigin: "top left",
+          }}
+          onMouseDown={(e) => {
+            setMouseDown(true);
+            setOffset({
+              x: window.innerWidth! / 2 - e.clientX,
+              y: window.innerHeight! / 2 - e.clientY,
+            });
+          }}
+          onTouchStart={(e) => {
+            setMouseDown(true);
+            setOffset({
+              x: window.innerWidth! / 2 - e.touches[0].clientX,
+              y: window.innerHeight! / 2 - e.touches[0].clientY,
+            });
+          }}
+        >
+          <FlipCard word={data.word} definition={data.definition} />
+        </div>
       </div>
-    </div>
+    </>
   );
 });
 

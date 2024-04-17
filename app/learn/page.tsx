@@ -1,21 +1,18 @@
-"use client";
-
+import { getCards } from "@/actions/cards/getCards";
+import { getCardsToUse } from "@/actions/cards/getCardsToUse";
 import SwipeCard from "@/components/learn/SwipeCard";
 import React from "react";
-import { IoChevronBack } from "react-icons/io5";
 
-function LearnPage() {
-  return (
-    <div>
-      <button className="btn btn-circle z-50 absolute top-3 left-3">
-        <IoChevronBack />
-      </button>
-      <SwipeCard
-        data={{ word: "word", definition: "definition" }}
-        onSwipe={() => {}}
-      />
-    </div>
-  );
+async function LearnPage() {
+  const allCards = await getCards();
+
+  const reducedCards = allCards.map((card) => {
+    return { id: card.id, box: 0 }; // TODO
+  });
+
+  const cards = getCardsToUse(reducedCards, 0);
+
+  return <SwipeCard data={{ word: "word", definition: "definition" }} />;
 }
 
 export default LearnPage;
