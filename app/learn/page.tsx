@@ -11,10 +11,11 @@ interface Props {
 }
 
 async function LearnPage({ searchParams: { scope, id } }: Props) {
-  const cardsData = await getCards("stack", parseInt(id));
-  const { cards: allCards, cardIdLevel } = cardsData;
+  const allCards = await getCards("stack", parseInt(id));
 
-  const cards = getCardsToUse(cardIdLevel, 0);
+  console.log(allCards);
+
+  const cards = getCardsToUse(allCards, 0);
 
   return <SwipeCard data={{ word: "word", definition: "definition" }} />;
 }

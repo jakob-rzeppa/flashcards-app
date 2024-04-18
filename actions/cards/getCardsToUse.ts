@@ -1,7 +1,27 @@
-export function getCardsToUse(
-  allCards: { cardId: number; level: number }[],
+import { createClient } from "@/utils/supabase/server";
+
+export async function getCardsToUse(
+  allCards: {
+    created_at: string;
+    definition: string;
+    id: number;
+    owner_id: string;
+    stack_id: number;
+    word: string;
+  }[],
   currentBox: number
 ) {
+  const supabase = createClient();
+
+  const user = await supabase.auth.getUser();
+
+  if (user.error) {
+    console.error("No User");
+    return [];
+  }
+
+  const userId = user.data.user!.id;
+
   let zerothBoxMax = 0;
   let firstBoxMax = 0;
   let secoundBoxMax = 0;
@@ -33,36 +53,63 @@ export function getCardsToUse(
       break;
   }
 
-  const cards: number[] = [];
+  const cards: {
+    created_at: string;
+    definition: string;
+    id: number;
+    owner_id: string;
+    stack_id: number;
+    word: string;
+  }[] = [];
 
-  allCards.forEach((card) => {
-    switch (card.level) {
+  for (let i = 0; i < allCards.length; i++) {
+    const levelData = await supabase
+      .from("card_level")
+      .select("*")
+      .eq("card_id", allCards[i].id)
+      .eq("user_id", userId);
+
+    if (levelData.error || levelData.data.length !== 1) {
+      const { data, error } = await supabase
+        .from("card_level")
+        .insert([{ card_id: allCards[i].id }]);
+
+      if (error) {
+        console.error("Couldnt create card");
+        return [];
+      }
+      console.log("created new level entry");
+    }
+
+    const level = levelData.data ? levelData.data[0].level : 0;
+
+    switch (level) {
       case 0:
         if (zerothBox < zerothBoxMax) {
-          cards.push(card.cardId);
+          cards.push(allCards[i]);
           zerothBox++;
         }
         break;
       case 1:
         if (firstBox < firstBoxMax) {
-          cards.push(card.cardId);
+          cards.push(allCards[i]);
           firstBox++;
         }
         break;
       case 2:
         if (secoundBox < secoundBoxMax) {
-          cards.push(card.cardId);
+          cards.push(allCards[i]);
           secoundBox++;
         }
         break;
       case 3:
         if (thirdBox < thirdBoxMax) {
-          cards.push(card.cardId);
+          cards.push(allCards[i]);
           thirdBox++;
         }
         break;
     }
-  });
+  }
 
   console.log(cards);
 }
