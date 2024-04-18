@@ -5,6 +5,7 @@ import { getFolderData } from "@/actions/library/getFolderData";
 import NavButton from "@/components/navigation/NavButton";
 import LibraryList from "@/components/library/LibraryList";
 import NewElement from "@/components/library/NewElement";
+import FolderSettings from "./FolderSettings";
 
 interface Props {
   searchParams: {
@@ -34,6 +35,7 @@ async function FolderPage({ searchParams: { id } }: Props) {
         href={`/library/course?id=${data!.course_id}`}
         className="absolute top-0 left-8"
       />
+      <FolderSettings id={parseInt(id)} courseId={data?.course_id!} />
       <h1 className="text-4xl font-bold">{data!.name}</h1>
       <LibraryList data={stacksDisplay} />
       <NewElement type="stack" id={parseInt(id)} />
