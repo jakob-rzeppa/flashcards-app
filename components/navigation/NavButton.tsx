@@ -10,7 +10,7 @@ interface Props {
 function NavButton({ className, href }: Props) {
   return (
     <a href={href} className={`btn btn-circle btn-primary ${className}`}>
-      <FiArrowLeft />
+      <FiArrowLeft size={20} />
     </a>
   );
 }
