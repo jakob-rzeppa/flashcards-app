@@ -1,6 +1,7 @@
 import { getCards } from "@/actions/cards/getCards";
 import { getCardsToUse } from "@/actions/cards/getCardsToUse";
 import SwipeCard from "@/components/learn/SwipeCard";
+import Content from "@/components/learnCards/Content";
 import React from "react";
 
 interface Props {
@@ -17,7 +18,7 @@ async function LearnPage({ searchParams: { scope, id } }: Props) {
 
   const cards = getCardsToUse(allCards, 0);
 
-  return <SwipeCard data={{ word: "word", definition: "definition" }} />;
+  return <Content />;
 }
 
 export default LearnPage;
