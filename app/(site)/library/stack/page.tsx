@@ -18,7 +18,7 @@ async function StackPage({ searchParams: { id } }: Props) {
         href={`/library/folder?id=${data?.folder_id}`}
         className="absolute left-8"
       />
-      <StackSettings />
+      <StackSettings id={parseInt(id)} folderId={data?.folder_id!} />
       <h1 className="text-4xl font-bold w-full text-center">{data?.name}</h1>
       <StackContent cardsData={cards ? cards : []} id={parseInt(id)} />
     </div>
