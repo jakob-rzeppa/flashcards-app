@@ -20,7 +20,7 @@ function Content({ cards }: Props) {
   let currentIndex = 0;
 
   // Store the learned cards
-  const right: number[] = [];
+  const [rightCards, setRightCards] = useState<number[]>([]);
 
   const [currentWord, setCurrentWord] = useState(cards[currentIndex].word);
   const [currentDefinition, setCurrentDefinition] = useState(
@@ -46,8 +46,8 @@ function Content({ cards }: Props) {
 
   const onSwipe = (dir: "left" | "right" | "bottom") => {
     // Saves every learned card
-    if (dir === "right" && !right.includes(currentIndex)) {
-      right.push(currentIndex);
+    if (dir === "right" && !rightCards.includes(currentIndex)) {
+      rightCards.push(currentIndex);
     }
 
     changeCardLevel(dir);
@@ -56,7 +56,7 @@ function Content({ cards }: Props) {
 
     // Checks if all cards learned, else starts from beginning
     if (currentIndex >= cards.length) {
-      if (right.length === cards.length) {
+      if (rightCards.length === cards.length) {
         console.log("done");
         setCurrentWord("done");
         setCurrentDefinition("done");
@@ -68,7 +68,7 @@ function Content({ cards }: Props) {
     }
 
     // Skips every learned card
-    while (right.includes(currentIndex)) currentIndex++;
+    while (rightCards.includes(currentIndex)) currentIndex++;
 
     setCurrentWord(cards[currentIndex].word);
     setCurrentDefinition(cards[currentIndex].definition);
@@ -76,6 +76,11 @@ function Content({ cards }: Props) {
 
   return (
     <div>
+      <progress
+        className="progress w-2/3 absolute top-4 left-1/2 -translate-x-1/2"
+        value={rightCards.length}
+        max={cards.length}
+      ></progress>
       <Card
         word={currentWord}
         definition={currentDefinition}
