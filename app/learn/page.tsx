@@ -12,11 +12,11 @@ interface Props {
 }
 
 async function LearnPage({ searchParams: { scope, id } }: Props) {
-  const allCards = await getCards("stack", parseInt(id));
+  //const allCards = await getCards("stack", parseInt(id));
 
-  console.log(allCards);
+  //console.log(allCards);
 
-  const cards = getCardsToUse(allCards, 0);
+  //const cards = getCardsToUse(allCards, 0);
 
   return <Content />;
 }
