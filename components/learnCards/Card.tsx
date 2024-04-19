@@ -110,12 +110,12 @@ function Card({ word, definition, onSwipe }: Props) {
           <div id="card" className="card bg-neutral relative w-full h-full">
             <div id="front" className="front absolute w-full h-full">
               <p className="text-3xl absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
-                front
+                {word}
               </p>
             </div>
             <div id="back" className="back rotate absolute w-full h-full">
               <p className="text-3xl absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
-                back
+                {definition}
               </p>
             </div>
           </div>

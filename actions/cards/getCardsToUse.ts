@@ -111,5 +111,5 @@ export async function getCardsToUse(
     }
   }
 
-  console.log(cards);
+  return cards;
 }
