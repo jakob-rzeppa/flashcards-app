@@ -30,13 +30,15 @@ async function FolderPage({ searchParams: { id } }: Props) {
   }));
 
   return (
-    <div className="flex flex-col gap-8 justify-center items-center mt-8 relative">
+    <div className="mt-8 relative">
       <NavButton
         href={`/library/course?id=${data!.course_id}`}
         className="absolute top-0 left-8"
       />
       <FolderSettings id={parseInt(id)} courseId={data?.course_id!} />
-      <h1 className="text-4xl font-bold">{data!.name}</h1>
+      <h1 className="text-4xl font-bold w-full text-center mb-4">
+        {data!.name}
+      </h1>
       <LibraryList data={stacksDisplay} />
       <NewElement type="stack" id={parseInt(id)} />
     </div>

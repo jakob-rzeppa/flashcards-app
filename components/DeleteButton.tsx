@@ -8,7 +8,7 @@ function DeleteButton({ onClick }: Props) {
   return (
     <>
       <button
-        className="btn btn-error w-full"
+        className="btn btn-error btn-outline w-full"
         onClick={() =>
           (
             document.getElementById("delete_modal") as HTMLDialogElement

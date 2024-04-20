@@ -11,7 +11,7 @@ function Settings({ children }: Props) {
   return (
     <>
       <button
-        className="btn btn-circle btn-primary absolute right-8 top-0"
+        className="btn btn-circle btn-primary absolute right-8"
         onClick={() =>
           (
             document.getElementById("settings_modal") as HTMLDialogElement

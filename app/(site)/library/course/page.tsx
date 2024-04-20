@@ -27,10 +27,12 @@ async function CoursePage({ searchParams: { id } }: Props) {
   }));
 
   return (
-    <div className="flex flex-col gap-8 justify-center items-center mt-8 relative">
+    <div className="mt-8 relative">
       <NavButton href={`/library/`} className="absolute top-0 left-8" />
       <CourseSettings id={parseInt(id)} />
-      <h1 className="text-4xl font-bold">{data!.name}</h1>
+      <h1 className="text-4xl font-bold w-full text-center mb-4">
+        {data!.name}
+      </h1>
       <LibraryList data={foldersDisplay} />
       <NewElement type="folder" id={parseInt(id)} />
     </div>

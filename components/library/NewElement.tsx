@@ -27,9 +27,9 @@ function NewElement({ type, id }: Props) {
   };
 
   return (
-    <div>
+    <>
       <button
-        className="btn btn-primary"
+        className="btn btn-primary mx-auto"
         onClick={() =>
           (document.getElementById("modal") as HTMLDialogElement).showModal()
         }
@@ -72,7 +72,7 @@ function NewElement({ type, id }: Props) {
           </div>
         </div>
       </dialog>
-    </div>
+    </>
   );
 }
 
