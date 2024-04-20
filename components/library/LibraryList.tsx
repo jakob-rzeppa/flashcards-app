@@ -14,7 +14,7 @@ interface Props {
 function LibraryList({ data }: Props) {
   return (
     <div className="w-full">
-      <div className="w-4/5 mx-auto flex flex-wrap justify-between items-center gap-4">
+      <div className="flex flex-wrap justify-between items-center gap-4">
         {data && data?.length >= 1 ? (
           data.map((element, index) => (
             <div className="min-w-max flex-1" key={index}>

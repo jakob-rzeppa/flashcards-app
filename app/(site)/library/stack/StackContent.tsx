@@ -18,7 +18,7 @@ interface Props {
 
 function StackContent({ cardsData, id }: Props) {
   return (
-    <main className="md:w-3/5 w-4/5 mx-auto mt-4">
+    <main className="w-4/5">
       <Link
         href={"/learn?scope=stack&id=" + id}
         className="btn btn-primary w-full"

@@ -5,6 +5,7 @@ import { getCourseData } from "@/actions/library/getCourseData";
 import LibraryList from "@/components/library/LibraryList";
 import NewElement from "@/components/library/NewElement";
 import CourseSettings from "./CourseSettings";
+import BackgroundBox from "@/components/BackgroundBox";
 
 interface Props {
   searchParams: { id: string };
@@ -33,8 +34,10 @@ async function CoursePage({ searchParams: { id } }: Props) {
       <h1 className="text-4xl font-bold w-full text-center mb-4">
         {data!.name}
       </h1>
-      <LibraryList data={foldersDisplay} />
-      <NewElement type="folder" id={parseInt(id)} />
+      <BackgroundBox>
+        <LibraryList data={foldersDisplay} />
+        <NewElement type="folder" id={parseInt(id)} />
+      </BackgroundBox>
     </div>
   );
 }

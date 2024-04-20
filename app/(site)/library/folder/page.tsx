@@ -6,6 +6,7 @@ import NavButton from "@/components/navigation/NavButton";
 import LibraryList from "@/components/library/LibraryList";
 import NewElement from "@/components/library/NewElement";
 import FolderSettings from "./FolderSettings";
+import BackgroundBox from "@/components/BackgroundBox";
 
 interface Props {
   searchParams: {
@@ -39,8 +40,10 @@ async function FolderPage({ searchParams: { id } }: Props) {
       <h1 className="text-4xl font-bold w-full text-center mb-4">
         {data!.name}
       </h1>
-      <LibraryList data={stacksDisplay} />
-      <NewElement type="stack" id={parseInt(id)} />
+      <BackgroundBox>
+        <LibraryList data={stacksDisplay} />
+        <NewElement type="stack" id={parseInt(id)} />
+      </BackgroundBox>
     </div>
   );
 }
