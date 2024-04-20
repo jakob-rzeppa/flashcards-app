@@ -41,6 +41,8 @@ function Content({ cards }: Props) {
       case "right":
         updateCardLevel(cards[currentIndex].id, cardLevel + 1);
         break;
+      case "bottom":
+        updateCardLevel(cards[currentIndex].id, cardLevel - 1);
     }
   };
 
