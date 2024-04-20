@@ -25,7 +25,7 @@ async function StackPage({ searchParams: { id } }: Props) {
         href={`/library/folder?id=${data?.folder_id}`}
         className="absolute left-8"
       />
-      <StackSettings data={data!} />
+      <StackSettings data={data!} cards={cards!} />
       <h1 className="text-4xl font-bold w-full text-center mb-4">
         {data?.name}
       </h1>

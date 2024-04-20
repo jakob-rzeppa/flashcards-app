@@ -7,9 +7,11 @@ import DeleteButton from "@/components/DeleteButton";
 import { deleteElement } from "@/actions/library/deleteElement";
 import { useRouter } from "next/navigation";
 import updateElement from "@/actions/library/updateElement";
+import resetCardLevels from "@/actions/cards/resetCardLevels";
 
 function StackSettings({
   data,
+  cards,
 }: {
   data: {
     created_at: string;
@@ -19,6 +21,14 @@ function StackSettings({
     name: string;
     owner_id: string;
   };
+  cards: {
+    created_at: string;
+    definition: string;
+    id: number;
+    owner_id: string;
+    stack_id: number;
+    word: string;
+  }[];
 }) {
   const router = useRouter();
 
@@ -26,7 +36,13 @@ function StackSettings({
   const [description, setDescription] = useState(data.description);
 
   const saveData = async () => {
-    const res = await updateElement("stacks", data.id, { name, description });
+    await updateElement("stacks", data.id, { name, description });
+
+    router.refresh();
+  };
+
+  const reset = async () => {
+    await resetCardLevels(cards);
 
     router.refresh();
   };
@@ -51,6 +67,12 @@ function StackSettings({
       />
       <button className="btn btn-primary mb-4 w-full" onClick={saveData}>
         Save
+      </button>
+      <button
+        className="btn btn-warning btn-outline mb-4 w-full"
+        onClick={reset}
+      >
+        Reset Cards
       </button>
       <DeleteButton
         onClick={() => {
