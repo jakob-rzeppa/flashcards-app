@@ -1,7 +1,5 @@
 import { getCards } from "@/actions/cards/server/getCards";
-import { getCardsToUse } from "@/actions/cards/server/getCardsToUse";
-import Content from "@/components/learnCards/Content";
-import React from "react";
+import CardsManager from "@/components/learnCards/CardsManager";
 
 interface Props {
   searchParams: {
@@ -13,11 +11,7 @@ interface Props {
 async function LearnPage({ searchParams: { scope, id } }: Props) {
   const allCards = await getCards(scope, parseInt(id));
 
-  console.log(allCards);
-
-  const cards = await getCardsToUse(allCards, 0);
-
-  return <Content cards={cards} />;
+  return <CardsManager cards={allCards} />;
 }
 
 export default LearnPage;

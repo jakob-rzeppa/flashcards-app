@@ -14,9 +14,10 @@ interface Props {
     stack_id: number;
     word: string;
   }[];
+  onFinished: () => void;
 }
 
-function Content({ cards }: Props) {
+function Content({ cards, onFinished }: Props) {
   let currentIndex = 0;
 
   // Store the learned cards
@@ -27,8 +28,13 @@ function Content({ cards }: Props) {
     cards[currentIndex].definition
   );
 
-  const changeCardLevel = async (dir: "left" | "right" | "bottom") => {
-    const cardLevel = await getCardLevel(cards[currentIndex].id);
+  const changeCardLevel = async (
+    dir: "left" | "right" | "bottom",
+    index: number
+  ) => {
+    if (index >= cards.length) return;
+
+    const cardLevel = await getCardLevel(cards[index].id);
 
     if (cardLevel === -1) {
       return;
@@ -36,13 +42,13 @@ function Content({ cards }: Props) {
 
     switch (dir) {
       case "left":
-        updateCardLevel(cards[currentIndex].id, 0);
+        updateCardLevel(cards[index].id, 0);
         break;
       case "right":
-        updateCardLevel(cards[currentIndex].id, cardLevel + 1);
+        updateCardLevel(cards[index].id, cardLevel + 1);
         break;
       case "bottom":
-        updateCardLevel(cards[currentIndex].id, cardLevel - 1);
+        updateCardLevel(cards[index].id, cardLevel - 1);
     }
   };
 
@@ -52,17 +58,15 @@ function Content({ cards }: Props) {
       rightCards.push(currentIndex);
     }
 
-    changeCardLevel(dir);
+    changeCardLevel(dir, currentIndex);
 
-    currentIndex++;
+    currentIndex += 1;
 
-    // Checks if all cards learned, else starts from beginning
     if (currentIndex >= cards.length) {
-      if (rightCards.length === cards.length) {
-        console.log("done");
-        setCurrentWord("done");
-        setCurrentDefinition("done");
-        // TODO
+      // Checks if all cards learned, else starts from beginning
+      if (rightCards.length >= cards.length) {
+        console.log(rightCards.length, cards.length);
+        onFinished();
         return;
       }
 
@@ -72,8 +76,10 @@ function Content({ cards }: Props) {
     // Skips every learned card
     while (rightCards.includes(currentIndex)) currentIndex++;
 
-    setCurrentWord(cards[currentIndex].word);
-    setCurrentDefinition(cards[currentIndex].definition);
+    try {
+      setCurrentWord(cards[currentIndex].word);
+      setCurrentDefinition(cards[currentIndex].definition);
+    } catch {}
   };
 
   return (
@@ -83,6 +89,7 @@ function Content({ cards }: Props) {
         value={rightCards.length}
         max={cards.length}
       ></progress>
+
       <Card
         word={currentWord}
         definition={currentDefinition}
