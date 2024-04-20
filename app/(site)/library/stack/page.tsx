@@ -2,10 +2,10 @@ import React from "react";
 
 import StackContent from "./StackContent";
 import NavButton from "@/components/navigation/NavButton";
-import { getStackData } from "@/actions/library/getStackData";
+import { getStackData } from "@/actions/library/server/getStackData";
 import StackSettings from "./StackSettings";
 import BackgroundBox from "@/components/BackgroundBox";
-import { getAllCardLevels } from "@/actions/cards/getAllCardLevels";
+import { getAllCardLevels } from "@/actions/cards/server/getAllCardLevels";
 
 interface Props {
   searchParams: { id: string };

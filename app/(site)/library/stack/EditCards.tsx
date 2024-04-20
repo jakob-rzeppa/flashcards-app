@@ -4,9 +4,9 @@ import React, { useState } from "react";
 
 import { FaRegTrashAlt } from "react-icons/fa";
 
-import updateCard from "@/actions/cards/updateCard";
-import createCard from "@/actions/cards/createCard";
-import deleteCard from "@/actions/cards/deleteCard";
+import updateCard from "@/actions/cards/client/updateCard";
+import createCard from "@/actions/cards/client/createCard";
+import deleteCard from "@/actions/cards/client/deleteCard";
 
 interface Props {
   data: {

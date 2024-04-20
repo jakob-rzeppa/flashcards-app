@@ -4,10 +4,10 @@ import React, { useState } from "react";
 
 import Settings from "@/components/library/Settings";
 import DeleteButton from "@/components/DeleteButton";
-import { deleteElement } from "@/actions/library/deleteElement";
+import { deleteElement } from "@/actions/library/client/deleteElement";
 import { useRouter } from "next/navigation";
-import updateElement from "@/actions/library/updateElement";
-import resetCardLevels from "@/actions/cards/resetCardLevels";
+import updateElement from "@/actions/library/client/updateElement";
+import resetCardLevels from "@/actions/cards/client/resetCardLevels";
 
 function StackSettings({
   data,

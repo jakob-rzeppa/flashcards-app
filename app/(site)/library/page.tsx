@@ -1,6 +1,6 @@
 import React from "react";
 
-import getLibraryData from "@/actions/library/getLibraryData";
+import getLibraryData from "@/actions/library/server/getLibraryData";
 import LibraryList from "@/components/library/LibraryList";
 import NewElement from "@/components/library/NewElement";
 import BackgroundBox from "@/components/BackgroundBox";

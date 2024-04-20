@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Card from "./Card";
-import getCardLevel from "@/actions/cards/getCardLevel";
-import { updateCardLevel } from "@/actions/cards/updateCardLevel";
+import getCardLevel from "@/actions/cards/client/getCardLevel";
+import { updateCardLevel } from "@/actions/cards/client/updateCardLevel";
 
 interface Props {
   cards: {

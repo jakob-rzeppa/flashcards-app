@@ -1,5 +1,4 @@
 import { createClient } from "@/utils/supabase/server";
-import getCardLevel from "./getCardLevel";
 
 export async function getAllCardLevels(
   cards: {

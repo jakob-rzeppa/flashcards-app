@@ -1,6 +1,5 @@
-import { getCards } from "@/actions/cards/getCards";
-import { getCardsToUse } from "@/actions/cards/getCardsToUse";
-import SwipeCard from "@/components/learn/SwipeCard";
+import { getCards } from "@/actions/cards/server/getCards";
+import { getCardsToUse } from "@/actions/cards/server/getCardsToUse";
 import Content from "@/components/learnCards/Content";
 import React from "react";
 

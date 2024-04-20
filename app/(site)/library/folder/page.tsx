@@ -1,6 +1,6 @@
 import React from "react";
 
-import { getFolderData } from "@/actions/library/getFolderData";
+import { getFolderData } from "@/actions/library/server/getFolderData";
 
 import NavButton from "@/components/navigation/NavButton";
 import LibraryList from "@/components/library/LibraryList";

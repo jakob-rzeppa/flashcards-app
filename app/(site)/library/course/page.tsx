@@ -1,7 +1,7 @@
 import React from "react";
 
 import NavButton from "@/components/navigation/NavButton";
-import { getCourseData } from "@/actions/library/getCourseData";
+import { getCourseData } from "@/actions/library/server/getCourseData";
 import LibraryList from "@/components/library/LibraryList";
 import NewElement from "@/components/library/NewElement";
 import CourseSettings from "./CourseSettings";
