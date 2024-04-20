@@ -5,13 +5,13 @@ import React from "react";
 
 interface Props {
   searchParams: {
-    scope: string;
+    scope: "stack" | "folder" | "course" | "library";
     id: string;
   };
 }
 
 async function LearnPage({ searchParams: { scope, id } }: Props) {
-  const allCards = await getCards("stack", parseInt(id));
+  const allCards = await getCards(scope, parseInt(id));
 
   console.log(allCards);
 
