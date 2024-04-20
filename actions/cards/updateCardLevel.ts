@@ -26,4 +26,6 @@ export async function updateCardLevel(id: number, level: number) {
     console.error(error);
     return;
   }
+
+  console.log("Level changed to " + level);
 }
