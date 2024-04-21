@@ -18,6 +18,10 @@ interface Props {
 }
 
 function Content({ cards, onFinished }: Props) {
+  if (cards.length === 0) {
+    return <div>No Cards</div>;
+  }
+
   let currentIndex = 0;
 
   // Store the learned cards

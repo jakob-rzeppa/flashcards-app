@@ -28,13 +28,31 @@ function CardsManager({ cards }: Props) {
   >([]);
   const [isActive, setIsActive] = useState(false);
 
-  useEffect(() => {
-    const res = getCardsToUse(cards, 0);
+  let currentBox = 0;
 
-    res.then((data) => {
-      setCurrentCards(data);
-      setIsActive(true);
-    });
+  const getCards = () => {
+    setIsActive(false);
+    const res = getCardsToUse(cards, currentBox, 20);
+
+    res.then(
+      (
+        data: {
+          created_at: string;
+          definition: string;
+          id: number;
+          owner_id: string;
+          stack_id: number;
+          word: string;
+        }[]
+      ) => {
+        setCurrentCards(data);
+        setIsActive(true);
+      }
+    );
+  };
+
+  useEffect(() => {
+    getCards();
   }, []);
 
   const onFinished = () => {
