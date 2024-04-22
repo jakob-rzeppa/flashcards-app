@@ -70,6 +70,15 @@ function Card({ word, definition, onSwipe }: Props) {
       top: event.clientY - window.innerHeight / 2,
     };
 
+    const dim = document.getElementById("card")?.getBoundingClientRect();
+
+    if (
+      Math.abs(offset.left) > dim?.width! / 2 ||
+      Math.abs(offset.top) > dim?.height! / 2
+    ) {
+      return;
+    }
+
     setPos({
       top: `${event.clientY - offset.top}px`,
       left: `${event.clientX - offset.left}px`,
@@ -77,12 +86,13 @@ function Card({ word, definition, onSwipe }: Props) {
         (((event.clientX - offset.left) / window.innerWidth) * 100 - 50) / 4
       }deg`,
     });
+
     mouseDown = true;
   };
 
   const onMouseUp = (event: MouseEvent) => {
+    if (mouseDown) handleDrop(event);
     mouseDown = false;
-    handleDrop(event);
   };
 
   useEffect(() => {
@@ -100,7 +110,7 @@ function Card({ word, definition, onSwipe }: Props) {
   }, []);
 
   return (
-    <div className="w-full h-full">
+    <div className="w-screen h-screen">
       <div
         className="absolute -translate-x-1/2 -translate-y-1/2 h-2/3 aspect-[2/3]"
         id="card_wrapper"

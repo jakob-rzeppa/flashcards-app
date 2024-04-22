@@ -71,7 +71,14 @@ function CardsManager({ cards }: Props) {
   };
 
   return isActive ? (
-    <Content cards={currentCards} onFinished={onFinished} />
+    <div className="">
+      <div className="w-full text-center text-2xl mt-4">Level {level}</div>
+      <Content
+        cards={currentCards}
+        onFinished={onFinished}
+        currentLevel={level}
+      />
+    </div>
   ) : (
     <div>Loading...</div>
   );
