@@ -27,7 +27,7 @@ export default async function AuthButton() {
         className="hover:cursor-pointer avatar rounded-full w-10 h-10 bg-primary"
       >
         {profilePictureUrl ? (
-          <img src={profilePictureUrl} />
+          <img src={profilePictureUrl} alt="Profile picture" />
         ) : (
           <span className="text-3xl m-auto">J</span>
         )}

@@ -18,7 +18,7 @@ export async function getCards(
   switch (scope) {
     case "stack":
       if (!parentId) {
-        console.error("no stackId");
+        console.error("can't get cards, because no stackId supplied");
         return [];
       }
       const cards = await supabase

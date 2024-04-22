@@ -3,8 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { getCardsToUse } from "@/actions/cards/client/getCardsToUse";
 import { useRouter } from "next/navigation";
-import { FiArrowLeft } from "react-icons/fi";
-import Card from "./Card";
+import Content from "./Content";
 
 interface Props {
   cards: {
@@ -34,7 +33,7 @@ function CardsManager({ cards }: Props) {
   >([]);
   const [isActive, setIsActive] = useState(false);
 
-  const getCards = () => {
+  const handleGetCards = () => {
     setIsActive(false);
     const res = getCardsToUse(cards, level, 5);
 
@@ -56,7 +55,7 @@ function CardsManager({ cards }: Props) {
   };
 
   useEffect(() => {
-    getCards();
+    handleGetCards();
   }, [level]);
 
   const onFinished = () => {
@@ -66,41 +65,15 @@ function CardsManager({ cards }: Props) {
       return;
     }
     setLevel(nextLevel);
-    console.log("Next Level: ", nextLevel);
-  };
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => console.log(currentIndex), [currentIndex]);
-
-  const onSwipe = (dir: "right" | "left" | "bottom") => {
-    const nextIndex = currentIndex + 1;
-    setCurrentIndex(nextIndex);
+    console.log("Next Box Level: ", nextLevel);
   };
 
   return isActive ? (
-    <div className="">
-      <div className="w-full text-center text-2xl mt-4">Level {level}</div>
-      <div>
-        <button
-          className="btn btn-circle btn-ghost absolute top-4 left-4"
-          onClick={() => onSwipe("bottom")}
-        >
-          <FiArrowLeft size={20} />
-        </button>
-        {/**<progress
-          className="progress w-2/3 absolute top-16 left-1/2 -translate-x-1/2"
-          value={rightCards.length}
-          max={cards.length}
-  ></progress>**/}
-
-        <Card
-          word={"currentCards[currentIndex].word"}
-          definition={"currentCards[currentIndex].definition"}
-          onSwipe={onSwipe}
-        />
-      </div>
-    </div>
+    <Content
+      cards={currentCards}
+      currentLevel={level}
+      onFinished={onFinished}
+    />
   ) : (
     <div>Loading...</div>
   );

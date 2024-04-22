@@ -18,16 +18,8 @@ interface Props {
 }
 
 function Content({ cards, onFinished, currentLevel }: Props) {
-  if (cards.length === 0) {
-    return <div>No Cards</div>;
-  }
-
   // State to manage the current index
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    console.log("Current Index Updated:", currentIndex);
-  }, [currentIndex]);
 
   // Store the learned cards
   const [rightCards, setRightCards] = useState<number[]>([]);
@@ -36,6 +28,10 @@ function Content({ cards, onFinished, currentLevel }: Props) {
   const [currentDefinition, setCurrentDefinition] = useState(
     cards[currentIndex].definition
   );
+
+  if (cards.length === 0) {
+    return <div>No Cards</div>;
+  }
 
   const changeCardLevel = async (
     dir: "left" | "right" | "bottom",
@@ -64,25 +60,31 @@ function Content({ cards, onFinished, currentLevel }: Props) {
   const onSwipe = (dir: "left" | "right" | "bottom") => {
     let index = currentIndex;
 
+    let newRightCards = rightCards;
+
     // Saves every learned card
     if (dir === "right" && !rightCards.includes(index)) {
-      setRightCards([...rightCards, index]);
+      newRightCards = [...rightCards, index];
     }
 
     changeCardLevel(dir, index);
 
-    console.log("Before index:", index);
-
     let nextIndex = index + 1;
 
-    while (rightCards.includes(nextIndex) || nextIndex >= cards.length) {
-      nextIndex = (nextIndex + 1) % cards.length;
+    if (nextIndex >= cards.length) {
+      if (newRightCards.length >= cards.length) {
+        newRightCards = [];
+        onFinished();
+      }
+
+      nextIndex = 0;
     }
 
-    setCurrentIndex(nextIndex);
+    while (rightCards.includes(nextIndex) || nextIndex >= cards.length) {
+      nextIndex = nextIndex + 1;
+    }
 
-    console.log("After index:", nextIndex);
-
+    setRightCards(newRightCards);
     setCurrentIndex(nextIndex);
     setCurrentWord(cards[nextIndex].word);
     setCurrentDefinition(cards[nextIndex].definition);

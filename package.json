@@ -4,13 +4,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "update-types": "npx supabase gen types typescript --project-id \"thuuymitstzfotzwerap\" > supabase.ts"
+    "update-types": "npx supabase gen types typescript --project-id \"thuuymitstzfotzwerap\" > supabase.ts",
+    "lint": "next lint"
   },
   "dependencies": {
     "@react-spring/web": "^9.7.3",
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
     "autoprefixer": "10.4.17",
+    "eslint": "^8.0.0",
     "geist": "^1.2.1",
     "next": "latest",
     "postcss": "8.4.33",
@@ -28,6 +30,7 @@
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
     "daisyui": "^4.7.3",
-    "encoding": "^0.1.13"
+    "encoding": "^0.1.13",
+    "eslint-config-next": "^14.2.2"
   }
 }

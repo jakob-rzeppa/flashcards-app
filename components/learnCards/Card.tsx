@@ -55,14 +55,14 @@ function Card({ word, definition, onSwipe }: Props) {
       offsetToBorders.right >= 0 &&
       offsetToBorders.bottom < offsetToBorders.right
     ) {
-      //onSwipe("right");
+      onSwipe("right");
     } else if (
       offsetToBorders.left >= 0 &&
       offsetToBorders.bottom < offsetToBorders.left
     ) {
-      //onSwipe("left");
+      onSwipe("left");
     } else if (offsetToBorders.bottom >= 0) {
-      //onSwipe("bottom");
+      onSwipe("bottom");
     }
 
     setPos({ top: "50%", left: "50%", rotate: "0deg" });

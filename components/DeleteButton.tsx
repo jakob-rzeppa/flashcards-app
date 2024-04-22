@@ -26,7 +26,7 @@ function DeleteButton({ onClick }: Props) {
             ✕
           </button>
         </form>
-        <p className="text-2xl mb-4">This action can't be undone!</p>
+        <p className="text-2xl mb-4">This action can&apost be undone!</p>
         <button className="btn btn-error" onClick={onClick}>
           Delete
         </button>
