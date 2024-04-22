@@ -34,7 +34,7 @@ export async function getCardsToUse(
 
   let counter = 0;
 
-  for (let i = 0; i < allCards.length; i++) {
+  for (let i = 0; i < allCards.length && counter < number; i++) {
     const levelData = await supabase
       .from("card_level")
       .select("*")

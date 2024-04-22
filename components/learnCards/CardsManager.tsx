@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Content from "./Content";
 import { getCardsToUse } from "@/actions/cards/client/getCardsToUse";
+import { useRouter } from "next/navigation";
 
 interface Props {
   cards: {
@@ -16,6 +17,10 @@ interface Props {
 }
 
 function CardsManager({ cards }: Props) {
+  const router = useRouter();
+
+  const [level, setLevel] = useState(0);
+
   const [currentCards, setCurrentCards] = useState<
     {
       created_at: string;
@@ -28,11 +33,9 @@ function CardsManager({ cards }: Props) {
   >([]);
   const [isActive, setIsActive] = useState(false);
 
-  let currentBox = 0;
-
   const getCards = () => {
     setIsActive(false);
-    const res = getCardsToUse(cards, currentBox, 20);
+    const res = getCardsToUse(cards, level, 5);
 
     res.then(
       (
@@ -53,10 +56,18 @@ function CardsManager({ cards }: Props) {
 
   useEffect(() => {
     getCards();
-  }, []);
+  }, [level]);
 
   const onFinished = () => {
-    console.log("done");
+    const nextLevel = level + 1;
+
+    if (nextLevel > 3) {
+      router.back();
+      return;
+    }
+
+    setLevel(nextLevel);
+    console.log("Next Level: ", nextLevel);
   };
 
   return isActive ? (
