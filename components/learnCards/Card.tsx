@@ -21,21 +21,25 @@ function Card({ word, definition, onSwipe }: Props) {
 
   // ---- MOVE ----
   const [pos, setPos] = useState({ top: "50%", left: "50%", rotate: "0deg" });
-  let offset = { top: 0, left: 0 };
-  let mouseDown = false;
+  let [offset, setOffset] = useState({ top: 0, left: 0 });
 
-  const onMouseMove = (event: MouseEvent) => {
-    if (mouseDown) {
+  const onMouseMove = (
+    event: MouseEvent,
+    currentOffset: { left: number; top: number }
+  ) => {
+    if (event.buttons === 1)
       setPos({
-        top: `${event.clientY - offset.top}px`,
-        left: `${event.clientX - offset.left}px`,
+        top: `${event.clientY - currentOffset.top}px`,
+        left: `${event.clientX - currentOffset.left}px`,
         rotate: `${
-          (((event.clientX - offset.left) / window.innerWidth) * 100 - 50) / 4
+          (((event.clientX - currentOffset.left) / window.innerWidth) * 100 -
+            50) /
+          4
         }deg`,
       });
-    }
   };
-  const handleDrop = (event: MouseEvent) => {
+
+  const handleDrop = (event: React.MouseEvent) => {
     const borders = {
       right: (window.innerWidth * 2) / 3,
       left: (window.innerWidth * 1) / 3,
@@ -51,70 +55,70 @@ function Card({ word, definition, onSwipe }: Props) {
       offsetToBorders.right >= 0 &&
       offsetToBorders.bottom < offsetToBorders.right
     ) {
-      onSwipe("right");
+      //onSwipe("right");
     } else if (
       offsetToBorders.left >= 0 &&
       offsetToBorders.bottom < offsetToBorders.left
     ) {
-      onSwipe("left");
+      //onSwipe("left");
     } else if (offsetToBorders.bottom >= 0) {
-      onSwipe("bottom");
+      //onSwipe("bottom");
     }
 
     setPos({ top: "50%", left: "50%", rotate: "0deg" });
   };
 
-  const onMouseDown = (event: MouseEvent) => {
-    offset = {
+  const onMouseDown = (event: React.MouseEvent) => {
+    const currentOffset = {
       left: event.clientX - window.innerWidth / 2,
       top: event.clientY - window.innerHeight / 2,
     };
 
+    setOffset(currentOffset);
+
     const dim = document.getElementById("card")?.getBoundingClientRect();
 
     if (
-      Math.abs(offset.left) > dim?.width! / 2 ||
-      Math.abs(offset.top) > dim?.height! / 2
+      Math.abs(currentOffset.left) > dim?.width! / 2 ||
+      Math.abs(currentOffset.top) > dim?.height! / 2
     ) {
       return;
     }
 
     setPos({
-      top: `${event.clientY - offset.top}px`,
-      left: `${event.clientX - offset.left}px`,
+      top: `${event.clientY - currentOffset.top}px`,
+      left: `${event.clientX - currentOffset.left}px`,
       rotate: `${
-        (((event.clientX - offset.left) / window.innerWidth) * 100 - 50) / 4
+        (((event.clientX - currentOffset.left) / window.innerWidth) * 100 -
+          50) /
+        4
       }deg`,
     });
 
-    mouseDown = true;
+    function move(event: MouseEvent) {
+      onMouseMove(event, currentOffset);
+    }
+
+    window.addEventListener("mousemove", move);
+
+    function cleanup() {
+      window.removeEventListener("mousemove", move);
+    }
+
+    window.addEventListener("mouseup", cleanup, { once: true });
   };
 
-  const onMouseUp = (event: MouseEvent) => {
-    if (mouseDown) handleDrop(event);
-    mouseDown = false;
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousemove", onMouseMove);
-
-    document.addEventListener("mousedown", onMouseDown);
-    document.addEventListener("mouseup", onMouseUp);
-
-    return () => {
-      document.removeEventListener("mousemove", onMouseMove);
-
-      document.removeEventListener("mousedown", onMouseDown);
-      document.removeEventListener("mouseup", onMouseUp);
-    };
-  }, []);
+  function onMouseUp(event: React.MouseEvent) {
+    handleDrop(event);
+  }
 
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-screen" onMouseUp={onMouseUp}>
       <div
         className="absolute -translate-x-1/2 -translate-y-1/2 h-2/3 aspect-[2/3]"
         id="card_wrapper"
         style={pos}
+        onMouseDown={onMouseDown}
       >
         <ReactTouchEvents onTap={rotate}>
           <div id="card" className="card bg-neutral relative w-full h-full">
