@@ -23,18 +23,13 @@ function Card({ word, definition, onSwipe }: Props) {
   const [pos, setPos] = useState({ top: "50%", left: "50%", rotate: "0deg" });
   let [offset, setOffset] = useState({ top: 0, left: 0 });
 
-  const onMouseMove = (
-    event: MouseEvent,
-    currentOffset: { left: number; top: number }
-  ) => {
+  const onMouseMove = (event: React.MouseEvent) => {
     if (event.buttons === 1)
       setPos({
-        top: `${event.clientY - currentOffset.top}px`,
-        left: `${event.clientX - currentOffset.left}px`,
+        top: `${event.clientY - offset.top}px`,
+        left: `${event.clientX - offset.left}px`,
         rotate: `${
-          (((event.clientX - currentOffset.left) / window.innerWidth) * 100 -
-            50) /
-          4
+          (((event.clientX - offset.left) / window.innerWidth) * 100 - 50) / 4
         }deg`,
       });
   };
@@ -94,18 +89,6 @@ function Card({ word, definition, onSwipe }: Props) {
         4
       }deg`,
     });
-
-    function move(event: MouseEvent) {
-      onMouseMove(event, currentOffset);
-    }
-
-    window.addEventListener("mousemove", move);
-
-    function cleanup() {
-      window.removeEventListener("mousemove", move);
-    }
-
-    window.addEventListener("mouseup", cleanup, { once: true });
   };
 
   function onMouseUp(event: React.MouseEvent) {
@@ -113,7 +96,11 @@ function Card({ word, definition, onSwipe }: Props) {
   }
 
   return (
-    <div className="w-screen h-screen" onMouseUp={onMouseUp}>
+    <div
+      className="w-screen h-screen"
+      onMouseUp={onMouseUp}
+      onMouseMove={onMouseMove}
+    >
       <div
         className="absolute -translate-x-1/2 -translate-y-1/2 h-2/3 aspect-[2/3]"
         id="card_wrapper"
