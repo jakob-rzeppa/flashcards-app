@@ -58,22 +58,35 @@ function CardsManager({ cards }: Props) {
     handleGetCards();
   }, [level]);
 
+  const [finished, setFinished] = useState(false);
+
   const onFinished = () => {
+    setFinished(true);
+  };
+
+  const onNextLevel = () => {
     const nextLevel = level + 1;
     if (nextLevel > 3) {
       router.back();
       return;
     }
-    setLevel(nextLevel);
     console.log("Next Box Level: ", nextLevel);
+    setLevel(nextLevel);
+    setFinished(false);
   };
 
   return isActive ? (
-    <Content
-      cards={currentCards}
-      currentLevel={level}
-      onFinished={onFinished}
-    />
+    finished ? (
+      <button className="btn btn-primary" onClick={onNextLevel}>
+        Next Level
+      </button>
+    ) : (
+      <Content
+        cards={currentCards}
+        currentLevel={level}
+        onFinished={onFinished}
+      />
+    )
   ) : (
     <div>Loading...</div>
   );
