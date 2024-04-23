@@ -91,9 +91,9 @@ function Content({ cards, onFinished, currentLevel }: Props) {
   };
 
   const back = () => {
-    const lastIndex = currentIndex - 1;
+    let lastIndex = currentIndex - 1;
 
-    if (lastIndex < 0) return; // Prevent going back if already at the first card
+    if (lastIndex < 0) lastIndex = cards.length - 1; // TODO prevent going back when first cards
 
     if (rightCards[rightCards.length - 1] === lastIndex) {
       const updatedRightCards = [...rightCards];

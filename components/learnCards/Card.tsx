@@ -21,10 +21,11 @@ function Card({ word, definition, onSwipe }: Props) {
 
   // ---- MOVE ----
   const [pos, setPos] = useState({ top: "50%", left: "50%", rotate: "0deg" });
-  let [offset, setOffset] = useState({ top: 0, left: 0 });
+  const [offset, setOffset] = useState({ top: 0, left: 0 });
+  const [mouseDown, setMouseDown] = useState(false);
 
   const onMouseMove = (event: React.MouseEvent) => {
-    if (event.buttons === 1)
+    if (mouseDown)
       setPos({
         top: `${event.clientY - offset.top}px`,
         left: `${event.clientX - offset.left}px`,
@@ -35,7 +36,8 @@ function Card({ word, definition, onSwipe }: Props) {
   };
 
   const handleDrop = (event: React.MouseEvent) => {
-    // TODO somewhere here the programm stops randomly
+    setMouseDown(false);
+
     const borders = {
       right: (window.innerWidth * 2) / 3,
       left: (window.innerWidth * 1) / 3,
@@ -71,6 +73,7 @@ function Card({ word, definition, onSwipe }: Props) {
     };
 
     setOffset(currentOffset);
+    setMouseDown(true);
 
     const dim = document.getElementById("card")?.getBoundingClientRect();
 
