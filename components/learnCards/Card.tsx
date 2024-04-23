@@ -35,6 +35,7 @@ function Card({ word, definition, onSwipe }: Props) {
   };
 
   const handleDrop = (event: React.MouseEvent) => {
+    // TODO somewhere here the programm stops randomly
     const borders = {
       right: (window.innerWidth * 2) / 3,
       left: (window.innerWidth * 1) / 3,
@@ -91,14 +92,10 @@ function Card({ word, definition, onSwipe }: Props) {
     });
   };
 
-  function onMouseUp(event: React.MouseEvent) {
-    handleDrop(event);
-  }
-
   return (
     <div
       className="w-screen h-screen"
-      onMouseUp={onMouseUp}
+      onMouseUp={handleDrop}
       onMouseMove={onMouseMove}
     >
       <div
