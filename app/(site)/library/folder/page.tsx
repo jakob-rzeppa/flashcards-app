@@ -36,7 +36,7 @@ async function FolderPage({ searchParams: { id } }: Props) {
         href={`/library/course?id=${data!.course_id}`}
         className="absolute top-0 left-8"
       />
-      <FolderSettings id={parseInt(id)} courseId={data?.course_id!} />
+      <FolderSettings data={data} />
       <h1 className="text-4xl font-bold w-full text-center mb-4">
         {data!.name}
       </h1>

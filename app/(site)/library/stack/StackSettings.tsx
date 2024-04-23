@@ -32,54 +32,35 @@ function StackSettings({
 }) {
   const router = useRouter();
 
-  const [name, setName] = useState(data.name);
-  const [description, setDescription] = useState(data.description);
-
-  const saveData = async () => {
+  const onSave = async (name: string, description: string) => {
     await updateElement("stacks", data.id, { name, description });
 
     router.refresh();
   };
 
-  const reset = async () => {
+  const onReset = async () => {
     await resetCardLevels(cards);
 
     router.refresh();
   };
 
+  const onDelete = () => {
+    deleteElement("stacks", data.id);
+    router.push("/library/folder?id=" + data.folder_id);
+  };
+
   return (
-    <Settings>
-      <p>Name:</p>
-      <input
-        type="text"
-        name="name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        className="input input-bordered mb-4 w-full"
-      />
-      <p>Description:</p>
-      <input
-        type="text"
-        name="description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        className="input input-bordered mb-4 w-full"
-      />
-      <button className="btn btn-primary mb-4 w-full" onClick={saveData}>
-        Save
-      </button>
+    <Settings
+      onSave={onSave}
+      onDelete={onDelete}
+      data={{ name: data.name, description: data.description }}
+    >
       <button
         className="btn btn-warning btn-outline mb-4 w-full"
-        onClick={reset}
+        onClick={onReset}
       >
         Reset Cards
       </button>
-      <DeleteButton
-        onClick={() => {
-          deleteElement("stacks", data.id);
-          router.push("/library/folder?id=" + data.folder_id);
-        }}
-      />
     </Settings>
   );
 }

@@ -1,24 +1,41 @@
 "use client";
 
-import React from "react";
-
-import Settings from "@/components/library/Settings";
-import DeleteButton from "@/components/DeleteButton";
 import { deleteElement } from "@/actions/library/client/deleteElement";
+import updateElement from "@/actions/library/client/updateElement";
+import Settings from "@/components/library/Settings";
 import { useRouter } from "next/navigation";
 
-function CourseSettings({ id }: { id: number }) {
+interface Props {
+  data: {
+    course_id: number;
+    created_at: string;
+    description: string;
+    id: number;
+    name: string;
+    owner_id: string;
+  };
+}
+
+function CourseSettings({ data }: Props) {
   const router = useRouter();
 
+  const onSave = async (name: string, description: string) => {
+    await updateElement("courses", data.id, { name, description });
+
+    router.refresh();
+  };
+
+  const onDelete = () => {
+    deleteElement("courses", data.id);
+    router.push("/library/");
+  };
+
   return (
-    <Settings>
-      <DeleteButton
-        onClick={() => {
-          deleteElement("courses", id);
-          router.push("/library/");
-        }}
-      />
-    </Settings>
+    <Settings
+      data={{ name: data.name, description: data.description }}
+      onSave={onSave}
+      onDelete={onDelete}
+    />
   );
 }
 

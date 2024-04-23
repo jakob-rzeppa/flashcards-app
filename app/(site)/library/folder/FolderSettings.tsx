@@ -6,19 +6,39 @@ import Settings from "@/components/library/Settings";
 import DeleteButton from "@/components/DeleteButton";
 import { deleteElement } from "@/actions/library/client/deleteElement";
 import { useRouter } from "next/navigation";
+import updateElement from "@/actions/library/client/updateElement";
 
-function FolderSettings({ id, courseId }: { id: number; courseId: number }) {
+interface Props {
+  data: {
+    course_id: number;
+    created_at: string;
+    description: string;
+    id: number;
+    name: string;
+    owner_id: string;
+  };
+}
+
+function FolderSettings({ data }: Props) {
   const router = useRouter();
 
+  const onSave = async (name: string, description: string) => {
+    await updateElement("folders", data.id, { name, description });
+
+    router.refresh();
+  };
+
+  const onDelete = () => {
+    deleteElement("folders", data.id);
+    router.push("/library/course?id=" + data.course_id);
+  };
+
   return (
-    <Settings>
-      <DeleteButton
-        onClick={() => {
-          deleteElement("folders", id);
-          router.push("/library/course?id=" + courseId);
-        }}
-      />
-    </Settings>
+    <Settings
+      data={{ name: data.name, description: data.description }}
+      onSave={onSave}
+      onDelete={onDelete}
+    />
   );
 }
 
