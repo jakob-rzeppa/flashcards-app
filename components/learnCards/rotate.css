@@ -1,0 +1,16 @@
+#card_wrapper {
+  transform-origin: "center";
+}
+
+.card {
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.card div {
+  backface-visibility: hidden;
+}
+
+.rotate {
+  transform: rotateY(180deg);
+}
