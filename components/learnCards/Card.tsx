@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactTouchEvents from "react-touch-events";
 
 import "./rotate.css";
@@ -26,6 +26,9 @@ function Card({ word, definition, onSwipe }: Props) {
   };
 
   const handleDrop = (event: React.MouseEvent) => {
+    if (!isMouseDown) {
+      return;
+    }
     setIsMouseDown(false);
     const borders = {
       right: (window.innerWidth * 2) / 3,
@@ -88,6 +91,23 @@ function Card({ word, definition, onSwipe }: Props) {
           4
         }deg`,
       });
+  };
+
+  // TODO
+  const handleKeyClick = (event: KeyboardEvent) => {
+    console.log(event.key);
+
+    switch (event.key) {
+      case "ArrowRight":
+        onSwipe("right");
+        break;
+      case "ArrowLeft":
+        onSwipe("left");
+        break;
+      case "ArrowDown":
+        onSwipe("bottom");
+        break;
+    }
   };
 
   return (
