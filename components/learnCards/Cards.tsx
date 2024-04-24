@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Card from "./Card";
+import React, { useState } from "react";
+import { FiArrowLeft } from "react-icons/fi";
+
 import getCardLevel from "@/actions/cards/client/getCardLevel";
 import { updateCardLevel } from "@/actions/cards/client/updateCardLevel";
-import { FiArrowLeft } from "react-icons/fi";
+
+import Card from "./Card";
 
 interface Props {
   cards: {
@@ -17,13 +19,10 @@ interface Props {
   onFinished: () => void;
 }
 
-function Content({ cards, onFinished, currentLevel }: Props) {
-  // State to manage the current index
+// Handles the cards and updates on swipe or back
+function Cards({ cards, onFinished, currentLevel }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  // Store the learned cards
-  const [rightCards, setRightCards] = useState<number[]>([]);
-
+  const [learnedCards, setLearnedCards] = useState<number[]>([]);
   const [currentWord, setCurrentWord] = useState(cards[currentIndex].word);
   const [currentDefinition, setCurrentDefinition] = useState(
     cards[currentIndex].definition
@@ -59,12 +58,10 @@ function Content({ cards, onFinished, currentLevel }: Props) {
 
   const onSwipe = (dir: "left" | "right" | "bottom") => {
     let index = currentIndex;
+    let newLearnedCards = learnedCards;
 
-    let newRightCards = rightCards;
-
-    // Saves every learned card
-    if (dir === "right" && !rightCards.includes(index)) {
-      newRightCards = [...rightCards, index];
+    if (dir === "right" && !learnedCards.includes(index)) {
+      newLearnedCards = [...learnedCards, index];
     }
 
     changeCardLevel(dir, index);
@@ -72,19 +69,19 @@ function Content({ cards, onFinished, currentLevel }: Props) {
     let nextIndex = index + 1;
 
     if (nextIndex >= cards.length) {
-      if (newRightCards.length >= cards.length) {
-        newRightCards = [];
+      if (newLearnedCards.length >= cards.length) {
+        newLearnedCards = [];
         onFinished();
       }
 
       nextIndex = 0;
     }
 
-    while (rightCards.includes(nextIndex) || nextIndex >= cards.length) {
+    while (learnedCards.includes(nextIndex) || nextIndex >= cards.length) {
       nextIndex = nextIndex + 1;
     }
 
-    setRightCards(newRightCards);
+    setLearnedCards(newLearnedCards);
     setCurrentIndex(nextIndex);
     setCurrentWord(cards[nextIndex].word);
     setCurrentDefinition(cards[nextIndex].definition);
@@ -93,12 +90,12 @@ function Content({ cards, onFinished, currentLevel }: Props) {
   const back = () => {
     let lastIndex = currentIndex - 1;
 
-    if (lastIndex < 0) lastIndex = cards.length - 1; // TODO prevent going back when first cards
+    if (lastIndex < 0) lastIndex = cards.length - 1;
 
-    if (rightCards[rightCards.length - 1] === lastIndex) {
-      const updatedRightCards = [...rightCards];
-      updatedRightCards.pop();
-      setRightCards(updatedRightCards);
+    if (learnedCards[learnedCards.length - 1] === lastIndex) {
+      const updatedLearnedCards = [...learnedCards];
+      updatedLearnedCards.pop();
+      setLearnedCards(updatedLearnedCards);
     }
     updateCardLevel(cards[lastIndex].id, currentLevel);
     setCurrentIndex(lastIndex);
@@ -116,10 +113,9 @@ function Content({ cards, onFinished, currentLevel }: Props) {
       </button>
       <progress
         className="progress w-2/3 absolute top-16 left-1/2 -translate-x-1/2"
-        value={rightCards.length}
+        value={learnedCards.length}
         max={cards.length}
       ></progress>
-
       <Card
         word={currentWord}
         definition={currentDefinition}
@@ -129,4 +125,4 @@ function Content({ cards, onFinished, currentLevel }: Props) {
   );
 }
 
-export default Content;
+export default Cards;

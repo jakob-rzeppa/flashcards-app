@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactTouchEvents from "react-touch-events";
 
 import "./rotate.css";
@@ -12,43 +12,31 @@ interface Props {
 }
 
 function Card({ word, definition, onSwipe }: Props) {
-  // ---- ROTATE ----
-  const rotate = () => {
-    const card = document.getElementById("card") as HTMLDivElement;
+  const [cardPosition, setCardPosition] = useState({
+    top: "50%",
+    left: "50%",
+    rotate: "0deg",
+  });
+  const [dragOffset, setDragOffset] = useState({ top: 0, left: 0 });
+  const [isMouseDown, setIsMouseDown] = useState(false);
 
+  const rotateCard = () => {
+    const card = document.getElementById("card") as HTMLDivElement;
     card.classList.toggle("rotate");
   };
 
-  // ---- MOVE ----
-  const [pos, setPos] = useState({ top: "50%", left: "50%", rotate: "0deg" });
-  const [offset, setOffset] = useState({ top: 0, left: 0 });
-  const [mouseDown, setMouseDown] = useState(false);
-
-  const onMouseMove = (event: React.MouseEvent) => {
-    if (mouseDown)
-      setPos({
-        top: `${event.clientY - offset.top}px`,
-        left: `${event.clientX - offset.left}px`,
-        rotate: `${
-          (((event.clientX - offset.left) / window.innerWidth) * 100 - 50) / 4
-        }deg`,
-      });
-  };
-
   const handleDrop = (event: React.MouseEvent) => {
-    setMouseDown(false);
-
+    setIsMouseDown(false);
     const borders = {
       right: (window.innerWidth * 2) / 3,
       left: (window.innerWidth * 1) / 3,
       bottom: (window.innerHeight * 2) / 3,
     };
     const offsetToBorders = {
-      right: event.clientX - offset.left - borders.right,
-      left: borders.left - offset.left - event.clientX,
-      bottom: event.clientY - offset.top - borders.bottom,
+      right: event.clientX - dragOffset.left - borders.right,
+      left: borders.left - dragOffset.left - event.clientX,
+      bottom: event.clientY - dragOffset.top - borders.bottom,
     };
-
     if (
       offsetToBorders.right >= 0 &&
       offsetToBorders.bottom < offsetToBorders.right
@@ -62,29 +50,24 @@ function Card({ word, definition, onSwipe }: Props) {
     } else if (offsetToBorders.bottom >= 0) {
       onSwipe("bottom");
     }
-
-    setPos({ top: "50%", left: "50%", rotate: "0deg" });
+    setCardPosition({ top: "50%", left: "50%", rotate: "0deg" });
   };
 
-  const onMouseDown = (event: React.MouseEvent) => {
+  const handleMouseDown = (event: React.MouseEvent) => {
     const currentOffset = {
       left: event.clientX - window.innerWidth / 2,
       top: event.clientY - window.innerHeight / 2,
     };
-
-    setOffset(currentOffset);
-    setMouseDown(true);
-
+    setDragOffset(currentOffset);
+    setIsMouseDown(true);
     const dim = document.getElementById("card")?.getBoundingClientRect();
-
     if (
       Math.abs(currentOffset.left) > dim?.width! / 2 ||
       Math.abs(currentOffset.top) > dim?.height! / 2
     ) {
       return;
     }
-
-    setPos({
+    setCardPosition({
       top: `${event.clientY - currentOffset.top}px`,
       left: `${event.clientX - currentOffset.left}px`,
       rotate: `${
@@ -95,19 +78,31 @@ function Card({ word, definition, onSwipe }: Props) {
     });
   };
 
+  const handleMouseMove = (event: React.MouseEvent) => {
+    if (isMouseDown)
+      setCardPosition({
+        top: `${event.clientY - dragOffset.top}px`,
+        left: `${event.clientX - dragOffset.left}px`,
+        rotate: `${
+          (((event.clientX - dragOffset.left) / window.innerWidth) * 100 - 50) /
+          4
+        }deg`,
+      });
+  };
+
   return (
     <div
       className="w-screen h-screen"
       onMouseUp={handleDrop}
-      onMouseMove={onMouseMove}
+      onMouseMove={handleMouseMove}
     >
       <div
         className="absolute -translate-x-1/2 -translate-y-1/2 h-2/3 aspect-[2/3]"
         id="card_wrapper"
-        style={pos}
-        onMouseDown={onMouseDown}
+        style={cardPosition}
+        onMouseDown={handleMouseDown}
       >
-        <ReactTouchEvents onTap={rotate}>
+        <ReactTouchEvents onTap={rotateCard}>
           <div id="card" className="card bg-neutral relative w-full h-full">
             <div id="front" className="front absolute w-full h-full">
               <p className="text-3xl absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
