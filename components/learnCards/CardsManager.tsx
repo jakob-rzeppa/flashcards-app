@@ -33,6 +33,11 @@ function CardsManager({ cards }: Props) {
     const res = getCardsToUse(cards, level, 20);
 
     res.then((data: CardData[]) => {
+      if (data.length <= 0) {
+        onNextLevel();
+        return;
+      }
+
       setCurrentCards(data);
       setIsActive(true);
     });
