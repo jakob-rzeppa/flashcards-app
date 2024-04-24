@@ -27,13 +27,13 @@ export default function Header() {
       </div>
       <div className="navbar-center text-xl">Flashcards App</div>
       <div className="navbar-end gap-2">
-        <div className="form-control">
+        {/*<div className="form-control">
           <input
             type="text"
             placeholder="Search for Stack"
             className="input input-bordered w-24 md:w-auto"
           />
-        </div>
+  </div>*/}
         <AuthButton />
       </div>
     </div>
