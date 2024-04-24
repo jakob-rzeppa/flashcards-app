@@ -30,7 +30,7 @@ function CardsManager({ cards }: Props) {
 
   const handleGetCards = () => {
     setIsActive(false);
-    const res = getCardsToUse(cards, level, 5);
+    const res = getCardsToUse(cards, level, 20);
 
     res.then((data: CardData[]) => {
       setCurrentCards(data);

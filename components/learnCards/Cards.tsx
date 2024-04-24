@@ -112,7 +112,7 @@ function Cards({ cards, onFinished, currentLevel }: Props) {
         <FiArrowLeft size={20} />
       </button>
       <progress
-        className="progress w-2/3 absolute top-16 left-1/2 -translate-x-1/2"
+        className="progress w-2/3 absolute top-8 left-1/2 -translate-x-1/2"
         value={learnedCards.length}
         max={cards.length}
       ></progress>
