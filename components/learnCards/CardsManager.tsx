@@ -32,7 +32,7 @@ function CardsManager({ cards }: Props) {
 
   const handleGetCards = () => {
     setIsActive(false);
-    const res = getCardsToUse(cards, level, 20);
+    const res = getCardsToUse(cards, level);
 
     res.then((data: CardData[]) => {
       if (data.length <= 0) {
@@ -64,11 +64,26 @@ function CardsManager({ cards }: Props) {
     setFinished(false);
   };
 
+  const onLowestLevel = () => {
+    console.log("Next Box Level: ", 0);
+    setLevel(0);
+    setFinished(false);
+  };
+
   return isActive ? (
     finished ? (
-      <button className="btn btn-primary" onClick={onNextLevel}>
-        Next Level
-      </button>
+      <div className="items-center justify-center flex flex-col h-screen gap-8">
+        <h2>Done (Level {level})</h2>
+        <button className="btn btn-primary" onClick={onNextLevel}>
+          Next Level
+        </button>
+        <button className="btn btn-primary" onClick={onLowestLevel}>
+          All from lowest level first
+        </button>
+        <button className="btn" onClick={() => router.back()}>
+          Return
+        </button>
+      </div>
     ) : (
       <>
         <BrowserView>

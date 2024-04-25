@@ -9,8 +9,7 @@ export async function getCardsToUse(
     stack_id: number;
     word: string;
   }[],
-  box: number,
-  number: number
+  box: number
 ) {
   const supabase = createClient();
 
@@ -32,9 +31,7 @@ export async function getCardsToUse(
     word: string;
   }[] = [];
 
-  let counter = 0;
-
-  for (let i = 0; i < allCards.length && counter < number; i++) {
+  for (let i = 0; i < allCards.length; i++) {
     const levelData = await supabase
       .from("card_level")
       .select("*")
@@ -57,8 +54,28 @@ export async function getCardsToUse(
 
     if (level === box) {
       cards.push(allCards[i]);
-      counter++;
     }
+  }
+
+  if (cards.length <= 20) {
+    return cards;
+  }
+
+  if (cards.length <= 25) {
+    const result: {
+      created_at: string;
+      definition: string;
+      id: number;
+      owner_id: string;
+      stack_id: number;
+      word: string;
+    }[] = [];
+    cards.forEach((card, index) => {
+      if (index < cards.length - 10) {
+        result.push(card);
+      }
+    });
+    return result;
   }
 
   return cards;
