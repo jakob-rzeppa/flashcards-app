@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
+import { FaArrowLeft, FaArrowRight, FaArrowDown } from "react-icons/fa";
 
 import "./rotate.css";
 import "./animation.css";
@@ -23,6 +25,9 @@ type dir = "right" | "left" | "down";
 
 function BrowserCards({ cards, onFinished }: Props) {
   const [index, setIndex] = useState(0);
+  const [prevCards, setPrevCards] = useState<
+    { index: number; level: number }[]
+  >([]);
   const [learnedCards, setLearnedCards] = useState<number[]>([]);
 
   const [rotated, setRotated] = useState(false);
@@ -38,6 +43,12 @@ function BrowserCards({ cards, onFinished }: Props) {
     if (indexToChange >= cards.length) return;
 
     const cardLevel = await getCardLevel(cards[indexToChange].id);
+
+    const newPrevCards = [
+      ...prevCards,
+      { index: indexToChange, level: cardLevel },
+    ];
+    setPrevCards(newPrevCards);
 
     if (cardLevel === -1) {
       return;
@@ -55,11 +66,11 @@ function BrowserCards({ cards, onFinished }: Props) {
     }
   };
 
-  const updateIndex = (dir: dir) => {
+  const nextCard = async (dir: dir) => {
     let indexToChange = index;
     let newLearnedCards = learnedCards;
 
-    if (dir === "right" && !learnedCards.includes(indexToChange)) {
+    if (dir === "right") {
       newLearnedCards = [...learnedCards, indexToChange];
     }
 
@@ -82,36 +93,80 @@ function BrowserCards({ cards, onFinished }: Props) {
     setIndex(nextIndex);
   };
 
-  const nextCard = (dir: dir) => {
+  const onSwipe = (dir: dir) => {
+    setAnimation(dir);
     changeCardLevel(dir, index);
+
     setTimeout(() => {
       setRotated(false);
       setVisible(false);
+
       setTimeout(() => {
         setAnimation("none");
-        updateIndex(dir);
+        nextCard(dir);
         setVisible(true);
       }, 100);
     }, 200);
   };
 
-  const swipeRight = () => {
-    setAnimation("right");
-    nextCard("right");
+  const back = () => {
+    const updatedPrevCards = [...prevCards];
+
+    const prevCard = updatedPrevCards.pop()!;
+
+    if (!prevCard) {
+      return;
+    }
+
+    if (prevCard.index < 0) prevCard.index = cards.length - 1;
+
+    if (learnedCards[learnedCards.length - 1] === prevCard.index) {
+      const updatedLearnedCards = [...learnedCards];
+      updatedLearnedCards.pop();
+      setLearnedCards(updatedLearnedCards);
+    }
+    updateCardLevel(cards[prevCard.index].id, prevCard.level);
+
+    setPrevCards(updatedPrevCards);
+    setIndex(prevCard.index);
   };
 
-  const swipeLeft = () => {
-    setAnimation("left");
-    nextCard("left");
+  const onKeyDown = (event: KeyboardEvent) => {
+    //console.log(event.key);
+    switch (event.key) {
+      case "ArrowRight":
+        onSwipe("right");
+        break;
+      case "ArrowDown":
+        onSwipe("down");
+        break;
+      case "ArrowLeft":
+        onSwipe("left");
+        break;
+      case " ":
+        rotateCard();
+        break;
+      case "Backspace":
+        back();
+    }
   };
 
-  const swipeDown = () => {
-    setAnimation("down");
-    nextCard("down");
-  };
+  useEffect(() => {
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  });
 
   return (
     <div className="w-screen h-screen overflow-hidden">
+      <button
+        className="btn btn-circle btn-ghost absolute top-4 left-4"
+        onClick={back}
+      >
+        <FaArrowLeft size={20} />
+      </button>
       <progress
         className="progress w-2/3 absolute top-8 left-1/2 -translate-x-1/2"
         value={learnedCards.length}
@@ -144,16 +199,22 @@ function BrowserCards({ cards, onFinished }: Props) {
       <div className="flex flex-row justify-center items-center gap-4 absolute bottom-[10%] left-1/2 -translate-x-1/2 translate-y-1/2">
         <button
           className="btn btn-circle btn-outline btn-primary"
-          onClick={swipeLeft}
-        ></button>
+          onClick={() => onSwipe("left")}
+        >
+          <FaArrowLeft size={20} />
+        </button>
         <button
           className="btn btn-circle btn-outline btn-primary"
-          onClick={swipeDown}
-        ></button>
+          onClick={() => onSwipe("down")}
+        >
+          <FaArrowDown size={20} />
+        </button>
         <button
           className="btn btn-circle btn-outline btn-primary"
-          onClick={swipeRight}
-        ></button>
+          onClick={() => onSwipe("right")}
+        >
+          <FaArrowRight size={20} />
+        </button>
       </div>
     </div>
   );
