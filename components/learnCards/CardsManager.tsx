@@ -2,10 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { BrowserView, MobileView } from "react-device-detect";
 
 import { getCardsToUse } from "@/actions/cards/client/getCardsToUse";
 
 import Cards from "./Cards";
+import BrowserCards from "./BrowserCards";
 
 interface CardData {
   created_at: string;
@@ -68,11 +70,18 @@ function CardsManager({ cards }: Props) {
         Next Level
       </button>
     ) : (
-      <Cards
-        cards={currentCards}
-        currentLevel={level}
-        onFinished={onFinished}
-      />
+      <>
+        <BrowserView>
+          <BrowserCards cards={currentCards} onFinished={onFinished} />
+        </BrowserView>
+        <MobileView>
+          <Cards
+            cards={currentCards}
+            currentLevel={level}
+            onFinished={onFinished}
+          />
+        </MobileView>
+      </>
     )
   ) : (
     <div>Loading...</div>
