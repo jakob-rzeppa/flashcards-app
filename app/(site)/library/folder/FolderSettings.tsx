@@ -3,7 +3,6 @@
 import React from "react";
 
 import Settings from "@/components/library/Settings";
-import DeleteButton from "@/components/DeleteButton";
 import { deleteElement } from "@/actions/library/client/deleteElement";
 import { useRouter } from "next/navigation";
 import updateElement from "@/actions/library/client/updateElement";

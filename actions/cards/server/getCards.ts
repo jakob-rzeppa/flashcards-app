@@ -1,8 +1,9 @@
 import { createClient } from "@/utils/supabase/server";
+import { error } from "console";
 
 export async function getCards(
   scope: "stack" | "folder" | "course" | "library",
-  parentId?: number
+  id?: number
 ): Promise<
   {
     created_at: string;
@@ -25,14 +26,11 @@ export async function getCards(
   const userId = user.data.user!.id;
 
   if (scope === "stack") {
-    if (!parentId) {
+    if (!id) {
       console.error("can't get cards, because no stackId supplied");
       return [];
     }
-    const cards = await supabase
-      .from("cards")
-      .select("*")
-      .eq("stack_id", parentId!);
+    const cards = await supabase.from("cards").select("*").eq("stack_id", id!);
 
     if (cards.error) {
       console.error(cards.error);
@@ -45,6 +43,36 @@ export async function getCards(
       .from("cards")
       .select("*")
       .eq("owner_id", userId);
+
+    if (cards.error) {
+      console.error(cards.error);
+      return [];
+    }
+
+    return cards.data;
+  } else if (scope === "folder") {
+    if (!id) {
+      console.error("can't get cards, because no folderId supplied");
+      return [];
+    }
+
+    const stackIds = await supabase
+      .from("stacks")
+      .select("id")
+      .eq("folder_id", id);
+
+    if (stackIds.error || !stackIds.data) {
+      console.log(stackIds.error);
+      return [];
+    }
+
+    const cards = await supabase
+      .from("cards")
+      .select("*")
+      .in(
+        "stack_id",
+        stackIds.data.map((e) => e.id)
+      );
 
     if (cards.error) {
       console.error(cards.error);
