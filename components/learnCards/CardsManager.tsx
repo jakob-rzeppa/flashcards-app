@@ -9,6 +9,7 @@ import { getCardsToUse } from "@/actions/cards/client/getCardsToUse";
 import Cards from "./Cards";
 import BrowserCards from "./BrowserCards";
 import { getAllCardLevels } from "@/actions/cards/client/getAllCardLevels";
+import shuffleCards from "@/actions/cards/client/shuffleCards";
 
 interface CardData {
   created_at: string;
@@ -48,7 +49,9 @@ function CardsManager({ cards }: Props) {
         return;
       }
 
-      setCurrentCards(data);
+      const shuffledCards = shuffleCards(data);
+
+      setCurrentCards(shuffledCards);
       setIsActive(true);
     });
   };
