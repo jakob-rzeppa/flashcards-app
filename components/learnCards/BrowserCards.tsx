@@ -161,18 +161,18 @@ function BrowserCards({ cards, onFinished }: Props) {
 
   return (
     <div className="w-screen h-screen overflow-hidden">
-      <button
-        className="btn btn-circle btn-ghost absolute top-4 left-4"
-        onClick={back}
-      >
-        <FaArrowLeft size={20} />
-      </button>
       <progress
         className="progress w-2/3 absolute top-8 left-1/2 -translate-x-1/2"
         value={learnedCards.length}
         max={cards.length}
       ></progress>
       <button
+        className="btn btn-circle btn-ghost absolute top-[22%] left-[18%] z-10"
+        onClick={back}
+      >
+        <FaArrowLeft size={20} />
+      </button>
+      <div
         className={`${animation === "none" ? "" : animation} ${
           visible ? "" : "hidden"
         } card_wrapper w-2/3 h-3/5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
@@ -195,7 +195,7 @@ function BrowserCards({ cards, onFinished }: Props) {
             </p>
           </div>
         </div>
-      </button>
+      </div>
       <div className="flex flex-row justify-center items-center gap-4 absolute bottom-[10%] left-1/2 -translate-x-1/2 translate-y-1/2">
         <button
           className="btn btn-circle btn-outline btn-primary"
