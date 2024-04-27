@@ -4,14 +4,18 @@ import CardsManager from "@/components/learnCards/CardsManager";
 interface Props {
   searchParams: {
     scope: "stack" | "folder" | "course" | "library";
-    id: string;
+    id?: string;
   };
 }
 
 async function LearnPage({ searchParams: { scope, id } }: Props) {
-  const allCards = await getCards(scope, parseInt(id));
+  const cards = id
+    ? await getCards(scope, parseInt(id))
+    : await getCards(scope);
 
-  return <CardsManager cards={allCards} />;
+  console.log(cards);
+
+  return <CardsManager cards={cards} />;
 }
 
 export default LearnPage;
