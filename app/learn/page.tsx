@@ -13,7 +13,20 @@ async function LearnPage({ searchParams: { scope, id } }: Props) {
     ? await getCards(scope, parseInt(id))
     : await getCards(scope);
 
-  return <CardsManager cards={cards} />;
+  let prevHref = "/library/";
+
+  switch (scope) {
+    case "course":
+      prevHref += "course?id=" + id;
+      break;
+    case "folder":
+      prevHref += "folder?id=" + id;
+      break;
+    case "stack":
+      prevHref += "stack?id=" + id;
+  }
+
+  return <CardsManager cards={cards} prevHref={prevHref} />;
 }
 
 export default LearnPage;

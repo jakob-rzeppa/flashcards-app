@@ -10,6 +10,7 @@ import Cards from "./Cards";
 import BrowserCards from "./BrowserCards";
 import { getAllCardLevels } from "@/actions/cards/client/getAllCardLevels";
 import shuffleCards from "@/actions/cards/client/shuffleCards";
+import NavButton from "../navigation/NavButton";
 
 interface CardData {
   created_at: string;
@@ -22,10 +23,11 @@ interface CardData {
 
 interface Props {
   cards: CardData[];
+  prevHref: string;
 }
 
 // Handles getting the current Cards and when all Cards are learned
-function CardsManager({ cards }: Props) {
+function CardsManager({ cards, prevHref }: Props) {
   const [cardLevels, setCardLevels] = useState<{
     0: number;
     1: number;
@@ -91,49 +93,53 @@ function CardsManager({ cards }: Props) {
     handleGetCards(0);
   }, []);
 
-  return isActive ? (
-    finished ? (
-      <div className="items-center justify-center flex flex-col h-screen gap-8">
-        <div className="w-4/5 h-2 bg-red-600 rounded-full flex flex-row overflow-hidden">
-          <div
-            className={`h-full bg-green-500`}
-            style={{ width: `${(cardLevels[3] / cards?.length!) * 100}%` }}
-          ></div>
-          <div
-            className={`h-full bg-yellow-500`}
-            style={{ width: `${(cardLevels[2] / cards?.length!) * 100}%` }}
-          ></div>
-          <div
-            className={`h-full bg-orange-500`}
-            style={{ width: `${(cardLevels[1] / cards?.length!) * 100}%` }}
-          ></div>
+  return (
+    <>
+      <NavButton href={prevHref} className="absolute top-4 left-4" />
+      {isActive ? (
+        finished ? (
+          <div className="items-center justify-center flex flex-col h-screen gap-8">
+            <div className="w-4/5 h-2 bg-red-600 rounded-full flex flex-row overflow-hidden">
+              <div
+                className={`h-full bg-green-500`}
+                style={{ width: `${(cardLevels[3] / cards?.length!) * 100}%` }}
+              ></div>
+              <div
+                className={`h-full bg-yellow-500`}
+                style={{ width: `${(cardLevels[2] / cards?.length!) * 100}%` }}
+              ></div>
+              <div
+                className={`h-full bg-orange-500`}
+                style={{ width: `${(cardLevels[1] / cards?.length!) * 100}%` }}
+              ></div>
+            </div>
+            <button className="btn btn-primary" onClick={onNextLevel}>
+              Next Level
+            </button>
+            <button className="btn btn-primary" onClick={onLowestLevel}>
+              All from lowest level first
+            </button>
+          </div>
+        ) : (
+          <>
+            <BrowserView>
+              <BrowserCards cards={currentCards} onFinished={onFinished} />
+            </BrowserView>
+            <MobileView>
+              <Cards
+                cards={currentCards}
+                currentLevel={level}
+                onFinished={onFinished}
+              />
+            </MobileView>
+          </>
+        )
+      ) : (
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <span className="loading loading-spinner loading-lg"></span>
         </div>
-        <button className="btn btn-primary" onClick={onNextLevel}>
-          Next Level
-        </button>
-        <button className="btn btn-primary" onClick={onLowestLevel}>
-          All from lowest level first
-        </button>
-        <button className="btn" onClick={() => router.back()}>
-          Return
-        </button>
-      </div>
-    ) : (
-      <>
-        <BrowserView>
-          <BrowserCards cards={currentCards} onFinished={onFinished} />
-        </BrowserView>
-        <MobileView>
-          <Cards
-            cards={currentCards}
-            currentLevel={level}
-            onFinished={onFinished}
-          />
-        </MobileView>
-      </>
-    )
-  ) : (
-    <div>Loading...</div>
+      )}
+    </>
   );
 }
 
