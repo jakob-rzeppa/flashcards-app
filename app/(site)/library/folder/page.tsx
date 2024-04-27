@@ -8,6 +8,7 @@ import NewElement from "@/components/library/NewElement";
 import FolderSettings from "./FolderSettings";
 import BackgroundBox from "@/components/BackgroundBox";
 import Link from "next/link";
+import ProgressDisplay from "@/components/library/ProgressDisplay";
 
 interface Props {
   searchParams: {
@@ -45,6 +46,7 @@ async function FolderPage({ searchParams: { id } }: Props) {
         {data!.description}
       </h2>
       <BackgroundBox>
+        <ProgressDisplay scope="folder" id={parseInt(id)} />
         <Link
           href={"/learn?scope=folder&id=" + data?.id}
           className="btn btn-primary w-full"

@@ -7,6 +7,7 @@ import NewElement from "@/components/library/NewElement";
 import CourseSettings from "./CourseSettings";
 import BackgroundBox from "@/components/BackgroundBox";
 import Link from "next/link";
+import ProgressDisplay from "@/components/library/ProgressDisplay";
 
 interface Props {
   searchParams: { id: string };
@@ -39,6 +40,7 @@ async function CoursePage({ searchParams: { id } }: Props) {
         {data!.description}
       </h2>
       <BackgroundBox>
+        <ProgressDisplay scope="course" id={parseInt(id)} />
         <Link
           href={"/learn?scope=course&id=" + data?.id}
           className="btn btn-primary w-full"

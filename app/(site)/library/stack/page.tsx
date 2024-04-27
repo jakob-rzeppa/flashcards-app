@@ -6,6 +6,7 @@ import { getStackData } from "@/actions/library/server/getStackData";
 import StackSettings from "./StackSettings";
 import BackgroundBox from "@/components/BackgroundBox";
 import { getAllCardLevels } from "@/actions/cards/server/getAllCardLevels";
+import ProgressDisplay from "@/components/library/ProgressDisplay";
 
 interface Props {
   searchParams: { id: string };
@@ -14,10 +15,6 @@ interface Props {
 async function StackPage({ searchParams: { id } }: Props) {
   // TODO error handling
   const { data, cards } = await getStackData(parseInt(id));
-
-  const levels = await getAllCardLevels(cards!);
-
-  console.log(levels);
 
   return (
     <div className="mt-8">
@@ -33,19 +30,8 @@ async function StackPage({ searchParams: { id } }: Props) {
         {data!.description}
       </h2>
       <BackgroundBox>
-        <div className="w-4/5 h-2 bg-red-600 rounded-full flex flex-row overflow-hidden">
-          <div
-            className={`h-full bg-green-500`}
-            style={{ width: `${(levels[3] / cards?.length!) * 100}%` }}
-          ></div>
-          <div
-            className={`h-full bg-yellow-500`}
-            style={{ width: `${(levels[2] / cards?.length!) * 100}%` }}
-          ></div>
-          <div
-            className={`h-full bg-orange-500`}
-            style={{ width: `${(levels[1] / cards?.length!) * 100}%` }}
-          ></div>
+        <div className="w-4/5">
+          <ProgressDisplay scope="stack" id={parseInt(id)} />
         </div>
         <StackContent cardsData={cards ? cards : []} id={parseInt(id)} />
       </BackgroundBox>
