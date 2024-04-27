@@ -6,6 +6,7 @@ import LibraryList from "@/components/library/LibraryList";
 import NewElement from "@/components/library/NewElement";
 import CourseSettings from "./CourseSettings";
 import BackgroundBox from "@/components/BackgroundBox";
+import Link from "next/link";
 
 interface Props {
   searchParams: { id: string };
@@ -30,11 +31,17 @@ async function CoursePage({ searchParams: { id } }: Props) {
   return (
     <div className="mt-8 relative">
       <NavButton href={`/library/`} className="absolute top-0 left-8" />
-      <CourseSettings data={data} />
+      <CourseSettings data={data!} />
       <h1 className="text-4xl font-bold w-full text-center mb-4">
         {data!.name}
       </h1>
       <BackgroundBox>
+        <Link
+          href={"/learn?scope=course&id=" + data?.id}
+          className="btn btn-primary w-full"
+        >
+          Learn all
+        </Link>
         <LibraryList data={foldersDisplay} />
         <NewElement type="folder" id={parseInt(id)} />
       </BackgroundBox>

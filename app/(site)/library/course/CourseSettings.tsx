@@ -7,9 +7,8 @@ import { useRouter } from "next/navigation";
 
 interface Props {
   data: {
-    course_id: number;
     created_at: string;
-    description: string;
+    description: string | null;
     id: number;
     name: string;
     owner_id: string;
@@ -32,7 +31,10 @@ function CourseSettings({ data }: Props) {
 
   return (
     <Settings
-      data={{ name: data.name, description: data.description }}
+      data={{
+        name: data.name,
+        description: data.description ? data.description : "",
+      }}
       onSave={onSave}
       onDelete={onDelete}
     />

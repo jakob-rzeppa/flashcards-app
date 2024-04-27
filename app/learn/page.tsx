@@ -13,8 +13,6 @@ async function LearnPage({ searchParams: { scope, id } }: Props) {
     ? await getCards(scope, parseInt(id))
     : await getCards(scope);
 
-  console.log(cards);
-
   return <CardsManager cards={cards} />;
 }
 
