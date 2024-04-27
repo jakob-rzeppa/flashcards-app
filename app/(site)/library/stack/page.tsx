@@ -29,6 +29,9 @@ async function StackPage({ searchParams: { id } }: Props) {
       <h1 className="text-4xl font-bold w-full text-center mb-4">
         {data?.name}
       </h1>
+      <h2 className="text-xl font-bold w-full text-center mb-4">
+        {data!.description}
+      </h2>
       <BackgroundBox>
         <div className="w-4/5 h-2 bg-red-600 rounded-full flex flex-row overflow-hidden">
           <div

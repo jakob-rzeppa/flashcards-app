@@ -41,6 +41,9 @@ async function FolderPage({ searchParams: { id } }: Props) {
       <h1 className="text-4xl font-bold w-full text-center mb-4">
         {data!.name}
       </h1>
+      <h2 className="text-xl font-bold w-full text-center mb-4">
+        {data!.description}
+      </h2>
       <BackgroundBox>
         <Link
           href={"/learn?scope=folder&id=" + data?.id}
