@@ -37,6 +37,7 @@ function FolderSettings({ data }: Props) {
       data={{ name: data.name, description: data.description }}
       onSave={onSave}
       onDelete={onDelete}
+      buttonClassName="absolute top-2 right-2"
     />
   );
 }

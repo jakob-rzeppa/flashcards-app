@@ -9,6 +9,7 @@ import FolderSettings from "./FolderSettings";
 import BackgroundBox from "@/components/BackgroundBox";
 import Link from "next/link";
 import ProgressDisplay from "@/components/library/ProgressDisplay";
+import LibraryPath from "@/components/library/LibraryPath";
 
 interface Props {
   searchParams: {
@@ -34,11 +35,6 @@ async function FolderPage({ searchParams: { id } }: Props) {
 
   return (
     <div className="mt-8 relative">
-      <NavButton
-        href={`/library/course?id=${data!.course_id}`}
-        className="absolute top-0 left-8"
-      />
-      <FolderSettings data={data!} />
       <h1 className="text-4xl font-bold w-full text-center mb-4">
         {data!.name}
       </h1>
@@ -46,6 +42,8 @@ async function FolderPage({ searchParams: { id } }: Props) {
         {data!.description}
       </h2>
       <BackgroundBox>
+        <FolderSettings data={data!} />
+        <LibraryPath element="folder" id={parseInt(id)} />
         <ProgressDisplay scope="folder" id={parseInt(id)} />
         <Link
           href={"/learn?scope=folder&id=" + data?.id}

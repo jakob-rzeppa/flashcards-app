@@ -37,6 +37,7 @@ function CourseSettings({ data }: Props) {
       }}
       onSave={onSave}
       onDelete={onDelete}
+      buttonClassName="absolute top-2 right-2"
     />
   );
 }

@@ -1,8 +1,8 @@
 import { createClient } from "@/utils/supabase/server";
 
 export default async function getPath(
-  element: "stack" | "folder" | "course",
-  id: number
+  element: "stack" | "folder" | "course" | "library",
+  id?: number
 ) {
   const supabase = createClient();
 
@@ -10,7 +10,7 @@ export default async function getPath(
     { name: "Library", href: "/library/" },
   ];
 
-  if (element === "course") {
+  if (element === "course" && id) {
     const { data: courseData, error: courseError } = await supabase
       .from("courses")
       .select("*")
@@ -22,10 +22,7 @@ export default async function getPath(
     }
 
     path.push({ name: courseData[0].name });
-    return path;
-  }
-
-  if (element === "folder") {
+  } else if (element === "folder" && id) {
     const { data: folderData, error: folderError } = await supabase
       .from("folders")
       .select("*")
@@ -39,9 +36,9 @@ export default async function getPath(
     const { data: courseData, error: courseError } = await supabase
       .from("courses")
       .select("*")
-      .eq("id", folderData[0].id);
+      .eq("id", folderData[0].course_id);
 
-    if (courseError || !courseData) {
+    if (courseError || !courseData[0]) {
       console.error("Couldnt fetch course");
       return [];
     }
@@ -54,11 +51,7 @@ export default async function getPath(
     path.push({
       name: folderData[0].name,
     });
-
-    return path;
-  }
-
-  if (element === "stack") {
+  } else if (element === "stack" && id) {
     const { data: stackData, error: stackError } = await supabase
       .from("stacks")
       .select("*")
@@ -72,7 +65,7 @@ export default async function getPath(
     const { data: folderData, error: folderError } = await supabase
       .from("folders")
       .select("*")
-      .eq("id", stackData[0].id);
+      .eq("id", stackData[0].folder_id);
 
     if (folderError || !folderData) {
       console.error("Couldnt fetch folder");
@@ -82,7 +75,7 @@ export default async function getPath(
     const { data: courseData, error: courseError } = await supabase
       .from("courses")
       .select("*")
-      .eq("id", folderData[0].id);
+      .eq("id", folderData[0].course_id);
 
     if (courseError || !courseData) {
       console.error("Couldnt fetch course");
@@ -102,7 +95,7 @@ export default async function getPath(
     path.push({
       name: stackData[0].name,
     });
-
-    return path;
   }
+
+  return path;
 }

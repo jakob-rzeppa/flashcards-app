@@ -13,16 +13,23 @@ interface Props {
   onSave: (name: string, description: string) => void;
   onDelete: () => void;
   children?: ReactNode;
+  buttonClassName?: string;
 }
 
-function Settings({ data, onSave, onDelete, children }: Props) {
+function Settings({
+  data,
+  onSave,
+  onDelete,
+  children,
+  buttonClassName,
+}: Props) {
   const [name, setName] = useState(data.name);
   const [description, setDescription] = useState(data.description);
 
   return (
     <>
       <button
-        className="btn btn-circle btn-primary absolute right-8"
+        className={`btn btn-circle ${buttonClassName}`}
         onClick={() =>
           (
             document.getElementById("settings_modal") as HTMLDialogElement

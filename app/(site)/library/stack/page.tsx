@@ -7,6 +7,7 @@ import StackSettings from "./StackSettings";
 import BackgroundBox from "@/components/BackgroundBox";
 import { getAllCardLevels } from "@/actions/cards/server/getAllCardLevels";
 import ProgressDisplay from "@/components/library/ProgressDisplay";
+import LibraryPath from "@/components/library/LibraryPath";
 
 interface Props {
   searchParams: { id: string };
@@ -18,11 +19,6 @@ async function StackPage({ searchParams: { id } }: Props) {
 
   return (
     <div className="mt-8">
-      <NavButton
-        href={`/library/folder?id=${data?.folder_id}`}
-        className="absolute left-8"
-      />
-      <StackSettings data={data!} cards={cards!} />
       <h1 className="text-4xl font-bold w-full text-center mb-4">
         {data?.name}
       </h1>
@@ -30,6 +26,8 @@ async function StackPage({ searchParams: { id } }: Props) {
         {data!.description}
       </h2>
       <BackgroundBox>
+        <StackSettings data={data!} cards={cards!} />
+        <LibraryPath element="stack" id={parseInt(id)} />
         <div className="w-4/5">
           <ProgressDisplay scope="stack" id={parseInt(id)} />
         </div>

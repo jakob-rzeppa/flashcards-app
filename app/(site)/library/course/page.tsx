@@ -8,6 +8,7 @@ import CourseSettings from "./CourseSettings";
 import BackgroundBox from "@/components/BackgroundBox";
 import Link from "next/link";
 import ProgressDisplay from "@/components/library/ProgressDisplay";
+import LibraryPath from "@/components/library/LibraryPath";
 
 interface Props {
   searchParams: { id: string };
@@ -31,8 +32,6 @@ async function CoursePage({ searchParams: { id } }: Props) {
 
   return (
     <div className="mt-8 relative">
-      <NavButton href={`/library/`} className="absolute top-0 left-8" />
-      <CourseSettings data={data!} />
       <h1 className="text-4xl font-bold w-full text-center mb-4">
         {data!.name}
       </h1>
@@ -40,6 +39,8 @@ async function CoursePage({ searchParams: { id } }: Props) {
         {data!.description}
       </h2>
       <BackgroundBox>
+        <CourseSettings data={data!} />
+        <LibraryPath element="course" id={parseInt(id)} />
         <ProgressDisplay scope="course" id={parseInt(id)} />
         <Link
           href={"/learn?scope=course&id=" + data?.id}

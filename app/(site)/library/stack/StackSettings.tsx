@@ -54,6 +54,7 @@ function StackSettings({
       onSave={onSave}
       onDelete={onDelete}
       data={{ name: data.name, description: data.description }}
+      buttonClassName="absolute top-2 right-2"
     >
       <button
         className="btn btn-warning btn-outline mb-4 w-full"
