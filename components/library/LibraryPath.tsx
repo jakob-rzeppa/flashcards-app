@@ -13,7 +13,9 @@ async function LibraryPath({ element, id }: Props) {
     <div className="text-sm breadcrumbs">
       <ul>
         {path.map((node, index) => (
-          <li>{node.href ? <a href={node.href}>{node.name}</a> : node.name}</li>
+          <li key={index}>
+            {node.href ? <a href={node.href}>{node.name}</a> : node.name}
+          </li>
         ))}
       </ul>
     </div>
