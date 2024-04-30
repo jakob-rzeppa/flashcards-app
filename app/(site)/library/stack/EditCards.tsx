@@ -135,35 +135,28 @@ function EditCards({ data, stackId }: Props) {
           <div className="flex flex-col gap-4 m-8">
             <form method="dialog">
               <button
-                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-                onClick={resetModal}
-              >
-                ✕
-              </button>
-              <button
                 className="btn btn-sm btn-circle btn-ghost absolute top-2 left-2"
                 onClick={handleDeleteCard}
               >
                 <FaRegTrashAlt />
               </button>
             </form>
-            <input
-              className="input input-primary"
-              type="text"
+            <textarea
+              className="textarea textarea-primary"
               id="word"
               placeholder="word"
               value={word}
               onChange={(e) => setWord(e.target.value)}
               autoFocus
-            />
-            <input
-              className="input input-primary"
-              type="text"
+            ></textarea>
+
+            <textarea
+              className="textarea textarea-primary h-[25vh]"
               id="definition"
               placeholder="definition"
               value={definition}
               onChange={(e) => setDefinition(e.target.value)}
-            />
+            ></textarea>
             <form method="dialog">
               <button
                 className="btn btn-neutral w-full"
@@ -174,6 +167,10 @@ function EditCards({ data, stackId }: Props) {
             </form>
           </div>
         </div>
+
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
       </dialog>
     </div>
   );
