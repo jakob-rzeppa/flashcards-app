@@ -56,7 +56,12 @@ function StackSettings({
       data={{ name: data.name, description: data.description }}
       buttonClassName="absolute top-2 right-2"
     >
-      <button onClick={onReset}>Reset Cards</button>
+      <button
+        onClick={onReset}
+        className="btn btn-warning btn-outline w-full mb-4"
+      >
+        Reset Cards
+      </button>
     </Settings>
   );
 }

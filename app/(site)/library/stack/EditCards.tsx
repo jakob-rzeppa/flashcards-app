@@ -132,7 +132,7 @@ function EditCards({ data, stackId }: Props) {
       </div>
       <dialog id="edit_card_modal" className="modal">
         <div className="modal-box">
-          <div className="flex flex-col gap-4 m-8">
+          <div className="flex flex-col gap-4 m-6">
             <form method="dialog">
               <button
                 className="btn btn-sm btn-circle btn-ghost absolute top-2 left-2"
