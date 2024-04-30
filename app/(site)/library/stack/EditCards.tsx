@@ -107,7 +107,7 @@ function EditCards({ data, stackId }: Props) {
   };
 
   return (
-    <div>
+    <>
       <div className="flex flex-col justify-center items-center gap-4 w-full">
         {cards.map((card, index) => (
           <button
@@ -172,7 +172,7 @@ function EditCards({ data, stackId }: Props) {
           <button>close</button>
         </form>
       </dialog>
-    </div>
+    </>
   );
 }
 
