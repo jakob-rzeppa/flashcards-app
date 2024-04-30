@@ -112,13 +112,13 @@ function EditCards({ data, stackId }: Props) {
         {cards.map((card, index) => (
           <button
             onClick={() => handleEditCard(index)}
-            className="btn w-full h-fit btn-neutral text-start items-center justify-start py-2 px-4"
+            className="btn w-full h-fit btn-neutral text-start items-center justify-start py-2 px-4 flex flex-nowrap md:flex-row flex-col gap-4"
             key={card.id}
           >
-            <h3 className="text-xl md:w-1/2 w-full whitespace-normal break-words">
+            <h3 className="text-xl flex-1 whitespace-normal break-words">
               {card.word}
             </h3>
-            <h4 className="md:text-xl text-md whitespace-normal break-words">
+            <h4 className="md:text-xl text-md flex-1 whitespace-normal break-words ">
               {card.definition}
             </h4>
           </button>

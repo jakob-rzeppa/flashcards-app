@@ -26,7 +26,6 @@ function NewElement({ type, id }: Props) {
     router.refresh();
   };
 
-  // TODO viele modals werden übereinander erstellt
   return (
     <>
       <button
