@@ -46,6 +46,11 @@ function CardsManager({ cards, prevHref }: Props) {
     setIsFinished(false);
   };
 
+  const onLearnAllCards = () => {
+    setCurrentCards(cards);
+    setTimeout(() => setIsFinished(false), 100);
+  };
+
   return (
     <>
       <NavButton href={prevHref} className="absolute top-4 left-4" />
@@ -54,9 +59,20 @@ function CardsManager({ cards, prevHref }: Props) {
           <BrowserCards onFinished={onFinished} />
         </currentCardsContext.Provider>
       ) : (
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center gap-8">
+          <p>
+            {cards.length - currentCards.length} of {cards.length} right
+          </p>
+          <progress
+            className="progress w-56"
+            value={cards.length - currentCards.length}
+            max={cards.length}
+          ></progress>
           <button className="btn btn-primary" onClick={onLearnWrongCards}>
-            Learn wrong cards
+            Repeat wrong cards
+          </button>
+          <button className="btn btn-primary" onClick={onLearnAllCards}>
+            Repeat all cards
           </button>
         </div>
       )}

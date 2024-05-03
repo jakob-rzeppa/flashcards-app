@@ -37,7 +37,7 @@ function BrowserCards({ onFinished }: Props) {
   };
 
   const nextCard = (dir: dir) => {
-    setPrevCards([...prevCards, { index, right: dir === "right" }]);
+    const nextPrevCards = [...prevCards, { index, right: dir === "right" }];
 
     let nextIndex = index + 1;
 
@@ -46,7 +46,7 @@ function BrowserCards({ onFinished }: Props) {
 
       // update current cards
       const nextCards: CardData[] = [];
-      prevCards.forEach((card) => {
+      nextPrevCards.forEach((card) => {
         if (!card.right) {
           nextCards.push(currentCards[card.index]);
         }
@@ -57,6 +57,7 @@ function BrowserCards({ onFinished }: Props) {
       onFinished();
       return;
     }
+    setPrevCards(nextPrevCards);
     setIndex(nextIndex);
   };
 
