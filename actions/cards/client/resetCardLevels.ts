@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/client";
 
+// TODO delete or rebuild with new learn algorithm
 export default async function resetCardLevels(
   cards: {
     created_at: string;

@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/client";
 
+// TODO delete or rebuild with new learn algorithm
 export async function updateCardLevel(id: number, level: number) {
   if (level < 0 || level > 3) {
     console.log("Level not changed");
