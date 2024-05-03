@@ -1,34 +1,31 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { FaArrowLeft, FaArrowRight, FaArrowDown } from "react-icons/fa";
 
 import "./rotate.css";
 import "./animation.css";
-import getCardLevel from "@/actions/cards/client/getCardLevel";
-import { updateCardLevel } from "@/actions/cards/client/updateCardLevel";
+import { CardData, currentCardsContext } from "./CardsManager";
 
 interface Props {
-  cards: {
-    created_at: string;
-    definition: string;
-    id: number;
-    owner_id: string;
-    stack_id: number;
-    word: string;
-  }[];
   onFinished: () => void;
 }
 
 type dir = "right" | "left" | "down";
 
-function BrowserCards({ cards, onFinished }: Props) {
+function BrowserCards({ onFinished }: Props) {
+  const currentCardsOrNull = useContext(currentCardsContext);
+  if (!currentCardsOrNull) {
+    return <div>Error: Card Context not supplying cards</div>;
+  }
+
+  const { currentCards, setCurrentCards } = currentCardsOrNull;
+
   const [index, setIndex] = useState(0);
   const [prevCards, setPrevCards] = useState<
-    { index: number; level: number }[]
+    { index: number; right: boolean }[]
   >([]);
-  const [learnedCards, setLearnedCards] = useState<number[]>([]);
 
   const [rotated, setRotated] = useState(false);
 
@@ -39,67 +36,37 @@ function BrowserCards({ cards, onFinished }: Props) {
     setRotated(rotated ? false : true);
   };
 
-  const changeCardLevel = async (dir: dir, indexToChange: number) => {
-    if (indexToChange >= cards.length) return;
+  const nextCard = (dir: dir) => {
+    setPrevCards([...prevCards, { index, right: dir === "right" }]);
 
-    const cardLevel = await getCardLevel(cards[indexToChange].id);
+    let nextIndex = index + 1;
 
-    const newPrevCards = [
-      ...prevCards,
-      { index: indexToChange, level: cardLevel },
-    ];
-    setPrevCards(newPrevCards);
+    if (nextIndex >= currentCards.length) {
+      setIndex(0);
 
-    if (cardLevel === -1) {
+      // update current cards
+      const nextCards: CardData[] = [];
+      prevCards.forEach((card) => {
+        if (!card.right) {
+          nextCards.push(currentCards[card.index]);
+        }
+      });
+      setCurrentCards(nextCards);
+
+      setPrevCards([]);
+      onFinished();
       return;
     }
-
-    switch (dir) {
-      case "left":
-        updateCardLevel(cards[indexToChange].id, 0);
-        break;
-      case "right":
-        updateCardLevel(cards[indexToChange].id, cardLevel + 1);
-        break;
-      case "down":
-        updateCardLevel(cards[indexToChange].id, cardLevel - 1);
-    }
-  };
-
-  const nextCard = async (dir: dir) => {
-    let indexToChange = index;
-    let newLearnedCards = learnedCards;
-
-    if (dir === "right") {
-      newLearnedCards = [...learnedCards, indexToChange];
-    }
-
-    let nextIndex = indexToChange + 1;
-
-    if (nextIndex >= cards.length) {
-      if (newLearnedCards.length >= cards.length) {
-        newLearnedCards = [];
-        onFinished();
-      }
-
-      nextIndex = 0;
-    }
-
-    while (learnedCards.includes(nextIndex) || nextIndex >= cards.length) {
-      nextIndex = nextIndex + 1;
-    }
-
-    setLearnedCards(newLearnedCards);
     setIndex(nextIndex);
   };
 
   const onSwipe = (dir: dir) => {
     setAnimation(dir);
-    changeCardLevel(dir, index);
 
     setTimeout(() => {
       setRotated(false);
       setVisible(false);
+      // TODO change in database
 
       setTimeout(() => {
         setAnimation("none");
@@ -118,14 +85,9 @@ function BrowserCards({ cards, onFinished }: Props) {
       return;
     }
 
-    if (prevCard.index < 0) prevCard.index = cards.length - 1;
+    if (prevCard.index < 0) prevCard.index = currentCards.length - 1;
 
-    if (learnedCards[learnedCards.length - 1] === prevCard.index) {
-      const updatedLearnedCards = [...learnedCards];
-      updatedLearnedCards.pop();
-      setLearnedCards(updatedLearnedCards);
-    }
-    updateCardLevel(cards[prevCard.index].id, prevCard.level);
+    // TODO change in databse
 
     setPrevCards(updatedPrevCards);
     setIndex(prevCard.index);
@@ -163,8 +125,8 @@ function BrowserCards({ cards, onFinished }: Props) {
     <div className="w-screen h-screen overflow-hidden">
       <progress
         className="progress w-2/3 absolute top-8 left-1/2 -translate-x-1/2"
-        value={learnedCards.length}
-        max={cards.length}
+        value={prevCards.length}
+        max={currentCards.length}
       ></progress>
       <button
         className="btn btn-circle btn-ghost absolute top-[22%] left-[18%] z-10"
@@ -186,12 +148,16 @@ function BrowserCards({ cards, onFinished }: Props) {
         >
           <div id="front" className="front absolute w-full h-full">
             <p className="text-3xl absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
-              {cards[index].word}
+              {currentCards[index]
+                ? currentCards[index].word
+                : "Something went wrong"}
             </p>
           </div>
           <div id="back" className="back rotate absolute w-full h-full">
             <p className="text-3xl absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
-              {cards[index].definition}
+              {currentCards[index]
+                ? currentCards[index].definition
+                : "Something went wrong"}
             </p>
           </div>
         </div>
