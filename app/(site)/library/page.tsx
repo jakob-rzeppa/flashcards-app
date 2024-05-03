@@ -28,7 +28,10 @@ async function LibraryPage() {
       <h2 className="text-3xl">Courses</h2>
       <BackgroundBox>
         <ProgressDisplay scope="library" />
-        <Link href="/learn?scope=library" className="btn btn-primary w-full">
+        <Link
+          href="/learn?scope=library&method=shortTermMemory"
+          className="btn btn-primary w-full"
+        >
           Learn all
         </Link>
         <LibraryList data={data} />

@@ -46,7 +46,7 @@ async function FolderPage({ searchParams: { id } }: Props) {
         <LibraryPath element="folder" id={parseInt(id)} />
         <ProgressDisplay scope="folder" id={parseInt(id)} />
         <Link
-          href={"/learn?scope=folder&id=" + data?.id}
+          href={"/learn?scope=folder&method=shortTermMemory&id=" + data?.id}
           className="btn btn-primary w-full"
         >
           Learn all

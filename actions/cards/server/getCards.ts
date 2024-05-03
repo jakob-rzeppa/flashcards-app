@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
-import { error } from "console";
 
 export async function getCards(
+  method: "shortTermMemory" | "longTermMemory",
   scope: "stack" | "folder" | "course" | "library",
   id?: number
 ): Promise<

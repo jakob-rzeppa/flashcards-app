@@ -43,7 +43,7 @@ async function CoursePage({ searchParams: { id } }: Props) {
         <LibraryPath element="course" id={parseInt(id)} />
         <ProgressDisplay scope="course" id={parseInt(id)} />
         <Link
-          href={"/learn?scope=course&id=" + data?.id}
+          href={"/learn?scope=course&method=shortTermMemory&id=" + data?.id}
           className="btn btn-primary w-full"
         >
           Learn all

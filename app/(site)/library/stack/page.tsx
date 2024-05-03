@@ -34,7 +34,7 @@ async function StackPage({ searchParams: { id } }: Props) {
           <ProgressDisplay scope="stack" id={parseInt(id)} />
         </div>
         <Link
-          href={"/learn?scope=stack&id=" + id}
+          href={"/learn?scope=stack&method=shortTermMemory&id=" + id}
           className="btn btn-primary w-full"
         >
           Learn
