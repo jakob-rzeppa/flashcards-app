@@ -9,17 +9,17 @@ export async function getFolderData(id: number) {
 
   if (folder.error) {
     console.error(folder.error);
-    return { data: null, stacks: null };
+    return null;
   }
 
   if (folder.data.length === 0) {
     console.error("FolderId not found!");
-    return { data: null, stacks: null };
+    return null;
   }
 
   if (stacks.error) {
     console.error(stacks.error);
-    return { data: folder.data[0], stacks: null };
+    return null;
   }
 
   const numOfCards: number[] = [];

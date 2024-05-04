@@ -12,17 +12,17 @@ export async function getCourseData(id: number) {
 
   if (course.error) {
     console.error(course.error);
-    return { data: null, folders: null };
+    return null;
   }
 
   if (course.data.length === 0) {
     console.error("CourseId not found!");
-    return { data: null, folders: null };
+    return null;
   }
 
   if (folders.error) {
     console.error(folders.error);
-    return { data: course.data[0], folders: null };
+    return null;
   }
 
   const numOfStacks: number[] = [];

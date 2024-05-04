@@ -1,6 +1,5 @@
 import React from "react";
 
-import NavButton from "@/components/navigation/NavButton";
 import { getCourseData } from "@/actions/library/server/getCourseData";
 import LibraryList from "@/components/library/LibraryList";
 import NewElement from "@/components/library/NewElement";
@@ -15,15 +14,18 @@ interface Props {
 }
 
 async function CoursePage({ searchParams: { id } }: Props) {
-  //TODO error handling
-  const { data, folders, numOfStacks } = await getCourseData(parseInt(id));
+  const courseData = await getCourseData(parseInt(id));
+
+  if (!courseData) return <div>Couldnt fetch course data</div>;
+
+  const { data, folders, numOfStacks } = courseData;
 
   const foldersDisplay: {
     href: string;
     name: string;
     description: string | null;
     badgeText: string;
-  }[] = folders!.map((folder, index) => ({
+  }[] = folders.map((folder, index) => ({
     href: `/library/folder?id=${folder.id}`,
     name: folder.name,
     description: null,
@@ -33,13 +35,13 @@ async function CoursePage({ searchParams: { id } }: Props) {
   return (
     <div className="mt-8 relative">
       <h1 className="text-4xl font-bold w-full text-center mb-4">
-        {data!.name}
+        {data.name}
       </h1>
       <h2 className="text-xl font-bold w-full text-center mb-4">
-        {data!.description}
+        {data.description}
       </h2>
       <BackgroundBox>
-        <CourseSettings data={data!} />
+        <CourseSettings data={data} />
         <LibraryPath element="course" id={parseInt(id)} />
         <ProgressDisplay scope="course" id={parseInt(id)} />
         <Link

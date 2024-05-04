@@ -18,8 +18,9 @@ interface Props {
 }
 
 async function FolderPage({ searchParams: { id } }: Props) {
-  //TODO error handling
-  const { data, stacks, numOfCards } = await getFolderData(parseInt(id));
+  const folderData = await getFolderData(parseInt(id));
+  if (!folderData) return <div>Couldnt fetch folder data</div>;
+  const { data, stacks, numOfCards } = folderData;
 
   const stacksDisplay: {
     href: string;
