@@ -23,7 +23,7 @@ export default async function resetCardLevels(
   const userId = user.data.user.id;
 
   const { data, error } = await supabase
-    .from("card_level")
+    .from("card_levels")
     .update({ level: 0 })
     .in(
       "card_id",

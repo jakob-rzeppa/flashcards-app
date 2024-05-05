@@ -18,7 +18,7 @@ export async function updateCardLevel(id: number, level: number) {
   const userId = user.data.user.id;
 
   const { data, error } = await supabase
-    .from("card_level")
+    .from("card_levels")
     .update({ level: level })
     .eq("card_id", id)
     .eq("user_id", userId);
