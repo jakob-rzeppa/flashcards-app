@@ -26,14 +26,14 @@ export async function getAllCardLevels(
 
   for (let i = 0; i < cards.length; i++) {
     const levelData = await supabase
-      .from("card_level")
+      .from("card_levels")
       .select("*")
       .eq("card_id", cards[i].id)
       .eq("user_id", userId);
 
     if (levelData.error || levelData.data.length !== 1) {
       const { data, error } = await supabase
-        .from("card_level")
+        .from("card_levels")
         .insert([{ card_id: cards[i].id }]);
 
       if (error) {
