@@ -1,7 +1,7 @@
-import { createClient } from "@/utils/supabase/server";
-import getStackCards from "./getCards/getStackCards";
-import getLibraryCards from "./getCards/getLibraryCards";
-import getCourseCards from "./getCards/getCourseCards";
+import getStackCards from "./getStackCards";
+import getLibraryCards from "./getLibraryCards";
+import getCourseCards from "./getCourseCards";
+import getCardsToRepeat from "./getCardsToRepeat";
 
 export async function getCards(
   method: "shortTermMemory" | "longTermMemory",
@@ -17,6 +17,15 @@ export async function getCards(
     word: string;
   }[]
 > {
+  let cards: {
+    created_at: string;
+    definition: string;
+    id: number;
+    owner_id: string;
+    stack_id: number;
+    word: string;
+  }[] = [];
+
   if (scope === "stack") {
     if (!id) {
       console.error("can't get cards, because no stackId supplied");
@@ -25,11 +34,11 @@ export async function getCards(
 
     const data = await getStackCards(id);
 
-    return data;
+    cards = data;
   } else if (scope === "library") {
     const data = await getLibraryCards();
 
-    return data;
+    cards = data;
   } else if (scope === "folder") {
     if (!id) {
       console.error("can't get cards, because no folderId supplied");
@@ -38,17 +47,17 @@ export async function getCards(
 
     const data = await getLibraryCards();
 
-    return data;
+    cards = data;
   } else if (scope === "course" && id) {
     if (!id) {
       console.error("can't get cards, because no courseId supplied");
       return [];
     }
 
-    const data = getCourseCards(id);
+    const data = await getCourseCards(id);
 
-    return data;
+    cards = data;
   }
 
-  return [];
+  return method === "shortTermMemory" ? cards : getCardsToRepeat(cards);
 }

@@ -1,5 +1,5 @@
 import { getAllCardLevels } from "@/actions/cards/server/getAllCardLevels";
-import { getCards } from "@/actions/cards/server/getCards";
+import { getCards } from "@/actions/cards/server/getCards/getCards";
 import Loading from "@/app/loading";
 import React, { Suspense } from "react";
 

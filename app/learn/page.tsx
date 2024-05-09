@@ -1,4 +1,4 @@
-import { getCards } from "@/actions/cards/server/getCards";
+import { getCards } from "@/actions/cards/server/getCards/getCards";
 import CardsManager from "@/components/learnCards/CardsManager";
 
 interface Props {
