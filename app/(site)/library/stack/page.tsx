@@ -3,7 +3,6 @@ import React from "react";
 import { getStackData } from "@/actions/library/server/getStackData";
 import StackSettings from "./StackSettings";
 import BackgroundBox from "@/components/BackgroundBox";
-import ProgressDisplay from "@/components/library/ProgressDisplay";
 import LibraryPath from "@/components/library/LibraryPath";
 import Link from "next/link";
 import EditCards from "./EditCards";
@@ -30,9 +29,6 @@ async function StackPage({ searchParams: { id } }: Props) {
       <BackgroundBox>
         <StackSettings data={data!} cards={cards} />
         <LibraryPath element="stack" id={parseInt(id)} />
-        <div className="w-4/5">
-          <ProgressDisplay scope="stack" id={parseInt(id)} />
-        </div>
         <Link
           href={"/learn?scope=stack&method=shortTermMemory&id=" + id}
           className="btn btn-primary w-full"

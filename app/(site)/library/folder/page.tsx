@@ -2,13 +2,11 @@ import React from "react";
 
 import { getFolderData } from "@/actions/library/server/getFolderData";
 
-import NavButton from "@/components/navigation/NavButton";
 import LibraryList from "@/components/library/LibraryList";
 import NewElement from "@/components/library/NewElement";
 import FolderSettings from "./FolderSettings";
 import BackgroundBox from "@/components/BackgroundBox";
 import Link from "next/link";
-import ProgressDisplay from "@/components/library/ProgressDisplay";
 import LibraryPath from "@/components/library/LibraryPath";
 
 interface Props {
@@ -45,7 +43,6 @@ async function FolderPage({ searchParams: { id } }: Props) {
       <BackgroundBox>
         <FolderSettings data={data!} />
         <LibraryPath element="folder" id={parseInt(id)} />
-        <ProgressDisplay scope="folder" id={parseInt(id)} />
         <Link
           href={"/learn?scope=folder&method=shortTermMemory&id=" + data?.id}
           className="btn btn-primary w-full"

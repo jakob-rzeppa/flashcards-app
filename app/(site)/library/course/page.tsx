@@ -6,7 +6,6 @@ import NewElement from "@/components/library/NewElement";
 import CourseSettings from "./CourseSettings";
 import BackgroundBox from "@/components/BackgroundBox";
 import Link from "next/link";
-import ProgressDisplay from "@/components/library/ProgressDisplay";
 import LibraryPath from "@/components/library/LibraryPath";
 
 interface Props {
@@ -43,7 +42,6 @@ async function CoursePage({ searchParams: { id } }: Props) {
       <BackgroundBox>
         <CourseSettings data={data} />
         <LibraryPath element="course" id={parseInt(id)} />
-        <ProgressDisplay scope="course" id={parseInt(id)} />
         <Link
           href={"/learn?scope=course&method=shortTermMemory&id=" + data?.id}
           className="btn btn-primary w-full"
