@@ -106,7 +106,7 @@ function EditCards({ data, stackId }: Props) {
         {cards.map((card, index) => (
           <button
             onClick={() => handleEditCard(index)}
-            className="btn w-full h-fit btn-neutral text-start items-center justify-start py-2 px-4 flex flex-nowrap md:flex-row flex-col gap-4"
+            className="btn w-full h-fit text-start items-center justify-start py-2 px-4 flex flex-nowrap md:flex-row flex-col gap-4"
             key={card.id}
           >
             <h3 className="text-xl flex-1 whitespace-normal break-words">
