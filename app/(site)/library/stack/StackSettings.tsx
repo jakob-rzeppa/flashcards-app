@@ -1,39 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
+import { useRouter } from "next/navigation";
 
 import Settings from "@/components/library/Settings";
-import DeleteButton from "@/components/DeleteButton";
-import { deleteElement } from "@/actions/library/client/deleteElement";
-import { useRouter } from "next/navigation";
-import updateElement from "@/actions/library/client/updateElement";
 import resetCardLevels from "@/actions/cards/client/resetCardLevels";
+import updateStack from "@/actions/library/client/updateStack";
+import { typeCards, typeStack } from "@/types";
+import { deleteStack } from "@/actions/library/client/deleteStack";
 
-function StackSettings({
-  data,
-  cards,
-}: {
-  data: {
-    created_at: string;
-    description: string;
-    folder_id: number;
-    id: number;
-    name: string;
-    owner_id: string;
-  };
-  cards: {
-    created_at: string;
-    definition: string;
-    id: number;
-    owner_id: string;
-    stack_id: number;
-    word: string;
-  }[];
-}) {
+function StackSettings({ data, cards }: { data: typeStack; cards: typeCards }) {
   const router = useRouter();
 
   const onSave = async (name: string, description: string) => {
-    await updateElement("stacks", data.id, { name, description });
+    await updateStack(data.id, { name, description });
 
     router.refresh();
   };
@@ -45,8 +25,8 @@ function StackSettings({
   };
 
   const onDelete = () => {
-    deleteElement("stacks", data.id);
-    router.push("/library/folder?id=" + data.folder_id);
+    deleteStack(data.id);
+    router.push("/library/");
   };
 
   return (

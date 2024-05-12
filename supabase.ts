@@ -87,77 +87,36 @@ export type Database = {
           }
         ];
       };
-      courses: {
+      stack_tags: {
         Row: {
-          created_at: string;
-          description: string | null;
           id: number;
-          name: string;
-          owner_id: string;
+          stack_id: number;
+          tag: string;
         };
         Insert: {
-          created_at?: string;
-          description?: string | null;
           id?: number;
-          name: string;
-          owner_id?: string;
+          stack_id: number;
+          tag: string;
         };
         Update: {
-          created_at?: string;
-          description?: string | null;
           id?: number;
-          name?: string;
-          owner_id?: string;
+          stack_id?: number;
+          tag?: string;
         };
         Relationships: [
           {
-            foreignKeyName: "public_courses_owner_id_fkey";
-            columns: ["owner_id"];
+            foreignKeyName: "stack_tags_stack_id_fkey";
+            columns: ["stack_id"];
             isOneToOne: false;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
-      };
-      folders: {
-        Row: {
-          course_id: number;
-          created_at: string;
-          description: string;
-          id: number;
-          name: string;
-          owner_id: string;
-        };
-        Insert: {
-          course_id: number;
-          created_at?: string;
-          description?: string;
-          id?: number;
-          name: string;
-          owner_id?: string;
-        };
-        Update: {
-          course_id?: number;
-          created_at?: string;
-          description?: string;
-          id?: number;
-          name?: string;
-          owner_id?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: "public_folders_course_id_fkey";
-            columns: ["course_id"];
-            isOneToOne: false;
-            referencedRelation: "courses";
+            referencedRelation: "stacks";
             referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "public_folders_owner_id_fkey";
-            columns: ["owner_id"];
+            foreignKeyName: "stack_tags_tag_fkey";
+            columns: ["tag"];
             isOneToOne: false;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
+            referencedRelation: "tags";
+            referencedColumns: ["name"];
           }
         ];
       };
@@ -165,7 +124,6 @@ export type Database = {
         Row: {
           created_at: string;
           description: string;
-          folder_id: number;
           id: number;
           name: string;
           owner_id: string;
@@ -173,7 +131,6 @@ export type Database = {
         Insert: {
           created_at?: string;
           description?: string;
-          folder_id: number;
           id?: number;
           name: string;
           owner_id?: string;
@@ -181,19 +138,11 @@ export type Database = {
         Update: {
           created_at?: string;
           description?: string;
-          folder_id?: number;
           id?: number;
           name?: string;
           owner_id?: string;
         };
         Relationships: [
-          {
-            foreignKeyName: "public_stacks_folder_id_fkey";
-            columns: ["folder_id"];
-            isOneToOne: false;
-            referencedRelation: "folders";
-            referencedColumns: ["id"];
-          },
           {
             foreignKeyName: "public_stacks_owner_id_fkey";
             columns: ["owner_id"];
@@ -202,6 +151,18 @@ export type Database = {
             referencedColumns: ["id"];
           }
         ];
+      };
+      tags: {
+        Row: {
+          name: string;
+        };
+        Insert: {
+          name: string;
+        };
+        Update: {
+          name?: string;
+        };
+        Relationships: [];
       };
     };
     Views: {

@@ -32,10 +32,11 @@
 Supabase
 
 - supabase user (from supabase)
-- cards (id, front, back)
+- cards (id, front, back, stack_id -> stacks.id)
 - stacks (id, name, description)
-- tags (id, name, stack_id)
-- card_levels (user_id, card_id, level, last_changed)
+- tags (name)
+- stack_tags (tag -> tag.name, stack_id -> stacks.id)
+- card_levels (user_id -> auth.user, card_id -> cards.id, level, last_changed)
 
 ### Stacks / Stack organisation
 

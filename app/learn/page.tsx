@@ -3,28 +3,17 @@ import CardsManager from "@/components/learnCards/CardsManager";
 
 interface Props {
   searchParams: {
-    scope: "stack" | "folder" | "course" | "library";
     id?: string;
     method: "shortTermMemory" | "longTermMemory";
   };
 }
 
-async function LearnPage({ searchParams: { scope, id, method } }: Props) {
+async function LearnPage({ searchParams: { id, method } }: Props) {
   const cards = id
-    ? await getCards(method, scope, parseInt(id))
-    : await getCards(method, scope);
+    ? await getCards(method, parseInt(id))
+    : await getCards(method);
 
-  let prevHref = "/library/";
-  switch (scope) {
-    case "course":
-      prevHref += "course?id=" + id;
-      break;
-    case "folder":
-      prevHref += "folder?id=" + id;
-      break;
-    case "stack":
-      prevHref += "stack?id=" + id;
-  }
+  const prevHref = "/library/stack?id=" + id;
 
   return <CardsManager cards={cards} prevHref={prevHref} />;
 }
