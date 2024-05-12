@@ -31,8 +31,15 @@
 
 Supabase
 
-- supabase user
-- cards
-- stacks
-- tags
-- card_levels
+- supabase user (from supabase)
+- cards (id, front, back)
+- stacks (id, name, description)
+- tags (id, name, stack_id)
+- card_levels (user_id, card_id, level, last_changed)
+
+### Stacks / Stack organisation
+
+- Search for stack name (Spotify clone search)
+- Select multiple tags
+- Order stacks
+- Save search params in the url (sharable link)
