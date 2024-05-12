@@ -1,11 +1,11 @@
 import { createClient } from "@/utils/supabase/client";
 
-async function createCard(stackId: number, word: string, definition: string) {
+async function createCard(stackId: number, front: string, back: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
     .from("cards")
-    .insert([{ word: word, definition: definition, stack_id: stackId }])
+    .insert([{ front: front, back: back, stack_id: stackId }])
     .select();
 
   if (error) {

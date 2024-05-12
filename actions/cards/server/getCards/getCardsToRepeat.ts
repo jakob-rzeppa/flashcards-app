@@ -1,15 +1,7 @@
+import { typeCards } from "@/types";
 import { createClient } from "@/utils/supabase/server";
 
-export default async function getCardsToRepeat(
-  cards: {
-    created_at: string;
-    definition: string;
-    id: number;
-    owner_id: string;
-    stack_id: number;
-    word: string;
-  }[]
-) {
+export default async function getCardsToRepeat(cards: typeCards) {
   const supabase = createClient();
 
   const user = await supabase.auth.getUser();

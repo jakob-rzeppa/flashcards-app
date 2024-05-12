@@ -1,11 +1,11 @@
 import { createClient } from "@/utils/supabase/client";
 
-async function updateCard(cardId: number, word: string, definition: string) {
+async function updateCard(cardId: number, front: string, back: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
     .from("cards")
-    .update({ word: word, definition: definition })
+    .update({ front: front, back: back })
     .eq("id", cardId)
     .select();
 
@@ -13,7 +13,7 @@ async function updateCard(cardId: number, word: string, definition: string) {
     throw error;
   }
 
-  console.log("Sucessfully updated", { cardId, word, definition });
+  console.log("Sucessfully updated", { cardId, front, back });
 }
 
 export default updateCard;

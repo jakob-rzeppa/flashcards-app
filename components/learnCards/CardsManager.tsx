@@ -5,30 +5,22 @@ import React, { createContext, useEffect, useState } from "react";
 import NavButton from "../navigation/NavButton";
 import BrowserCards from "./BrowserCards";
 import { useRouter } from "next/navigation";
-
-export interface CardData {
-  created_at: string;
-  definition: string;
-  id: number;
-  owner_id: string;
-  stack_id: number;
-  word: string;
-}
+import { typeCards } from "@/types";
 
 interface Props {
-  cards: CardData[];
+  cards: typeCards;
   prevHref: string;
 }
 
 export const currentCardsContext = createContext<{
-  currentCards: CardData[];
-  setCurrentCards: React.Dispatch<React.SetStateAction<CardData[]>>;
+  currentCards: typeCards;
+  setCurrentCards: React.Dispatch<React.SetStateAction<typeCards>>;
 } | null>(null);
 
 function CardsManager({ cards, prevHref }: Props) {
   const router = useRouter();
 
-  const [currentCards, setCurrentCards] = useState<CardData[]>(cards);
+  const [currentCards, setCurrentCards] = useState<typeCards>(cards);
 
   useEffect(() => {
     if (currentCards.length <= 0) {

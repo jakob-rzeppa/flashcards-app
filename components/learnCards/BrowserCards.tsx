@@ -6,7 +6,8 @@ import { FaArrowLeft, FaArrowRight, FaArrowDown } from "react-icons/fa";
 
 import "./rotate.css";
 import "./animation.css";
-import { CardData, currentCardsContext } from "./CardsManager";
+import { currentCardsContext } from "./CardsManager";
+import { typeCards } from "@/types";
 
 interface Props {
   onFinished: () => void;
@@ -45,7 +46,7 @@ function BrowserCards({ onFinished }: Props) {
       setIndex(0);
 
       // update current cards
-      const nextCards: CardData[] = [];
+      const nextCards: typeCards = [];
       nextPrevCards.forEach((card) => {
         if (!card.right) {
           nextCards.push(currentCards[card.index]);
@@ -150,14 +151,14 @@ function BrowserCards({ onFinished }: Props) {
           <div id="front" className="front absolute w-full h-full">
             <p className="text-3xl absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
               {currentCards[index]
-                ? currentCards[index].word
+                ? currentCards[index].front
                 : "Something went wrong"}
             </p>
           </div>
           <div id="back" className="back rotate absolute w-full h-full">
             <p className="text-3xl absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
               {currentCards[index]
-                ? currentCards[index].definition
+                ? currentCards[index].back
                 : "Something went wrong"}
             </p>
           </div>

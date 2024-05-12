@@ -7,16 +7,10 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import updateCard from "@/actions/cards/client/updateCard";
 import createCard from "@/actions/cards/client/createCard";
 import deleteCard from "@/actions/cards/client/deleteCard";
+import { typeCards } from "@/types";
 
 interface Props {
-  data: {
-    created_at: string;
-    definition: string;
-    id: number;
-    owner_id: string | null;
-    stack_id: number;
-    word: string;
-  }[];
+  data: typeCards;
   stackId: number;
 }
 
@@ -30,8 +24,8 @@ function EditCards({ data, stackId }: Props) {
   const [newCard, setNewCard] = useState(false);
 
   const handleEditCard = (index: number) => {
-    setWord(cards[index] ? cards[index].word : "");
-    setDefinition(cards[index] ? cards[index].definition : "");
+    setWord(cards[index] ? cards[index].front : "");
+    setDefinition(cards[index] ? cards[index].back : "");
     setIndexToEdit(index);
 
     (
@@ -75,8 +69,8 @@ function EditCards({ data, stackId }: Props) {
     }
 
     if (
-      word === (cards[indexToEdit] ? cards[indexToEdit].word : "") &&
-      definition === (cards[indexToEdit] ? cards[indexToEdit].definition : "")
+      word === (cards[indexToEdit] ? cards[indexToEdit].front : "") &&
+      definition === (cards[indexToEdit] ? cards[indexToEdit].back : "")
     )
       return;
 
@@ -99,8 +93,8 @@ function EditCards({ data, stackId }: Props) {
     updateCard(cards[indexToEdit].id, word, definition);
 
     const tempCards = cards.map((card) => card);
-    tempCards[indexToEdit].word = word;
-    tempCards[indexToEdit].definition = definition;
+    tempCards[indexToEdit].front = word;
+    tempCards[indexToEdit].back = definition;
     setCards(tempCards);
 
     resetModal();
@@ -116,10 +110,10 @@ function EditCards({ data, stackId }: Props) {
             key={card.id}
           >
             <h3 className="text-xl flex-1 whitespace-normal break-words">
-              {card.word}
+              {card.front}
             </h3>
             <h4 className="md:text-xl text-md flex-1 whitespace-normal break-words ">
-              {card.definition}
+              {card.back}
             </h4>
           </button>
         ))}
