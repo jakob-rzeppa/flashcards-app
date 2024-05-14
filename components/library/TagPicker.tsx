@@ -2,34 +2,37 @@
 
 import React, { useState } from "react";
 
-function TagPicker() {
-  const suggestions = ["test", "atest2"].sort();
+interface Props {
+  activeTags: string[];
+  setActiveTags: React.Dispatch<React.SetStateAction<string[]>>;
+}
 
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+function TagPicker({ activeTags, setActiveTags }: Props) {
+  const suggestions = ["test", "atest2"].sort();
 
   const [inputValue, setInputValue] = useState("");
 
   const onRemove = (tagToRemove: string) => {
-    const index = selectedTags.indexOf(tagToRemove);
+    const index = activeTags.indexOf(tagToRemove);
 
-    const newTags = [...selectedTags];
+    const newTags = [...activeTags];
     if (index > -1) {
       // only splice array when item is found
       newTags.splice(index, 1);
     }
-    setSelectedTags(newTags);
+    setActiveTags(newTags);
   };
 
   const onRemoveLast = () => {
     if (inputValue !== "") return;
-    const newTags = [...selectedTags];
+    const newTags = [...activeTags];
     newTags.pop();
-    setSelectedTags(newTags);
+    setActiveTags(newTags);
   };
 
   const onAdd = (tag: string) => {
-    if (suggestions.includes(tag) && !selectedTags.includes(tag)) {
-      setSelectedTags([...selectedTags, tag]);
+    if (suggestions.includes(tag) && !activeTags.includes(tag)) {
+      setActiveTags([...activeTags, tag]);
       setInputValue("");
       return;
     }
@@ -41,7 +44,7 @@ function TagPicker() {
         className="w-full flex flex-row gap-2 items-center input"
         role="button"
       >
-        {selectedTags.map((tag, index) => (
+        {activeTags.map((tag, index) => (
           <button
             className="rounded-md bg-base-200 p-1 hover:bg-base-300"
             onClick={() => onRemove(tag)}
@@ -51,6 +54,10 @@ function TagPicker() {
           </button>
         ))}
         <input
+          placeholder="Input tags"
+          autoCapitalize="false"
+          autoComplete="false"
+          autoCorrect="false"
           type="text"
           name="tagInput"
           className="flex-1"
@@ -68,7 +75,7 @@ function TagPicker() {
       >
         {suggestions.map(
           (suggestion, index) =>
-            !selectedTags.includes(suggestion) &&
+            !activeTags.includes(suggestion) &&
             suggestion.startsWith(inputValue) && (
               <li key={index} className="">
                 <button className="" onClick={() => onAdd(suggestion)}>
