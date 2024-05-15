@@ -1,16 +1,8 @@
+import { typeCards } from "@/types";
 import { createClient } from "@/utils/supabase/server";
 
 // TODO delete or rebuild with new learn algorithm
-export async function getAllCardLevels(
-  cards: {
-    created_at: string;
-    definition: string;
-    id: number;
-    owner_id: string;
-    stack_id: number;
-    word: string;
-  }[]
-) {
+export async function getAllCardLevels(cards: typeCards) {
   const supabase = createClient();
 
   const user = await supabase.auth.getUser();

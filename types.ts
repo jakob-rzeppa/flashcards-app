@@ -12,5 +12,5 @@ export type typeStack = {
   description: string;
   id: number;
   name: string;
-  owner_id: string;
+  user_id: string;
 };

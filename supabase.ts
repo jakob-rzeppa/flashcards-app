@@ -72,7 +72,7 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "public_cards_owner_id_fkey";
+            foreignKeyName: "cards_user_id_fkey";
             columns: ["user_id"];
             isOneToOne: false;
             referencedRelation: "users";
@@ -89,17 +89,14 @@ export type Database = {
       };
       stack_tags: {
         Row: {
-          id: number;
           stack_id: number;
           tag: string;
         };
         Insert: {
-          id?: number;
           stack_id: number;
           tag: string;
         };
         Update: {
-          id?: number;
           stack_id?: number;
           tag?: string;
         };
@@ -126,26 +123,26 @@ export type Database = {
           description: string;
           id: number;
           name: string;
-          owner_id: string;
+          user_id: string;
         };
         Insert: {
           created_at?: string;
           description?: string;
           id?: number;
           name: string;
-          owner_id?: string;
+          user_id?: string;
         };
         Update: {
           created_at?: string;
           description?: string;
           id?: number;
           name?: string;
-          owner_id?: string;
+          user_id?: string;
         };
         Relationships: [
           {
-            foreignKeyName: "public_stacks_owner_id_fkey";
-            columns: ["owner_id"];
+            foreignKeyName: "stacks_user_id_fkey";
+            columns: ["user_id"];
             isOneToOne: false;
             referencedRelation: "users";
             referencedColumns: ["id"];

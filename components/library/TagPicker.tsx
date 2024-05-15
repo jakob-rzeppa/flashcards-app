@@ -5,10 +5,11 @@ import React, { useState } from "react";
 interface Props {
   activeTags: string[];
   setActiveTags: React.Dispatch<React.SetStateAction<string[]>>;
+  possibleTags: string[];
 }
 
-function TagPicker({ activeTags, setActiveTags }: Props) {
-  const suggestions = ["test", "atest2"].sort();
+function TagPicker({ activeTags, setActiveTags, possibleTags }: Props) {
+  const suggestions = possibleTags.sort();
 
   const [inputValue, setInputValue] = useState("");
 
