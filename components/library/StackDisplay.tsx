@@ -25,9 +25,13 @@ function StackDisplay({ stacks, tags }: Props) {
         setActiveTags={setActiveTags}
         possibleTags={possibleTags}
       />
-      {stacks.map((stack, index) => (
-        <div key={index}>{stack.name}</div>
-      ))}
+      <div className="grid grid-cols-3 gap-2">
+        {stacks.map((stack, index) => (
+          <a key={index} className="btn" href={`/library/stack?id=${stack.id}`}>
+            {stack.name}
+          </a>
+        ))}
+      </div>
     </div>
   );
 }

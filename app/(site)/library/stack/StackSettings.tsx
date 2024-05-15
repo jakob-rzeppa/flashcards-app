@@ -8,8 +8,17 @@ import resetCardLevels from "@/actions/cards/client/resetCardLevels";
 import updateStack from "@/actions/library/client/updateStack";
 import { typeCards, typeStack } from "@/types";
 import { deleteStack } from "@/actions/library/client/deleteStack";
+import TagAdder from "@/components/library/TagAdder";
 
-function StackSettings({ data, cards }: { data: typeStack; cards: typeCards }) {
+function StackSettings({
+  data,
+  cards,
+  tags,
+}: {
+  data: typeStack;
+  cards: typeCards;
+  tags: string[];
+}) {
   const router = useRouter();
 
   const onSave = async (name: string, description: string) => {
@@ -42,6 +51,7 @@ function StackSettings({ data, cards }: { data: typeStack; cards: typeCards }) {
       >
         Reset Cards
       </button>
+      <TagAdder data={data} allTags={tags} />
     </Settings>
   );
 }

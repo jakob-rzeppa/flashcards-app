@@ -5,12 +5,15 @@ import StackSettings from "./StackSettings";
 import BackgroundBox from "@/components/BackgroundBox";
 import Link from "next/link";
 import EditCards from "./EditCards";
+import getAllTags from "@/actions/library/server/getAllTags";
 
 interface Props {
   searchParams: { id: string };
 }
 
 async function StackPage({ searchParams: { id } }: Props) {
+  // TODO error handling
+  const allTags = await getAllTags();
   const { data, cards } = await getStackData(parseInt(id));
 
   if (!data) {
@@ -26,7 +29,11 @@ async function StackPage({ searchParams: { id } }: Props) {
         {data.description}
       </h2>
       <BackgroundBox>
-        <StackSettings data={data!} cards={cards} />
+        <StackSettings
+          data={data!}
+          cards={cards}
+          tags={allTags.map((tag) => tag.name)}
+        />
         <Link
           href={"/learn?scope=stack&method=shortTermMemory&id=" + id}
           className="btn btn-primary w-full"
