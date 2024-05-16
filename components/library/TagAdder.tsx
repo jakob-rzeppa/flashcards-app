@@ -1,7 +1,7 @@
 "use client";
 
+import addTag from "@/actions/library/client/addTag";
 import { typeStack } from "@/types";
-import { createClient } from "@/utils/supabase/client";
 import React, { useState } from "react";
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 
 function TagAdder({ data, allTags }: Props) {
   const [inputValue, setInputValue] = useState("");
-  const [currentTags, setCurrentTags] = useState<string[]>([]);
+  const [currentTags, setCurrentTags] = useState<string[]>(allTags);
 
   const onRemove = (tag: string) => {
     // TODO upload to supabase
@@ -35,10 +35,13 @@ function TagAdder({ data, allTags }: Props) {
   };
 
   const onAdd = (tag: string) => {
-    // TODO upload to supabase
-
-    setCurrentTags([...currentTags, tag]);
-    setInputValue("");
+    const added = addTag(tag, data.id);
+    added.then((val) => {
+      if (val) {
+        setCurrentTags([...currentTags, tag]);
+        setInputValue("");
+      }
+    });
   };
 
   return (
