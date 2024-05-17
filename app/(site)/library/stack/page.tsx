@@ -13,8 +13,8 @@ interface Props {
 
 async function StackPage({ searchParams: { id } }: Props) {
   // TODO error handling
+  const { data, cards, tags } = await getStackData(parseInt(id));
   const allTags = await getAllTags();
-  const { data, cards } = await getStackData(parseInt(id));
 
   if (!data) {
     return <div>Could not load Stack</div>;
@@ -32,7 +32,8 @@ async function StackPage({ searchParams: { id } }: Props) {
         <StackSettings
           data={data!}
           cards={cards}
-          tags={allTags.map((tag) => tag.name)}
+          tags={tags}
+          allTags={allTags.map((tag) => tag.name)}
         />
         <Link
           href={"/learn?scope=stack&method=shortTermMemory&id=" + id}

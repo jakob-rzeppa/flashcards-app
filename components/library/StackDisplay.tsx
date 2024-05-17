@@ -2,18 +2,18 @@
 
 import React, { useState } from "react";
 import TagPicker from "./TagPicker";
-import { typeStack } from "@/types";
+import { typeStack, typeStackTag } from "@/types";
 
 interface Props {
   stacks: typeStack[];
-  tags: { stack_id: number; tag: string }[];
+  tags: string[];
 }
 
 function StackDisplay({ stacks, tags }: Props) {
   const possibleTags: string[] = [];
   tags.forEach((tag) => {
-    if (!possibleTags.includes(tag.tag)) {
-      possibleTags.push(tag.tag);
+    if (!possibleTags.includes(tag)) {
+      possibleTags.push(tag);
     }
   });
 

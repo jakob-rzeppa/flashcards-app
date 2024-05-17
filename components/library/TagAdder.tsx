@@ -1,20 +1,24 @@
 "use client";
 
 import addTag from "@/actions/library/client/addTag";
-import { typeStack } from "@/types";
+import removeTag from "@/actions/library/client/removeTag";
+import { typeStack, typeStackTag } from "@/types";
 import React, { useState } from "react";
 
 interface Props {
   data: typeStack;
   allTags: string[];
+  tags: typeStackTag[];
 }
 
-function TagAdder({ data, allTags }: Props) {
+function TagAdder({ data, allTags, tags }: Props) {
   const [inputValue, setInputValue] = useState("");
-  const [currentTags, setCurrentTags] = useState<string[]>(allTags);
+  const [currentTags, setCurrentTags] = useState<string[]>(
+    tags.map((tag) => tag.tag)
+  );
 
-  const onRemove = (tag: string) => {
-    // TODO upload to supabase
+  const onRemove = async (tag: string) => {
+    await removeTag(tag, data.id);
 
     const index = currentTags.indexOf(tag);
     const newTags = [...currentTags];
@@ -25,8 +29,8 @@ function TagAdder({ data, allTags }: Props) {
     setCurrentTags(newTags);
   };
 
-  const onRemoveLast = () => {
-    // TODO upload to supabase
+  const onRemoveLast = async () => {
+    await removeTag(currentTags[currentTags.length - 1], data.id);
 
     if (inputValue !== "") return;
     const newTags = [...currentTags];
@@ -34,14 +38,11 @@ function TagAdder({ data, allTags }: Props) {
     setCurrentTags(newTags);
   };
 
-  const onAdd = (tag: string) => {
-    const added = addTag(tag, data.id);
-    added.then((val) => {
-      if (val) {
-        setCurrentTags([...currentTags, tag]);
-        setInputValue("");
-      }
-    });
+  const onAdd = async (tag: string) => {
+    await addTag(tag, data.id);
+
+    setCurrentTags([...currentTags, tag]);
+    setInputValue("");
   };
 
   return (

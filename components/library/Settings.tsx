@@ -3,7 +3,6 @@
 import React, { ReactNode, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import DeleteButton from "../DeleteButton";
-import { useRouter } from "next/navigation";
 
 interface Props {
   data: {

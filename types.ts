@@ -14,3 +14,8 @@ export type typeStack = {
   name: string;
   user_id: string;
 };
+
+export type typeStackTag = {
+  stack_id: number;
+  tag: string;
+};

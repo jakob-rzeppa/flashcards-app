@@ -3,7 +3,7 @@ import { createClient } from "@/utils/supabase/server";
 export async function getStackData(id: number) {
   const supabase = createClient();
 
-  const stack = await supabase.from("stacks").select("*").eq("id", id);
+  const stacks = await supabase.from("stacks").select("*").eq("id", id);
 
   const cards = await supabase
     .from("cards")
@@ -11,20 +11,33 @@ export async function getStackData(id: number) {
     .eq("stack_id", id)
     .order("created_at", { ascending: true });
 
-  if (stack.error) {
-    console.error(stack.error);
-    return { data: null, cards: [] };
+  if (stacks.error) {
+    console.error(stacks.error);
+    return { data: null, cards: [], tags: [] };
   }
 
-  if (stack.data.length === 0) {
+  if (stacks.data.length === 0) {
     console.error("StackId not found!");
-    return { data: null, cards: [] };
+    return { data: null, cards: [], tags: [] };
   }
 
   if (cards.error) {
     console.error(cards.error);
-    return { data: stack.data[0], cards: [] };
+    return { data: stacks.data[0], cards: [], tags: [] };
   }
 
-  return { data: stack.data[0], cards: cards.data };
+  const tags = await supabase
+    .from("stack_tags")
+    .select("*")
+    .in(
+      "stack_id",
+      stacks.data.map((stack) => stack.id)
+    );
+
+  if (tags.error) {
+    console.error(tags.error);
+    return { data: stacks.data[0], cards: cards.data, tags: [] };
+  }
+
+  return { data: stacks.data[0], cards: cards.data, tags: tags.data };
 }
