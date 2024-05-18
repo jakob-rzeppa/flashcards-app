@@ -130,12 +130,35 @@ function BrowserCards({ onFinished }: Props) {
         value={prevCards.length}
         max={currentCards.length}
       ></progress>
-      <button
-        className="btn btn-circle btn-ghost absolute top-[22%] left-[18%] z-10"
-        onClick={back}
+
+      <div
+        className={`${animation === "none" ? "" : animation} ${
+          visible ? "" : "hidden"
+        } card_wrapper w-2/3 z-10 h-3/5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none`}
       >
-        <FaArrowLeft size={20} />
-      </button>
+        <div
+          id="card"
+          className={`card relative w-full h-full ${rotated ? "rotate" : ""}`}
+        >
+          <div id="front" className="front absolute w-full h-full">
+            <button
+              className="btn btn-circle btn-ghost absolute top-2 left-2 z-20 pointer-events-auto"
+              onClick={back}
+            >
+              <FaArrowLeft size={20} />
+            </button>
+          </div>
+          <div id="back" className="back rotate absolute w-full h-full">
+            <button
+              className="btn btn-circle btn-ghost absolute top-2 left-2 z-20 pointer-events-auto"
+              onClick={back}
+            >
+              <FaArrowLeft size={20} />
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div
         className={`${animation === "none" ? "" : animation} ${
           visible ? "" : "hidden"
@@ -144,7 +167,7 @@ function BrowserCards({ onFinished }: Props) {
       >
         <div
           id="card"
-          className={`card bg-neutral relative w-full h-full ${
+          className={`card bg-base-200 text-base-content relative w-full h-full ${
             rotated ? "rotate" : ""
           }`}
         >
