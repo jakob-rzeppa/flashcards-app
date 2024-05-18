@@ -78,7 +78,7 @@ function TagAdder({ data, allTags, tags }: Props) {
       </div>
       <ul
         tabIndex={0}
-        className="dropdown-content z-[1] menu shadow bg-base-100 rounded-box w-max min-w-64 flex-col justify-start gap-1 p-4"
+        className="dropdown-content absolute z-[1] menu shadow bg-base-100 rounded-box w-max min-w-64 flex-col justify-start gap-1 p-4"
       >
         {allTags.map(
           (tag, index) =>
