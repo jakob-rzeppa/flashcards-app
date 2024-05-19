@@ -13,7 +13,7 @@ function StackDisplay({ stacks, tags }: Props) {
   const possibleTags: string[] = [];
   tags.forEach((value) => {
     value.forEach((e) => {
-      possibleTags.push(e);
+      if (!possibleTags.includes(e)) possibleTags.push(e);
     });
   });
 
@@ -42,10 +42,10 @@ function StackDisplay({ stacks, tags }: Props) {
 
           const stackTags = tags.get(stack.id);
           if (!stackTags) {
-            return;
+            return null;
           }
 
-          if (stackTags.every((val) => activeTags.includes(val))) {
+          if (activeTags.every((tag) => stackTags.includes(tag))) {
             return (
               <a
                 key={index}

@@ -30,6 +30,7 @@ function TagAdder({ data, allTags, tags }: Props) {
   };
 
   const onRemoveLast = async () => {
+    if (currentTags.length <= 0) return;
     await removeTag(currentTags[currentTags.length - 1], data.id);
 
     if (inputValue !== "") return;
