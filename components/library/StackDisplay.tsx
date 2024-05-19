@@ -26,16 +26,23 @@ function StackDisplay({ stacks, tags }: Props) {
         setActiveTags={setActiveTags}
         possibleTags={possibleTags}
       />
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-3 gap-2 p-4">
         {stacks.map((stack, index) => {
           if (activeTags.length === 0) {
             return (
               <a
                 key={index}
-                className="btn"
+                className="btn flex flex-col p-2 h-full"
                 href={`/library/stack?id=${stack.id}`}
               >
-                {stack.name}
+                <div>{stack.name}</div>
+                <div className="flex flex-wrap justify-center gap-1">
+                  {tags.get(stack.id)?.map((tag) => (
+                    <span className="badge badge-primary" key={tag}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </a>
             );
           }
@@ -49,10 +56,17 @@ function StackDisplay({ stacks, tags }: Props) {
             return (
               <a
                 key={index}
-                className="btn"
+                className="btn flex flex-col p-2 h-full"
                 href={`/library/stack?id=${stack.id}`}
               >
-                {stack.name}
+                <div>{stack.name}</div>
+                <div className="flex flex-wrap justify-center gap-1">
+                  {tags.get(stack.id)?.map((tag) => (
+                    <span className="badge badge-primary" key={tag}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </a>
             );
           }
