@@ -12,7 +12,6 @@
 ### Stacks
 
 - Create, update, delete Stacks (title, description)
-- Stack organisation system using tags
 - Progress display (long term memory)
 
 ### User
@@ -34,13 +33,9 @@ Supabase
 - supabase user (from supabase)
 - cards (id, front, back, stack_id -> stacks.id)
 - stacks (id, name, description)
-- tags (name)
-- stack_tags (tag -> tag.name, stack_id -> stacks.id)
 - card_levels (user_id -> auth.user, card_id -> cards.id, level, last_changed)
 
 ### Stacks / Stack organisation
 
 - Search for stack name (Spotify clone search)
-- Select multiple tags
 - Order stacks
-- Save search params in the url (sharable link)

@@ -87,36 +87,6 @@ export type Database = {
           }
         ];
       };
-      stack_tags: {
-        Row: {
-          stack_id: number;
-          tag: string;
-        };
-        Insert: {
-          stack_id: number;
-          tag: string;
-        };
-        Update: {
-          stack_id?: number;
-          tag?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: "stack_tags_stack_id_fkey";
-            columns: ["stack_id"];
-            isOneToOne: false;
-            referencedRelation: "stacks";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "stack_tags_tag_fkey";
-            columns: ["tag"];
-            isOneToOne: false;
-            referencedRelation: "tags";
-            referencedColumns: ["name"];
-          }
-        ];
-      };
       stacks: {
         Row: {
           created_at: string;
@@ -148,18 +118,6 @@ export type Database = {
             referencedColumns: ["id"];
           }
         ];
-      };
-      tags: {
-        Row: {
-          name: string;
-        };
-        Insert: {
-          name: string;
-        };
-        Update: {
-          name?: string;
-        };
-        Relationships: [];
       };
     };
     Views: {

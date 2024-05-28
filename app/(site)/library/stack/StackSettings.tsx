@@ -6,21 +6,10 @@ import { useRouter } from "next/navigation";
 import Settings from "@/components/library/Settings";
 import resetCardLevels from "@/actions/cards/client/resetCardLevels";
 import updateStack from "@/actions/library/client/updateStack";
-import { typeCards, typeStack, typeStackTag } from "@/types";
+import { typeCards, typeStack } from "@/types";
 import { deleteStack } from "@/actions/library/client/deleteStack";
-import TagAdder from "@/components/library/TagAdder";
 
-function StackSettings({
-  data,
-  cards,
-  tags,
-  allTags,
-}: {
-  data: typeStack;
-  cards: typeCards;
-  tags: typeStackTag[];
-  allTags: string[];
-}) {
+function StackSettings({ data, cards }: { data: typeStack; cards: typeCards }) {
   const router = useRouter();
 
   const onSave = async (name: string, description: string) => {
@@ -53,7 +42,6 @@ function StackSettings({
       >
         Reset Cards
       </button>
-      <TagAdder data={data} allTags={allTags} tags={tags} />
     </Settings>
   );
 }

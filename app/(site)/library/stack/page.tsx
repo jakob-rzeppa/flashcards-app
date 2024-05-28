@@ -5,7 +5,6 @@ import StackSettings from "./StackSettings";
 import BackgroundBox from "@/components/BackgroundBox";
 import Link from "next/link";
 import EditCards from "./EditCards";
-import getAllTags from "@/actions/library/server/getAllTags";
 
 interface Props {
   searchParams: { id: string };
@@ -13,8 +12,7 @@ interface Props {
 
 async function StackPage({ searchParams: { id } }: Props) {
   // TODO error handling
-  const { data, cards, tags } = await getStackData(parseInt(id));
-  const allTags = await getAllTags();
+  const { data, cards } = await getStackData(parseInt(id));
 
   if (!data) {
     return <div>Could not load Stack</div>;
@@ -29,12 +27,7 @@ async function StackPage({ searchParams: { id } }: Props) {
         {data.description}
       </h2>
       <BackgroundBox>
-        <StackSettings
-          data={data!}
-          cards={cards}
-          tags={tags}
-          allTags={allTags.map((tag) => tag.name)}
-        />
+        <StackSettings data={data!} cards={cards} />
         <Link
           href={"/learn?scope=stack&method=shortTermMemory&id=" + id}
           className="btn btn-primary w-full"
