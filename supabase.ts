@@ -87,12 +87,52 @@ export type Database = {
           }
         ];
       };
+      folders: {
+        Row: {
+          created_at: string;
+          id: number;
+          name: string;
+          parent_folder: number | null;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: number;
+          name?: string;
+          parent_folder?: number | null;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: number;
+          name?: string;
+          parent_folder?: number | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "folders_parent_folder_fkey";
+            columns: ["parent_folder"];
+            isOneToOne: false;
+            referencedRelation: "folders";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "folders_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
       stacks: {
         Row: {
           created_at: string;
           description: string;
           id: number;
           name: string;
+          parent_folder: number | null;
           user_id: string;
         };
         Insert: {
@@ -100,6 +140,7 @@ export type Database = {
           description?: string;
           id?: number;
           name: string;
+          parent_folder?: number | null;
           user_id?: string;
         };
         Update: {
@@ -107,9 +148,17 @@ export type Database = {
           description?: string;
           id?: number;
           name?: string;
+          parent_folder?: number | null;
           user_id?: string;
         };
         Relationships: [
+          {
+            foreignKeyName: "stacks_parent_folder_fkey";
+            columns: ["parent_folder"];
+            isOneToOne: false;
+            referencedRelation: "folders";
+            referencedColumns: ["id"];
+          },
           {
             foreignKeyName: "stacks_user_id_fkey";
             columns: ["user_id"];

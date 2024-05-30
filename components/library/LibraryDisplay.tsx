@@ -7,7 +7,7 @@ interface Props {
   stacks: typeStack[];
 }
 
-function StackDisplay({ stacks }: Props) {
+function LibraryDisplay({ stacks }: Props) {
   return (
     <div className="w-full">
       <div className="grid grid-cols-3 gap-2 p-4">
@@ -25,4 +25,4 @@ function StackDisplay({ stacks }: Props) {
   );
 }
 
-export default StackDisplay;
+export default LibraryDisplay;

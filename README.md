@@ -31,11 +31,12 @@
 Supabase
 
 - supabase user (from supabase)
-- cards (id, front, back, stack_id -> stacks.id)
-- stacks (id, name, description)
+- cards (id, front, back, stack_id -> stacks.id, user_id -> auth.user)
+- stacks (id, name, description, user_id -> auth.user)
+- folder (id, name, parent_folder (can be NULL), user_id -> auth.user)
 - card_levels (user_id -> auth.user, card_id -> cards.id, level, last_changed)
 
 ### Stacks / Stack organisation
 
-- Search for stack name (Spotify clone search)
-- Order stacks
+- Folder / Stack structure like finder IOS (collapsable folders)
+- Order structure
