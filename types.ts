@@ -12,5 +12,14 @@ export type typeStack = {
   description: string;
   id: number;
   name: string;
+  parent_folder: number | null;
+  user_id: string;
+};
+
+export type typeFolder = {
+  created_at: string;
+  id: number;
+  name: string;
+  parent_folder: number | null;
   user_id: string;
 };
