@@ -3,6 +3,7 @@
 import React from "react";
 import { typeFolder, typeStack } from "@/types";
 import LibararyNode from "./LibararyNode";
+import { FaFolderPlus } from "react-icons/fa";
 
 interface Props {
   stacks: typeStack[];
@@ -73,6 +74,9 @@ function LibraryDisplay({ stacks, folders }: Props) {
       {tree.children.map((node) => (
         <LibararyNode node={node} />
       ))}
+      <button className="outline-offset-2 ml-2 m-2 w-full rounded shadow-sm p-2 hover:bg-base-300">
+        <FaFolderPlus size={25} />
+      </button>
     </div>
   );
 }

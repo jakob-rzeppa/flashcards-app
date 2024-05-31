@@ -1,5 +1,6 @@
 import { typeFolder, typeStack } from "@/types";
 import React from "react";
+import { FaFolderPlus } from "react-icons/fa";
 
 interface LibraryNode {
   type: "folder" | "stack" | null;
@@ -24,10 +25,13 @@ function LibararyNode({ node }: Props) {
         {node.children.map((child) => (
           <LibararyNode node={child} />
         ))}
+        <button className="outline-offset-2 ml-2 m-2 w-full rounded shadow-sm p-2 hover:bg-base-300">
+          <FaFolderPlus size={25} />
+        </button>
       </div>
     </div>
   ) : (
-    <div className="text-xl outline-offset-2 ml-4 m-2">
+    <div className="text-xl outline-offset-2 mr-4 m-2 w-full rounded shadow-sm p-2 hover:bg-base-300">
       <a
         href={`/library/stack?id=${node.data.id}`}
         className="text-xl font-normal"
