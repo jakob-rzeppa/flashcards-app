@@ -6,8 +6,8 @@ import { FaArrowLeft, FaArrowRight, FaArrowDown } from "react-icons/fa";
 
 import "./rotate.css";
 import "./animation.css";
-import { currentCardsContext } from "./CardsManager";
 import { typeCards } from "@/types";
+import useCurrentCardsContext from "@/hooks/useCurrentCardsContext";
 
 interface Props {
   onFinished: () => void;
@@ -16,12 +16,7 @@ interface Props {
 type dir = "right" | "left" | "down";
 
 function BrowserCards({ onFinished }: Props) {
-  const currentCardsOrNull = useContext(currentCardsContext);
-  if (!currentCardsOrNull) {
-    return <div>Error: Card Context not supplying cards</div>;
-  }
-
-  const { currentCards, setCurrentCards } = currentCardsOrNull;
+  const { currentCards, setCurrentCards } = useCurrentCardsContext();
 
   const [index, setIndex] = useState(0);
   const [prevCards, setPrevCards] = useState<
