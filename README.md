@@ -36,6 +36,8 @@ Supabase
 - folder (id, name, parent_folder (can be NULL), user_id -> auth.user)
 - card_levels (user_id -> auth.user, card_id -> cards.id, level, last_changed)
 
+For more information see ./supabase.ts
+
 ### Stacks / Stack organisation
 
 - Folder / Stack structure like finder IOS (collapsable folders)
