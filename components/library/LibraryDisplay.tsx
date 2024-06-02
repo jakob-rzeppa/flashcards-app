@@ -71,8 +71,8 @@ function LibraryDisplay({ stacks, folders }: Props) {
 
   return (
     <div className="w-full flex flex-col gap-2">
-      {tree.children.map((node) => (
-        <LibararyNode node={node} />
+      {tree.children.map((node, index) => (
+        <LibararyNode node={node} key={index} />
       ))}
       <button className="outline-offset-2 w-full ml-2 rounded shadow-sm p-2 hover:bg-base-300">
         <FaPlus size={23} />

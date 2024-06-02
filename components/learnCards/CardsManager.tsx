@@ -26,7 +26,7 @@ function CardsManager({ cards, prevHref }: Props) {
     if (currentCards.length <= 0) {
       router.push(prevHref);
     }
-  }, [currentCards]);
+  }, [currentCards, prevHref, router]);
 
   const [isFinished, setIsFinished] = useState(false);
 

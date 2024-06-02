@@ -22,8 +22,8 @@ function LibararyNode({ node }: Props) {
         {node.data?.name}
       </div>
       <div className="collapse-content flex flex-col gap-2">
-        {node.children.map((child) => (
-          <LibararyNode node={child} />
+        {node.children.map((child, index) => (
+          <LibararyNode node={child} key={index} />
         ))}
         <button className="outline-offset-2 w-full ml-2 rounded shadow-sm p-2 hover:bg-base-300">
           <FaPlus size={23} />
