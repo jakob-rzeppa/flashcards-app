@@ -4,7 +4,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "types": "npx supabase gen types typescript --project-id 'thuuymitstzfotzwerap' --schema public > supabase.ts"
+    "types": "npx supabase gen types typescript --project-id 'thuuymitstzfotzwerap' --schema public > supabase.ts",
+    "lint": "next lint"
   },
   "dependencies": {
     "@supabase/ssr": "latest",
@@ -26,6 +27,8 @@
     "@types/node": "20.11.5",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
-    "encoding": "^0.1.13"
+    "encoding": "^0.1.13",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.3"
   }
 }
