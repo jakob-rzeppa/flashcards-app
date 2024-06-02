@@ -1,9 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useState } from "react";
 import { typeFolder, typeStack } from "@/types";
 import LibararyNode from "./LibararyNode";
 import { FaFolderPlus, FaPlus } from "react-icons/fa";
+import createFolder from "@/actions/library/client/createFolder";
+import createStack from "@/actions/library/client/createStack";
 
 interface Props {
   stacks: typeStack[];
@@ -69,20 +71,70 @@ function addToTree(
 function LibraryDisplay({ stacks, folders }: Props) {
   const tree = createTree(stacks, folders);
 
+  const newElementModal = useRef<HTMLDialogElement>(null);
+  const [elementToChange, setElementToChange] = useState<"folder" | "stack">(
+    "folder"
+  );
+  const [newElementName, setNewElementName] = useState("");
+
+  const onNewElement = (type: "folder" | "stack") => {
+    setElementToChange(type);
+
+    newElementModal.current!.showModal();
+  };
+
+  const createNewElement = () => {
+    if (elementToChange === "folder") createFolder(newElementName);
+    else if (elementToChange === "stack") createStack(newElementName, "");
+
+    setElementToChange("folder");
+    setNewElementName("");
+  };
+
   return (
-    <div className="w-full flex flex-col gap-2">
-      {tree.children.map((node, index) => (
-        <LibararyNode node={node} key={index} />
-      ))}
-      <div className="outline-offset-2 ml-2 w-full flex flex-row flex-wrap gap-2">
-        <button className="flex-1 rounded shadow-sm p-2 hover:bg-base-300">
-          <FaFolderPlus size={23} />
-        </button>
-        <button className="flex-1 rounded shadow-sm p-2 hover:bg-base-300">
-          <FaPlus size={23} />
-        </button>
+    <>
+      <div className="w-full flex flex-col gap-2">
+        {tree.children.map((node, index) => (
+          <LibararyNode node={node} key={index} onNewElement={onNewElement} />
+        ))}
+        <div className="outline-offset-2 ml-2 w-full flex flex-row flex-wrap gap-2">
+          <button
+            className="flex-1 rounded shadow-sm p-2 hover:bg-base-300"
+            onClick={() => onNewElement("folder")}
+          >
+            <FaFolderPlus size={23} />
+          </button>
+          <button
+            className="flex-1 rounded shadow-sm p-2 hover:bg-base-300"
+            onClick={() => onNewElement("stack")}
+          >
+            <FaPlus size={23} />
+          </button>
+        </div>
       </div>
-    </div>
+      <dialog className="modal" id="newElementModal" ref={newElementModal}>
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">create new {elementToChange}</h3>
+          <input
+            type="text"
+            className="input input-primary w-full my-4"
+            value={newElementName}
+            onChange={(e) => setNewElementName(e.target.value)}
+          />
+          <form method="dialog" className="w-full">
+            <button
+              className="btn btn-primary w-full"
+              onClick={createNewElement}
+            >
+              save
+            </button>
+          </form>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
+    </>
   );
 }
 
