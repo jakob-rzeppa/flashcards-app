@@ -13,7 +13,8 @@ export default async function getUserLibrary() {
   const folders = await supabase
     .from("folders")
     .select("*")
-    .eq("user_id", user.data.user.id);
+    .eq("user_id", user.data.user.id)
+    .order("created_at");
 
   if (folders.error || !folders.data) {
     console.error(folders.error);
@@ -23,7 +24,8 @@ export default async function getUserLibrary() {
   const stacks = await supabase
     .from("stacks")
     .select("*")
-    .eq("user_id", user.data.user.id);
+    .eq("user_id", user.data.user.id)
+    .order("created_at");
 
   if (stacks.error || !stacks.data) {
     console.error(stacks.error);
