@@ -11,8 +11,12 @@
 
 ### Stacks
 
-- Create, update, delete Stacks (title, description)
+- Create, update, delete Stacks (name, description)
 - Progress display (long term memory)
+
+### Folders
+
+- Create, update, delete Folders (name)
 
 ### User
 
@@ -38,7 +42,29 @@ Supabase
 
 For more information see ./supabase.ts
 
-### Stacks / Stack organisation
+### Library / Folder / Stacks
 
-- Folder / Stack structure like finder IOS (collapsable folders)
-- Order structure
+- Folder / Stack structure (collapsable folders and links to stacks)
+- A folder can be nested (if no parent at the root of the library)
+- Add folders and stacks in library
+
+### Cards
+
+- Learn Cards long and short term memory
+
+#### short term memory
+
+- Learn all cards and repeat the wrong ones until done
+- Like Quizlet
+
+#### long term memory
+
+- Like short term memory
+- Only the cards where a certain amount of time has passed (based on the level of the card)
+
+## TODO / Ideas
+
+- Update and Delete Folders
+- Create Folders in other places than root
+- Learn cards on mobile
+- General mobile view

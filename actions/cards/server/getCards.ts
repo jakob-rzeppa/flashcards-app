@@ -14,6 +14,7 @@ export async function getCards(
     return [];
   }
 
+  // If longTermMemory filter cards by date and level of the card
   return method === "shortTermMemory"
     ? cards.data
     : getCardsToRepeat(cards.data);
