@@ -1,7 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { typeFolder, typeStack } from "@/types";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { FaArrowLeft, FaFolder, FaStackOverflow } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 interface Props {
   stacks: typeStack[];
@@ -9,36 +12,88 @@ interface Props {
 }
 
 function LibraryDisplay({ stacks, folders }: Props) {
+  const router = useRouter();
+
+  const [parentFolderId, setParentFolderId] = useState<null | number>(null);
+
+  const onClick = (type: "folder" | "stack", id: number) => {
+    if (type === "folder") {
+      setParentFolderId(id);
+    } else if (type === "stack") {
+      router.push("/library/stack?id=" + id);
+    }
+  };
+
+  const onBack = () => {
+    const parentFolder = folders.find((folder) => folder.id === parentFolderId);
+
+    setParentFolderId(parentFolder ? parentFolder.parent_folder : null);
+  };
+
   return (
     <>
       <div>
+        <button className="btn btn-circle btn-primary" onClick={onBack}>
+          <FaArrowLeft />
+        </button>
         <button className="btn btn-outline">Type</button>
         <button className="btn btn-outline">Order</button>
       </div>
       <table className="table table-zebra table-lg">
         <thead>
-          <tr className="font-medium text-xl">
+          <tr className="text-2xl">
+            <th>type</th>
             <th>name</th>
-            <th>last changed</th>
-            <th></th>
+            <th>created at</th>
+            <th>
+              <button className="btn btn-circle btn-ghost">
+                <BsThreeDotsVertical className="text-2xl" />
+              </button>
+            </th>
           </tr>
         </thead>
         <tbody>
-          <tr className="hover">
-            <td>test</td>
-            <td>15.6.3493</td>
-            <td></td>
-          </tr>
-          <tr className="hover">
-            <td>test</td>
-            <td>15.6.3493</td>
-            <td></td>
-          </tr>
-          <tr className="hover">
-            <td>test</td>
-            <td>15.6.3493</td>
-            <td></td>
-          </tr>
+          {folders.map(
+            (folder) =>
+              folder.parent_folder === parentFolderId && (
+                <tr
+                  className="hover cursor-pointer"
+                  onClick={() => onClick("folder", folder.id)}
+                >
+                  <td className="text-lg">
+                    <FaFolder />
+                  </td>
+                  <td className="text-lg">{folder.name}</td>
+                  <td className="text-lg">{folder.created_at}</td>
+                  <td>
+                    <button className="btn btn-circle btn-ghost">
+                      <BsThreeDotsVertical className="text-lg" />
+                    </button>
+                  </td>
+                </tr>
+              )
+          )}
+
+          {stacks.map(
+            (stack) =>
+              stack.parent_folder === parentFolderId && (
+                <tr
+                  className="hover cursor-pointer"
+                  onClick={() => onClick("stack", stack.id)}
+                >
+                  <td className="text-lg">
+                    <FaStackOverflow />
+                  </td>
+                  <td className="text-lg">{stack.name}</td>
+                  <td className="text-lg w-full">{stack.created_at}</td>
+                  <td>
+                    <button className="btn btn-circle btn-ghost">
+                      <BsThreeDotsVertical className="text-lg" />
+                    </button>
+                  </td>
+                </tr>
+              )
+          )}
         </tbody>
       </table>
     </>
