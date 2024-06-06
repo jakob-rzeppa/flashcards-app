@@ -46,9 +46,41 @@ function LibraryDisplay({ stacks, folders }: Props) {
             <th>name</th>
             <th>created at</th>
             <th>
-              <button className="btn btn-circle btn-ghost">
-                <BsThreeDotsVertical className="text-2xl" />
-              </button>
+              <div className="dropdown">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-circle btn-ghost"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  <BsThreeDotsVertical className="text-2xl" />
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    >
+                      new folder
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    >
+                      new stack
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </th>
           </tr>
         </thead>
@@ -67,9 +99,32 @@ function LibraryDisplay({ stacks, folders }: Props) {
                   <td className="text-lg">{folder.name}</td>
                   <td className="text-lg">{folder.created_at}</td>
                   <td>
-                    <button className="btn btn-circle btn-ghost">
-                      <BsThreeDotsVertical className="text-lg" />
-                    </button>
+                    <div className="dropdown">
+                      <div
+                        tabIndex={0}
+                        role="button"
+                        className="btn btn-circle btn-ghost"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                      >
+                        <BsThreeDotsVertical className="text-lg" />
+                      </div>
+                      <ul
+                        tabIndex={0}
+                        className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                      >
+                        <li>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
+                          >
+                            rename
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
                   </td>
                 </tr>
               )
@@ -89,9 +144,32 @@ function LibraryDisplay({ stacks, folders }: Props) {
                   <td className="text-lg">{stack.name}</td>
                   <td className="text-lg w-full">{stack.created_at}</td>
                   <td>
-                    <button className="btn btn-circle btn-ghost">
-                      <BsThreeDotsVertical className="text-lg" />
-                    </button>
+                    <div className="dropdown">
+                      <div
+                        tabIndex={0}
+                        role="button"
+                        className="btn btn-circle btn-ghost"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                      >
+                        <BsThreeDotsVertical className="text-lg" />
+                      </div>
+                      <ul
+                        tabIndex={0}
+                        className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                      >
+                        <li>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
+                          >
+                            rename
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
                   </td>
                 </tr>
               )
