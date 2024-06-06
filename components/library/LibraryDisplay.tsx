@@ -57,6 +57,7 @@ function LibraryDisplay({ stacks, folders }: Props) {
             (folder) =>
               folder.parent_folder === parentFolderId && (
                 <tr
+                  key={folder.id}
                   className="hover cursor-pointer"
                   onClick={() => onClick("folder", folder.id)}
                 >
@@ -78,6 +79,7 @@ function LibraryDisplay({ stacks, folders }: Props) {
             (stack) =>
               stack.parent_folder === parentFolderId && (
                 <tr
+                  key={stack.id}
                   className="hover cursor-pointer"
                   onClick={() => onClick("stack", stack.id)}
                 >
