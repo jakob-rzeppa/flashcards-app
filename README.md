@@ -1,5 +1,7 @@
 # Flashcards-App
 
+The Branch "google-drive-like-file-system" contains the latest changes, but still does not have a way to update and delete folders and stacks.
+
 ## Requirements
 
 ### Cards
