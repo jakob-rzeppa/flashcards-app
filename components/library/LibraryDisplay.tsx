@@ -9,6 +9,7 @@ import NewStackModal, { NewStackModalData } from "./modals/NewStackModal";
 import NewFolderModal, { NewFolderModalData } from "./modals/NewFolderModal";
 import Stack from "./Stack";
 import RenameModal, { RenameData } from "./modals/RenameModal";
+import DeleteModal, { DeleteData } from "./modals/DeleteModal";
 
 interface Props {
   stacks: typeStack[];
@@ -23,6 +24,7 @@ function LibraryDisplay({ stacks, folders }: Props) {
   const [newFolderModal, setNewFolderModal] =
     useState<NewFolderModalData>(null);
   const [renameModal, setRenameModal] = useState<RenameData>(null);
+  const [deleteModal, setDeleteModal] = useState<DeleteData>(null);
 
   const onBack = () => {
     const parentFolder = folders.find((folder) => folder.id === parentFolderId);
@@ -92,7 +94,9 @@ function LibraryDisplay({ stacks, folders }: Props) {
                       type: "folder",
                     })
                   }
-                  onDelete={() => {}}
+                  onDelete={() =>
+                    setDeleteModal({ id: folder.id, type: "folder" })
+                  }
                 />
               )
           )}
@@ -109,7 +113,9 @@ function LibraryDisplay({ stacks, folders }: Props) {
                       type: "stack",
                     })
                   }
-                  onDelete={() => {}}
+                  onDelete={() =>
+                    setDeleteModal({ id: stack.id, type: "stack" })
+                  }
                 />
               )
           )}
@@ -118,6 +124,7 @@ function LibraryDisplay({ stacks, folders }: Props) {
       <NewStackModal data={newStackModal} setData={setNewStackModal} />
       <NewFolderModal data={newFolderModal} setData={setNewFolderModal} />
       <RenameModal data={renameModal} setData={setRenameModal} />
+      <DeleteModal data={deleteModal} setData={setDeleteModal} />
     </>
   );
 }
