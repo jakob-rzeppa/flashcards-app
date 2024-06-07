@@ -5,6 +5,7 @@ import { typeFolder, typeStack } from "@/types";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaArrowLeft, FaFolder, FaStackOverflow } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import NewLibraryElements from "./NewLibraryElements";
 
 interface Props {
   stacks: typeStack[];
@@ -57,29 +58,7 @@ function LibraryDisplay({ stacks, folders }: Props) {
                 >
                   <BsThreeDotsVertical className="text-2xl" />
                 </div>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-                >
-                  <li>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                      }}
-                    >
-                      new folder
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                      }}
-                    >
-                      new stack
-                    </button>
-                  </li>
-                </ul>
+                <NewLibraryElements parentFolderId={parentFolderId} />
               </div>
             </th>
           </tr>
