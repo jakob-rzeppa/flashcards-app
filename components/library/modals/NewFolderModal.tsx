@@ -20,7 +20,7 @@ function NewFolderModal({ data, setData }: Props) {
   const [name, setName] = useState("");
 
   const onCreate = async () => {
-    if (!data) throw new Error("No data to create stack provided");
+    if (!data) throw new Error("No data to create folder provided");
     await createFolder(name, data.parentFolderId);
 
     setName("");

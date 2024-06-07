@@ -8,6 +8,7 @@ import Folder from "./Folder";
 import NewStackModal, { NewStackModalData } from "./modals/NewStackModal";
 import NewFolderModal, { NewFolderModalData } from "./modals/NewFolderModal";
 import Stack from "./Stack";
+import RenameModal, { RenameData } from "./modals/RenameModal";
 
 interface Props {
   stacks: typeStack[];
@@ -21,6 +22,7 @@ function LibraryDisplay({ stacks, folders }: Props) {
   const [newStackModal, setNewStackModal] = useState<NewStackModalData>(null);
   const [newFolderModal, setNewFolderModal] =
     useState<NewFolderModalData>(null);
+  const [renameModal, setRenameModal] = useState<RenameData>(null);
 
   const onBack = () => {
     const parentFolder = folders.find((folder) => folder.id === parentFolderId);
@@ -83,7 +85,13 @@ function LibraryDisplay({ stacks, folders }: Props) {
                   key={folder.id}
                   folder={folder}
                   setParentFolderId={setParentFolderId}
-                  onRename={() => {}}
+                  onRename={() =>
+                    setRenameModal({
+                      id: folder.id,
+                      prevName: folder.name,
+                      type: "folder",
+                    })
+                  }
                   onDelete={() => {}}
                 />
               )
@@ -94,7 +102,13 @@ function LibraryDisplay({ stacks, folders }: Props) {
                 <Stack
                   key={stack.id}
                   stack={stack}
-                  onRename={() => {}}
+                  onRename={() =>
+                    setRenameModal({
+                      id: stack.id,
+                      prevName: stack.name,
+                      type: "stack",
+                    })
+                  }
                   onDelete={() => {}}
                 />
               )
@@ -103,6 +117,7 @@ function LibraryDisplay({ stacks, folders }: Props) {
       </table>
       <NewStackModal data={newStackModal} setData={setNewStackModal} />
       <NewFolderModal data={newFolderModal} setData={setNewFolderModal} />
+      <RenameModal data={renameModal} setData={setRenameModal} />
     </>
   );
 }
