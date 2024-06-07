@@ -1,5 +1,8 @@
 "use client";
 
+import createFolder from "@/actions/library/client/createFolder";
+import createStack from "@/actions/library/client/createStack";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 interface Props {
@@ -7,12 +10,23 @@ interface Props {
 }
 
 function NewLibraryElements({ parentFolderId }: Props) {
+  const router = useRouter();
+
   const [typeOfElementToCreate, setTypeOfElementToCreate] = useState<
     "folder" | "stack"
   >("folder");
   const [newElementName, setNewElementName] = useState("");
 
-  const createNewElement = () => {};
+  const createNewElement = async () => {
+    if (typeOfElementToCreate === "folder") {
+      await createFolder(newElementName, parentFolderId);
+    } else if (typeOfElementToCreate === "stack") {
+      await createStack(newElementName, "", parentFolderId);
+    }
+
+    setNewElementName("");
+    router.refresh();
+  };
 
   return (
     <>
