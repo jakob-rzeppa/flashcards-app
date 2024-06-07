@@ -56,7 +56,7 @@ function LibraryDisplay({ stacks, folders }: Props) {
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        setNewFolderModal({});
+                        setNewFolderModal({ parentFolderId: parentFolderId });
                       }}
                     >
                       New Folder
@@ -65,7 +65,7 @@ function LibraryDisplay({ stacks, folders }: Props) {
                   <li
                     onClick={(e) => {
                       e.stopPropagation();
-                      setNewStackModal({});
+                      setNewStackModal({ parentFolderId: parentFolderId });
                     }}
                   >
                     <button>New Stack</button>
