@@ -26,8 +26,10 @@ function DeleteModal({ data, setData }: Props) {
     switch (data.type) {
       case "folder":
         await deleteFolder(data.id);
+        break;
       case "stack":
         await deleteStack(data.id);
+        break;
     }
 
     router.refresh();

@@ -27,8 +27,10 @@ function RenameModal({ data, setData }: Props) {
     switch (data.type) {
       case "folder":
         await updateFolder(data.id, { name });
+        break;
       case "stack":
         await updateStack(data.id, { name, description: "" });
+        break;
     }
 
     setName("");

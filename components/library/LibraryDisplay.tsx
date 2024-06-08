@@ -10,6 +10,7 @@ import NewFolderModal, { NewFolderModalData } from "./modals/NewFolderModal";
 import Stack from "./Stack";
 import RenameModal, { RenameData } from "./modals/RenameModal";
 import DeleteModal, { DeleteData } from "./modals/DeleteModal";
+import MoveModal, { MoveData } from "./modals/MoveModal";
 
 interface Props {
   stacks: typeStack[];
@@ -25,6 +26,7 @@ function LibraryDisplay({ stacks, folders }: Props) {
     useState<NewFolderModalData>(null);
   const [renameModal, setRenameModal] = useState<RenameData>(null);
   const [deleteModal, setDeleteModal] = useState<DeleteData>(null);
+  const [moveModal, setMoveModal] = useState<MoveData>(null);
 
   const onBack = () => {
     const parentFolder = folders.find((folder) => folder.id === parentFolderId);
@@ -97,6 +99,13 @@ function LibraryDisplay({ stacks, folders }: Props) {
                   onDelete={() =>
                     setDeleteModal({ id: folder.id, type: "folder" })
                   }
+                  onMove={() =>
+                    setMoveModal({
+                      id: folder.id,
+                      type: "folder",
+                      parentFolderId: folder.parent_folder,
+                    })
+                  }
                 />
               )
           )}
@@ -116,6 +125,13 @@ function LibraryDisplay({ stacks, folders }: Props) {
                   onDelete={() =>
                     setDeleteModal({ id: stack.id, type: "stack" })
                   }
+                  onMove={() =>
+                    setMoveModal({
+                      id: stack.id,
+                      type: "stack",
+                      parentFolderId: stack.parent_folder,
+                    })
+                  }
                 />
               )
           )}
@@ -125,6 +141,7 @@ function LibraryDisplay({ stacks, folders }: Props) {
       <NewFolderModal data={newFolderModal} setData={setNewFolderModal} />
       <RenameModal data={renameModal} setData={setRenameModal} />
       <DeleteModal data={deleteModal} setData={setDeleteModal} />
+      <MoveModal data={moveModal} setData={setMoveModal} folders={folders} />
     </>
   );
 }

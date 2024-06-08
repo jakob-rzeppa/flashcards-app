@@ -10,9 +10,10 @@ interface Props {
   stack: typeStack;
   onRename: () => void;
   onDelete: () => void;
+  onMove: () => void;
 }
 
-function Stack({ stack, onRename, onDelete }: Props) {
+function Stack({ stack, onRename, onDelete, onMove }: Props) {
   const router = useRouter();
 
   return (
@@ -42,6 +43,16 @@ function Stack({ stack, onRename, onDelete }: Props) {
             tabIndex={0}
             className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
           >
+            <li>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onMove();
+                }}
+              >
+                Move
+              </button>
+            </li>
             <li>
               <button
                 onClick={(e) => {

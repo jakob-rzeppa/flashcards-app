@@ -2,7 +2,7 @@ import { createClient } from "@/utils/supabase/client";
 
 export default async function updateStack(
   id: number,
-  data: { name: string; description: string }
+  data: { name?: string; description?: string; parent_folder?: number | null }
 ) {
   const supabase = createClient();
 

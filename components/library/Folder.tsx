@@ -10,9 +10,16 @@ interface Props {
   setParentFolderId: React.Dispatch<React.SetStateAction<number | null>>;
   onRename: () => void;
   onDelete: () => void;
+  onMove: () => void;
 }
 
-function Folder({ folder, setParentFolderId, onRename, onDelete }: Props) {
+function Folder({
+  folder,
+  setParentFolderId,
+  onRename,
+  onDelete,
+  onMove,
+}: Props) {
   return (
     <tr
       key={folder.id}
@@ -40,6 +47,16 @@ function Folder({ folder, setParentFolderId, onRename, onDelete }: Props) {
             tabIndex={0}
             className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
           >
+            <li>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onMove();
+                }}
+              >
+                Move
+              </button>
+            </li>
             <li>
               <button
                 onClick={(e) => {
