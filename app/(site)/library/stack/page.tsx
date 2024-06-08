@@ -11,7 +11,6 @@ interface Props {
 }
 
 async function StackPage({ searchParams: { id } }: Props) {
-  // TODO error handling
   const { data, cards } = await getStackData(parseInt(id));
 
   if (!data) {
@@ -27,7 +26,7 @@ async function StackPage({ searchParams: { id } }: Props) {
         {data.description}
       </h2>
       <BackgroundBox>
-        <StackSettings data={data!} cards={cards} />
+        <StackSettings data={data} cards={cards} />
         <Link
           href={"/learn?scope=stack&method=shortTermMemory&id=" + id}
           className="btn btn-primary w-full"
