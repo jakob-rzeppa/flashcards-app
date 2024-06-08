@@ -1,9 +1,13 @@
 import { createClient } from "@/utils/supabase/client";
 
-async function createStack(name: string, description: string) {
+async function createStack(
+  name: string,
+  description: string,
+  parentFolderId: number | null
+) {
   const supabase = createClient();
 
-  const insertData = { name, description };
+  const insertData = { name, description, parent_folder: parentFolderId };
 
   console.log(insertData);
 
