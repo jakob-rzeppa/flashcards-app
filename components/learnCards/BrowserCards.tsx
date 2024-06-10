@@ -166,14 +166,17 @@ function BrowserCards({ onFinished }: Props) {
             rotated ? "rotate" : ""
           }`}
         >
-          <div id="front" className="front absolute w-full h-full">
+          <div id="front" className="front absolute w-full h-full bg-base-200">
             <p className="text-3xl absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
               {currentCards[index]
                 ? currentCards[index].front
                 : "Something went wrong"}
             </p>
           </div>
-          <div id="back" className="back rotate absolute w-full h-full">
+          <div
+            id="back"
+            className="back rotate absolute w-full h-full bg-base-200"
+          >
             <p className="text-3xl absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
               {currentCards[index]
                 ? currentCards[index].back
