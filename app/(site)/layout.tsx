@@ -8,10 +8,11 @@ interface Props {
 }
 
 function SiteLayout({ children }: Props) {
+  // TODO Login Check
   return (
     <div>
       <Header />
-      <LoginCheck>{children}</LoginCheck>
+      {children}
     </div>
   );
 }
