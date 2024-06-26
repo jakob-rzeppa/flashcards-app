@@ -4,6 +4,7 @@ import { typeFolder } from "@/types";
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaFolder } from "react-icons/fa";
+import Row from "../ui/Row";
 
 interface Props {
   folder: typeFolder;
@@ -11,6 +12,7 @@ interface Props {
   onRename: () => void;
   onDelete: () => void;
   onMove: () => void;
+  isMobile: boolean;
 }
 
 function Folder({
@@ -19,19 +21,13 @@ function Folder({
   onRename,
   onDelete,
   onMove,
+  isMobile,
 }: Props) {
   return (
-    <tr
-      key={folder.id}
-      className="hover cursor-pointer"
-      onClick={() => setParentFolderId(folder.id)}
-    >
-      <td className="text-lg">
-        <FaFolder />
-      </td>
-      <td className="text-lg">{folder.name}</td>
-      <td className="text-lg">todo</td>
-      <td>
+    <Row
+      elements={[
+        <FaFolder />,
+        <>{folder.name}</>,
         <div className="dropdown">
           <div
             tabIndex={0}
@@ -78,9 +74,10 @@ function Folder({
               </button>
             </li>
           </ul>
-        </div>
-      </td>
-    </tr>
+        </div>,
+      ]}
+      onClick={() => setParentFolderId(folder.id)}
+    />
   );
 }
 

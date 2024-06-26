@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { SubmitButton } from "./submit-button";
 import { IoIosArrowBack } from "react-icons/io";
-import Form from "@/components/Form";
+import Form from "@/components/ui/Form";
 
 interface Props {
   searchParams: { message: string };

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Modal from "../../Modal";
+import Modal from "../../ui/Modal";
 import { useRouter } from "next/navigation";
 import createFolder from "@/actions/library/client/createFolder";
 
