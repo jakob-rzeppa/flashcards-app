@@ -4,12 +4,13 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { SubmitButton } from "./submit-button";
 import { IoIosArrowBack } from "react-icons/io";
+import Form from "@/components/Form";
 
-export default function Login({
-  searchParams,
-}: {
+interface Props {
   searchParams: { message: string };
-}) {
+}
+
+export default function Login({ searchParams }: Props) {
   const signIn = async (formData: FormData) => {
     "use server";
 
@@ -58,48 +59,46 @@ export default function Login({
         <IoIosArrowBack />
         Back
       </Link>
-      <div className="w-1/4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <form className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground">
-          <label className="text-md" htmlFor="email">
-            Email
-          </label>
-          <input
-            className="input input-primary mb-6"
-            name="email"
-            placeholder="you@example.com"
-            required
-          />
-          <label className="text-md" htmlFor="password">
-            Password
-          </label>
-          <input
-            className="input input-primary mb-6"
-            type="password"
-            name="password"
-            placeholder="••••••••"
-            required
-          />
-          <SubmitButton
-            formAction={signIn}
-            className="btn btn-primary"
-            pendingText="Signing In..."
-          >
-            Sign In
-          </SubmitButton>
-          <SubmitButton
-            formAction={signUp}
-            className="btn btn-outline"
-            pendingText="Signing Up..."
-          >
-            Sign Up
-          </SubmitButton>
-          {searchParams?.message && (
-            <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
-              {searchParams.message}
-            </p>
-          )}
-        </form>
-      </div>
+      <Form>
+        <label className="text-md" htmlFor="email">
+          Email
+        </label>
+        <input
+          className="input input-primary mb-6"
+          name="email"
+          placeholder="you@example.com"
+          required
+        />
+        <label className="text-md" htmlFor="password">
+          Password
+        </label>
+        <input
+          className="input input-primary mb-6"
+          type="password"
+          name="password"
+          placeholder="••••••••"
+          required
+        />
+        <SubmitButton
+          formAction={signIn}
+          className="btn btn-primary"
+          pendingText="Signing In..."
+        >
+          Sign In
+        </SubmitButton>
+        <SubmitButton
+          formAction={signUp}
+          className="btn btn-outline"
+          pendingText="Signing Up..."
+        >
+          Sign Up
+        </SubmitButton>
+        {searchParams?.message && (
+          <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
+            {searchParams.message}
+          </p>
+        )}
+      </Form>
     </div>
   );
 }
