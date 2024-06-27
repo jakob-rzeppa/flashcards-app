@@ -12,7 +12,6 @@ interface Props {
   onRename: () => void;
   onDelete: () => void;
   onMove: () => void;
-  isMobile: boolean;
 }
 
 function Folder({
@@ -21,7 +20,6 @@ function Folder({
   onRename,
   onDelete,
   onMove,
-  isMobile,
 }: Props) {
   return (
     <Row

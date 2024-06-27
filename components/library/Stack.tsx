@@ -12,10 +12,9 @@ interface Props {
   onRename: () => void;
   onDelete: () => void;
   onMove: () => void;
-  isMobile: boolean;
 }
 
-function Stack({ stack, onRename, onDelete, onMove, isMobile }: Props) {
+function Stack({ stack, onRename, onDelete, onMove }: Props) {
   const router = useRouter();
 
   return (
