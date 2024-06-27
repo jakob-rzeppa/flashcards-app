@@ -17,9 +17,7 @@ async function LibraryPage({ searchParams: { fullLibrary } }: Props) {
   return (
     <div className="flex flex-col justify-center items-center gap-8 mt-8">
       <h2 className="text-3xl">Library</h2>
-      <BackgroundBox>
-        <LibraryDisplay folders={folders} stacks={stacks} />
-      </BackgroundBox>
+      <LibraryDisplay folders={folders} stacks={stacks} />
     </div>
   );
 }

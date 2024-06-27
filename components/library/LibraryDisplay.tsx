@@ -21,8 +21,6 @@ interface Props {
 function LibraryDisplay({ stacks, folders }: Props) {
   const [parentFolderId, setParentFolderId] = useState<null | number>(null);
 
-  const isMobile = window.innerWidth < 500;
-
   // Modals
   const [newStackModal, setNewStackModal] = useState<NewStackModalData>(null);
   const [newFolderModal, setNewFolderModal] =
@@ -48,7 +46,6 @@ function LibraryDisplay({ stacks, folders }: Props) {
             (folder) =>
               folder.parent_folder === parentFolderId && (
                 <Folder
-                  isMobile={isMobile}
                   key={folder.id}
                   folder={folder}
                   setParentFolderId={setParentFolderId}
@@ -76,7 +73,6 @@ function LibraryDisplay({ stacks, folders }: Props) {
             (stack) =>
               stack.parent_folder === parentFolderId && (
                 <Stack
-                  isMobile={isMobile}
                   key={stack.id}
                   stack={stack}
                   onRename={() =>

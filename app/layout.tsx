@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={GeistSans.className} data-theme="light">
-      <body>{children}</body>
+      <body className="overflow-x-hidden w-screen">{children}</body>
     </html>
   );
 }
