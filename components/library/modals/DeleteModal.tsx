@@ -3,8 +3,6 @@
 import React, { useState } from "react";
 import Modal from "../../Modal";
 import { useRouter } from "next/navigation";
-import updateFolder from "@/actions/library/client/updateFolder";
-import updateStack from "@/actions/library/client/updateStack";
 import { deleteFolder } from "@/actions/library/client/deleteFolder";
 import { deleteStack } from "@/actions/library/client/deleteStack";
 
