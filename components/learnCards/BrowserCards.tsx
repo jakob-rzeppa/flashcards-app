@@ -8,12 +8,13 @@ import "./rotate.css";
 import "./animation.css";
 import { typeCards } from "@/types";
 import useCurrentCardsContext from "@/hooks/useCurrentCardsContext";
+import CardSwipeButtons from "./CardSwipeButtons";
 
 interface Props {
   onFinished: () => void;
 }
 
-type dir = "right" | "left" | "down";
+export type dir = "right" | "left" | "down";
 
 function BrowserCards({ onFinished }: Props) {
   const { currentCards, setCurrentCards } = useCurrentCardsContext();
@@ -129,44 +130,28 @@ function BrowserCards({ onFinished }: Props) {
       <div
         className={`${animation === "none" ? "" : animation} ${
           visible ? "" : "hidden"
-        } card_wrapper w-2/3 z-10 h-3/5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none`}
-      >
-        <div
-          id="card"
-          className={`card relative w-full h-full ${rotated ? "rotate" : ""}`}
-        >
-          <div id="front" className="front absolute w-full h-full">
-            <button
-              className="btn btn-circle btn-ghost absolute top-2 left-2 z-20 pointer-events-auto"
-              onClick={back}
-            >
-              <FaArrowLeft size={20} />
-            </button>
-          </div>
-          <div id="back" className="back rotate absolute w-full h-full">
-            <button
-              className="btn btn-circle btn-ghost absolute top-2 left-2 z-20 pointer-events-auto"
-              onClick={back}
-            >
-              <FaArrowLeft size={20} />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div
-        className={`${animation === "none" ? "" : animation} ${
-          visible ? "" : "hidden"
         } card_wrapper w-2/3 h-3/5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
         onClick={rotateCard}
       >
         <div
           id="card"
-          className={`card bg-base-200 text-base-content relative w-full h-full ${
+          className={`card text-base-content relative w-full h-full ${
             rotated ? "rotate" : ""
           }`}
         >
-          <div id="front" className="front absolute w-full h-full bg-base-200">
+          <div
+            id="front"
+            className="front absolute w-full h-full bg-base-200 rounded-2xl"
+          >
+            <button
+              className="btn btn-circle btn-ghost absolute top-2 left-2 pointer-events-auto"
+              onClick={(e) => {
+                e.stopPropagation();
+                back();
+              }}
+            >
+              <FaArrowLeft size={20} />
+            </button>
             <p className="text-3xl absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
               {currentCards[index]
                 ? currentCards[index].front
@@ -175,8 +160,17 @@ function BrowserCards({ onFinished }: Props) {
           </div>
           <div
             id="back"
-            className="back rotate absolute w-full h-full bg-base-200"
+            className="back rotate absolute w-full h-full bg-base-200 rounded-2xl"
           >
+            <button
+              className="btn btn-circle btn-ghost absolute top-2 left-2 pointer-events-auto"
+              onClick={(e) => {
+                e.stopPropagation();
+                back();
+              }}
+            >
+              <FaArrowLeft size={20} />
+            </button>
             <p className="text-3xl absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
               {currentCards[index]
                 ? currentCards[index].back
@@ -185,26 +179,7 @@ function BrowserCards({ onFinished }: Props) {
           </div>
         </div>
       </div>
-      <div className="flex flex-row justify-center items-center gap-4 absolute bottom-[10%] left-1/2 -translate-x-1/2 translate-y-1/2">
-        <button
-          className="btn btn-circle btn-outline btn-primary"
-          onClick={() => onSwipe("left")}
-        >
-          <FaArrowLeft size={20} />
-        </button>
-        <button
-          className="btn btn-circle btn-outline btn-primary"
-          onClick={() => onSwipe("down")}
-        >
-          <FaArrowDown size={20} />
-        </button>
-        <button
-          className="btn btn-circle btn-outline btn-primary"
-          onClick={() => onSwipe("right")}
-        >
-          <FaArrowRight size={20} />
-        </button>
-      </div>
+      <CardSwipeButtons onSwipe={onSwipe} />
     </div>
   );
 }
