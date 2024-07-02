@@ -30,12 +30,9 @@ export default async function AuthButton() {
         tabIndex={0}
         className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 text-base-content"
       >
-        {/*<li>
-          <Link href={"/profile"}>Profile</Link>
-        </li>*/}
-        {/*<li>
+        <li>
           <Link href={"/settings"}>Settings</Link>
-        </li>*/}
+        </li>
         <li>
           <form action={signOut}>
             <button>Sign out</button>
