@@ -2,17 +2,14 @@ import React from "react";
 
 import BackgroundBox from "@/components/BackgroundBox";
 import LibraryDisplay from "@/components/library/LibraryDisplay";
-import getUserLibrary from "@/actions/library/server/getUserLibrary";
-import getFullLibrary from "@/actions/library/server/getFullLibrary";
+import getLibrary from "@/actions/library/server/getLibrary";
 
 interface Props {
-  searchParams: { fullLibrary?: boolean };
+  searchParams: { user?: string };
 }
 
-async function LibraryPage({ searchParams: { fullLibrary } }: Props) {
-  const { folders, stacks } = fullLibrary
-    ? await getFullLibrary()
-    : await getUserLibrary();
+async function LibraryPage({ searchParams: { user } }: Props) {
+  const { folders, stacks } = await getLibrary(user);
 
   return (
     <div className="flex flex-col justify-center items-center gap-8 mt-8">
