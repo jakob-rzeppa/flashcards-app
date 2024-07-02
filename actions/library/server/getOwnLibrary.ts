@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 
-export default async function getUserLibrary() {
+export default async function getOwnLibrary() {
   const supabase = createClient();
 
   const user = await supabase.auth.getUser();
@@ -20,7 +20,6 @@ export default async function getUserLibrary() {
     console.error(folders.error);
     return { folders: [], stacks: [] };
   }
-
   const stacks = await supabase
     .from("stacks")
     .select("*")

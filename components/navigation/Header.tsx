@@ -20,10 +20,7 @@ export default function Header() {
               <Link href="/">Homepage</Link>
             </li>
             <li>
-              <Link href="/library/">User Library</Link>
-            </li>
-            <li>
-              <Link href="/library?fullLibrary=true">Full Library</Link>
+              <Link href="/library/">Your Library</Link>
             </li>
           </ul>
         </div>
