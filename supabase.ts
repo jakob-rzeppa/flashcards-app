@@ -170,22 +170,19 @@ export type Database = {
       }
       users: {
         Row: {
-          email: string | null
           id: string
+          name: string | null
           public_library: boolean
-          username: string | null
         }
         Insert: {
-          email?: string | null
           id: string
+          name?: string | null
           public_library?: boolean
-          username?: string | null
         }
         Update: {
-          email?: string | null
           id?: string
+          name?: string | null
           public_library?: boolean
-          username?: string | null
         }
         Relationships: [
           {

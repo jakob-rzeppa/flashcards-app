@@ -5,10 +5,9 @@ import React from 'react'
 
 interface Props {
     user: {
-        email: string | null;
         id: string;
         public_library: boolean;
-        username: string | null;
+        username: string;
     }
 }
 
@@ -21,7 +20,7 @@ function UserCard({user}: Props) {
 
     return (
         <div className="bg-base-200 p-8 rounded-lg cursor-pointer hover:bg-base-300" onClick={onClick}>
-            <h1>{user.username ? user.username : user.email}</h1>
+            <h1>{user.username}</h1>
         </div>
     )
 }
