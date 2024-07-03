@@ -2,6 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { CgProfile } from "react-icons/cg";
+import SignOut from "./SignOut";
 
 export default async function AuthButton() {
   const supabase = createClient();
@@ -9,14 +10,6 @@ export default async function AuthButton() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  const signOut = async () => {
-    "use server";
-
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    return redirect("/login");
-  };
 
   return user ? (
     <div className="dropdown dropdown-end">
@@ -34,9 +27,7 @@ export default async function AuthButton() {
           <Link href={"/settings"}>Settings</Link>
         </li>
         <li>
-          <form action={signOut}>
-            <button>Sign out</button>
-          </form>
+          <SignOut />
         </li>
       </ul>
     </div>
