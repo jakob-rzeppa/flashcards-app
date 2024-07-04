@@ -1,9 +1,7 @@
 "use client";
 
 import { typeFolder, typeStack } from "@/types";
-import React, { useState } from "react";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaArrowLeft } from "react-icons/fa";
+import React, { useMemo, useState } from "react";
 import Folder from "./Folder";
 import NewStackModal, { NewStackModalData } from "./modals/NewStackModal";
 import NewFolderModal, { NewFolderModalData } from "./modals/NewFolderModal";
@@ -12,14 +10,16 @@ import RenameModal, { RenameData } from "./modals/RenameModal";
 import DeleteModal, { DeleteData } from "./modals/DeleteModal";
 import MoveModal, { MoveData } from "./modals/MoveModal";
 import Table from "../ui/Table";
+import { useRouter } from "next/navigation";
 
 interface Props {
   stacks: typeStack[];
   folders: typeFolder[];
+  path: string[];
 }
 
-function LibraryDisplay({ stacks, folders }: Props) {
-  const [parentFolderId, setParentFolderId] = useState<null | number>(null);
+function LibraryDisplay({ stacks, folders, path }: Props) {
+  const router = useRouter();
 
   // Modals
   const [newStackModal, setNewStackModal] = useState<NewStackModalData>(null);
@@ -29,26 +29,46 @@ function LibraryDisplay({ stacks, folders }: Props) {
   const [deleteModal, setDeleteModal] = useState<DeleteData>(null);
   const [moveModal, setMoveModal] = useState<MoveData>(null);
 
-  const onBack = () => {
-    const parentFolder = folders.find((folder) => folder.id === parentFolderId);
+  const prevFolderIds = useMemo<number[]>(() => {
+    if (!path) return [];
+    return path.map((id) => Number(id));
+  }, [path]);
 
-    setParentFolderId(parentFolder ? parentFolder.parent_folder : null);
+  const onSelectFolder = (folderId: number) => {
+    //TODO: make faster (use Link)
+    let p = "/library/";
+    if (path)
+      path.map((e) => {
+        p += e + "/";
+      });
+    p += folderId;
+
+    router.push(p);
   };
 
   return (
     <>
-      <button className="btn btn-circle btn-primary" onClick={onBack}>
-        <FaArrowLeft />
-      </button>
+      <div className="breadcrumbs text-sm">
+        <ul>
+          {prevFolderIds.map((folderId) => (
+            <li key={folderId}>
+              {folders.find((folder) => folder.id === folderId)?.name}
+            </li>
+          ))}
+        </ul>
+      </div>
       <Table>
         <tbody>
           {folders.map(
             (folder) =>
-              folder.parent_folder === parentFolderId && (
+              folder.parent_folder ===
+                (prevFolderIds.length >= 1
+                  ? prevFolderIds[prevFolderIds.length - 1]
+                  : null) && (
                 <Folder
                   key={folder.id}
                   folder={folder}
-                  setParentFolderId={setParentFolderId}
+                  onSelect={onSelectFolder}
                   onRename={() =>
                     setRenameModal({
                       id: folder.id,
@@ -71,7 +91,10 @@ function LibraryDisplay({ stacks, folders }: Props) {
           )}
           {stacks.map(
             (stack) =>
-              stack.parent_folder === parentFolderId && (
+              stack.parent_folder ===
+                (prevFolderIds.length >= 1
+                  ? prevFolderIds[prevFolderIds.length - 1]
+                  : null) && (
                 <Stack
                   key={stack.id}
                   stack={stack}

@@ -8,19 +8,13 @@ import Row from "../ui/Row";
 
 interface Props {
   folder: typeFolder;
-  setParentFolderId: React.Dispatch<React.SetStateAction<number | null>>;
+  onSelect: (folderId: number) => void;
   onRename: () => void;
   onDelete: () => void;
   onMove: () => void;
 }
 
-function Folder({
-  folder,
-  setParentFolderId,
-  onRename,
-  onDelete,
-  onMove,
-}: Props) {
+function Folder({ folder, onSelect, onRename, onDelete, onMove }: Props) {
   return (
     <Row
       elements={[
@@ -74,7 +68,7 @@ function Folder({
           </ul>
         </div>,
       ]}
-      onClick={() => setParentFolderId(folder.id)}
+      onClick={() => onSelect(folder.id)}
     />
   );
 }
