@@ -1,6 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
 
-
 export default async function getUsers() {
     const supabase = createClient();
 
