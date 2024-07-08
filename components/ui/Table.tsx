@@ -6,7 +6,7 @@ interface Props {
 
 function Table({ children }: Props) {
   return (
-    <table className="table table-zebra table-xs w-4/5 mx-auto">
+    <table className="table table-zebra table-xs w-4/5 mx-auto overflow-hidden rounded-lg">
       {children}
     </table>
   );

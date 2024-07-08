@@ -48,7 +48,7 @@ function LibraryDisplay({ stacks, folders, path }: Props) {
 
   return (
     <>
-      <div className="breadcrumbs text-sm">
+      <div className="breadcrumbs text-sm w-4/5 mx-auto">
         <ul>
           <li>
             <a href={"/library/"}>/</a>
