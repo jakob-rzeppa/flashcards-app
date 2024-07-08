@@ -168,6 +168,32 @@ export type Database = {
           },
         ]
       }
+      users: {
+        Row: {
+          id: string
+          name: string | null
+          public_library: boolean
+        }
+        Insert: {
+          id: string
+          name?: string | null
+          public_library?: boolean
+        }
+        Update: {
+          id?: string
+          name?: string | null
+          public_library?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "users_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

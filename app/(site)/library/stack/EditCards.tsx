@@ -18,14 +18,14 @@ function EditCards({ data, stackId }: Props) {
   const [cards, setCards] = useState(data);
 
   // Variables used in the modal, will be reset on save or close of Modal
-  const [word, setWord] = useState("");
-  const [definition, setDefinition] = useState("");
+  const [front, setFront] = useState("");
+  const [back, setBack] = useState("");
   const [indexToEdit, setIndexToEdit] = useState<number | null>(null);
   const [newCard, setNewCard] = useState(false);
 
   const handleEditCard = (index: number) => {
-    setWord(cards[index] ? cards[index].front : "");
-    setDefinition(cards[index] ? cards[index].back : "");
+    setFront(cards[index] ? cards[index].front : "");
+    setBack(cards[index] ? cards[index].back : "");
     setIndexToEdit(index);
 
     (
@@ -34,8 +34,8 @@ function EditCards({ data, stackId }: Props) {
   };
 
   const resetModal = () => {
-    setWord("");
-    setDefinition("");
+    setFront("");
+    setBack("");
     setIndexToEdit(null);
     setNewCard(false);
   };
@@ -69,13 +69,13 @@ function EditCards({ data, stackId }: Props) {
     }
 
     if (
-      word === (cards[indexToEdit] ? cards[indexToEdit].front : "") &&
-      definition === (cards[indexToEdit] ? cards[indexToEdit].back : "")
+      front === (cards[indexToEdit] ? cards[indexToEdit].front : "") &&
+      back === (cards[indexToEdit] ? cards[indexToEdit].back : "")
     )
       return;
 
     if (newCard) {
-      const newCardData = await createCard(stackId, word, definition);
+      const newCardData = await createCard(stackId, front, back);
 
       if (!newCardData) {
         console.error("Some error happened while trying to insert a new card!");
@@ -90,11 +90,11 @@ function EditCards({ data, stackId }: Props) {
       return;
     }
 
-    updateCard(cards[indexToEdit].id, word, definition);
+    updateCard(cards[indexToEdit].id, front, back);
 
     const tempCards = cards.map((card) => card);
-    tempCards[indexToEdit].front = word;
-    tempCards[indexToEdit].back = definition;
+    tempCards[indexToEdit].front = front;
+    tempCards[indexToEdit].back = back;
     setCards(tempCards);
 
     resetModal();
@@ -109,10 +109,10 @@ function EditCards({ data, stackId }: Props) {
             className="btn w-full h-fit text-start items-center justify-start py-2 px-4 flex flex-nowrap md:flex-row flex-col gap-4"
             key={card.id}
           >
-            <h3 className="text-xl flex-1 whitespace-normal break-words">
+            <h3 className="text-xl flex-1 whitespace-normal break-fronts">
               {card.front}
             </h3>
-            <h4 className="md:text-xl text-md flex-1 whitespace-normal break-words ">
+            <h4 className="md:text-xl text-md flex-1 whitespace-normal break-fronts ">
               {card.back}
             </h4>
           </button>
@@ -137,19 +137,19 @@ function EditCards({ data, stackId }: Props) {
             </form>
             <textarea
               className="textarea textarea-primary"
-              id="word"
-              placeholder="word"
-              value={word}
-              onChange={(e) => setWord(e.target.value)}
+              id="front"
+              placeholder="front"
+              value={front}
+              onChange={(e) => setFront(e.target.value)}
               autoFocus
             ></textarea>
 
             <textarea
               className="textarea textarea-primary h-[25vh]"
-              id="definition"
-              placeholder="definition"
-              value={definition}
-              onChange={(e) => setDefinition(e.target.value)}
+              id="back"
+              placeholder="back"
+              value={back}
+              onChange={(e) => setBack(e.target.value)}
             ></textarea>
             <form method="dialog">
               <button
