@@ -74,6 +74,7 @@ function BrowserCards({ onFinished }: Props) {
     }, 200);
   };
 
+  // TODO use stopPropagation instead of two rotating cards
   const back = () => {
     const updatedPrevCards = [...prevCards];
 
