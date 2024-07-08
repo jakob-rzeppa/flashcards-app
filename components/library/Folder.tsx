@@ -12,66 +12,67 @@ interface Props {
   onRename: () => void;
   onDelete: () => void;
   onMove: () => void;
-  key?: any;
 }
 
-function Folder({ folder, onSelect, onRename, onDelete, onMove, key }: Props) {
+function Folder({ folder, onSelect, onRename, onDelete, onMove }: Props) {
   return (
-    <Row
-      key={key}
-      elements={[
-        <FaFolder />,
-        <>{folder.name}</>,
-        <div className="dropdown">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-circle btn-ghost"
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <BsThreeDotsVertical className="text-lg" />
+    <Row onClick={() => onSelect(folder.id)}>
+      <>
+        <td className="text-lg">
+          <FaFolder />
+        </td>
+        <td className="text-lg">{folder.name}</td>
+        <td className="text-lg">
+          <div className="dropdown">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-circle btn-ghost"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <BsThreeDotsVertical className="text-lg" />
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onMove();
+                  }}
+                >
+                  Move
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onRename();
+                  }}
+                >
+                  Rename
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDelete();
+                  }}
+                >
+                  Delete
+                </button>
+              </li>
+            </ul>
           </div>
-          <ul
-            tabIndex={0}
-            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-          >
-            <li>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onMove();
-                }}
-              >
-                Move
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onRename();
-                }}
-              >
-                Rename
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onDelete();
-                }}
-              >
-                Delete
-              </button>
-            </li>
-          </ul>
-        </div>,
-      ]}
-      onClick={() => onSelect(folder.id)}
-    />
+        </td>
+      </>
+    </Row>
   );
 }
 
