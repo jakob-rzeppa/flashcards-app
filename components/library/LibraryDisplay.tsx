@@ -50,11 +50,22 @@ function LibraryDisplay({ stacks, folders, path }: Props) {
     <>
       <div className="breadcrumbs text-sm">
         <ul>
-          {prevFolderIds.map((folderId) => (
-            <li key={folderId}>
-              {folders.find((folder) => folder.id === folderId)?.name}
-            </li>
-          ))}
+          <li>
+            <a href={"/library/"}>/</a>
+          </li>
+          {prevFolderIds.map((folderId, index) => {
+            let folderPath = "/library/";
+            for (let i = 0; i <= index; i++) {
+              folderPath += "/" + prevFolderIds[i];
+            }
+            return (
+              <li key={folderId}>
+                <a href={folderPath}>
+                  {folders.find((folder) => folder.id === folderId)?.name}
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </div>
       <Table>
