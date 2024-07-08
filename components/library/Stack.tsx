@@ -12,13 +12,15 @@ interface Props {
   onRename: () => void;
   onDelete: () => void;
   onMove: () => void;
+  key?: any;
 }
 
-function Stack({ stack, onRename, onDelete, onMove }: Props) {
+function Stack({ stack, onRename, onDelete, onMove, key }: Props) {
   const router = useRouter();
 
   return (
     <Row
+      key={key}
       onClick={() => router.push("/library/stack?id=" + stack.id)}
       elements={[
         <FaStackOverflow />,
