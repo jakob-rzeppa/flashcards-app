@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Modal from "../../Modal";
+import Modal from "../../ui/Modal";
 import { useRouter } from "next/navigation";
 import { deleteFolder } from "@/actions/library/client/deleteFolder";
 import { deleteStack } from "@/actions/library/client/deleteStack";

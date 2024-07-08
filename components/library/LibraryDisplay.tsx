@@ -1,9 +1,7 @@
 "use client";
 
 import { typeFolder, typeStack } from "@/types";
-import React, { useState } from "react";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaArrowLeft } from "react-icons/fa";
+import React, { useMemo, useState } from "react";
 import Folder from "./Folder";
 import NewStackModal, { NewStackModalData } from "./modals/NewStackModal";
 import NewFolderModal, { NewFolderModalData } from "./modals/NewFolderModal";
@@ -11,14 +9,17 @@ import Stack from "./Stack";
 import RenameModal, { RenameData } from "./modals/RenameModal";
 import DeleteModal, { DeleteData } from "./modals/DeleteModal";
 import MoveModal, { MoveData } from "./modals/MoveModal";
+import Table from "../ui/Table";
+import { useRouter } from "next/navigation";
 
 interface Props {
   stacks: typeStack[];
   folders: typeFolder[];
+  path: string[];
 }
 
-function LibraryDisplay({ stacks, folders }: Props) {
-  const [parentFolderId, setParentFolderId] = useState<null | number>(null);
+function LibraryDisplay({ stacks, folders, path }: Props) {
+  const router = useRouter();
 
   // Modals
   const [newStackModal, setNewStackModal] = useState<NewStackModalData>(null);
@@ -28,67 +29,57 @@ function LibraryDisplay({ stacks, folders }: Props) {
   const [deleteModal, setDeleteModal] = useState<DeleteData>(null);
   const [moveModal, setMoveModal] = useState<MoveData>(null);
 
-  const onBack = () => {
-    const parentFolder = folders.find((folder) => folder.id === parentFolderId);
+  const prevFolderIds = useMemo<number[]>(() => {
+    if (!path) return [];
+    return path.map((id) => Number(id));
+  }, [path]);
 
-    setParentFolderId(parentFolder ? parentFolder.parent_folder : null);
+  const onSelectFolder = (folderId: number) => {
+    //TODO: make faster (use Link)
+    let p = "/library/";
+    if (path)
+      path.map((e) => {
+        p += e + "/";
+      });
+    p += folderId;
+
+    router.push(p);
   };
 
   return (
     <>
-      <button className="btn btn-circle btn-primary" onClick={onBack}>
-        <FaArrowLeft />
-      </button>
-      <table className="table table-zebra table-lg">
-        <thead>
-          <tr className="text-2xl">
-            <th>type</th>
-            <th>name</th>
-            <th>num of cards</th>
-            <th>
-              <div className="dropdown">
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className="btn btn-circle btn-ghost"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <BsThreeDotsVertical className="text-2xl" />
-                </div>
-                <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                  <li>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setNewFolderModal({ parentFolderId: parentFolderId });
-                      }}
-                    >
-                      New Folder
-                    </button>
-                  </li>
-                  <li
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setNewStackModal({ parentFolderId: parentFolderId });
-                    }}
-                  >
-                    <button>New Stack</button>
-                  </li>
-                </ul>
-              </div>
-            </th>
-          </tr>
-        </thead>
+      <div className="breadcrumbs text-sm w-4/5 mx-auto">
+        <ul>
+          <li>
+            <a href={"/library/"}>/</a>
+          </li>
+          {prevFolderIds.map((folderId, index) => {
+            let folderPath = "/library/";
+            for (let i = 0; i <= index; i++) {
+              folderPath += "/" + prevFolderIds[i];
+            }
+            return (
+              <li key={folderId}>
+                <a href={folderPath}>
+                  {folders.find((folder) => folder.id === folderId)?.name}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+      <Table>
         <tbody>
           {folders.map(
             (folder) =>
-              folder.parent_folder === parentFolderId && (
+              folder.parent_folder ===
+                (prevFolderIds.length >= 1
+                  ? prevFolderIds[prevFolderIds.length - 1]
+                  : null) && (
                 <Folder
                   key={folder.id}
                   folder={folder}
-                  setParentFolderId={setParentFolderId}
+                  onSelect={onSelectFolder}
                   onRename={() =>
                     setRenameModal({
                       id: folder.id,
@@ -111,7 +102,10 @@ function LibraryDisplay({ stacks, folders }: Props) {
           )}
           {stacks.map(
             (stack) =>
-              stack.parent_folder === parentFolderId && (
+              stack.parent_folder ===
+                (prevFolderIds.length >= 1
+                  ? prevFolderIds[prevFolderIds.length - 1]
+                  : null) && (
                 <Stack
                   key={stack.id}
                   stack={stack}
@@ -136,7 +130,8 @@ function LibraryDisplay({ stacks, folders }: Props) {
               )
           )}
         </tbody>
-      </table>
+      </Table>
+
       <NewStackModal data={newStackModal} setData={setNewStackModal} />
       <NewFolderModal data={newFolderModal} setData={setNewFolderModal} />
       <RenameModal data={renameModal} setData={setRenameModal} />
@@ -147,3 +142,47 @@ function LibraryDisplay({ stacks, folders }: Props) {
 }
 
 export default LibraryDisplay;
+
+/*
+<thead>
+            <tr className="text-2xl">
+              <th>type</th>
+              <th>name</th>
+              {!isMobile && <th>num of cards</th>}
+              <th>
+                <div className="dropdown">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-circle btn-ghost"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <BsThreeDotsVertical className="text-2xl" />
+                  </div>
+                  <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                    <li>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setNewFolderModal({ parentFolderId: parentFolderId });
+                        }}
+                      >
+                        New Folder
+                      </button>
+                    </li>
+                    <li
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setNewStackModal({ parentFolderId: parentFolderId });
+                      }}
+                    >
+                      <button>New Stack</button>
+                    </li>
+                  </ul>
+                </div>
+              </th>
+            </tr>
+          </thead>
+*/

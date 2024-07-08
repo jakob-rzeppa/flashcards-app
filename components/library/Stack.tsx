@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaStackOverflow } from "react-icons/fa";
+import Row from "../ui/Row";
 
 interface Props {
   stack: typeStack;
@@ -17,17 +18,11 @@ function Stack({ stack, onRename, onDelete, onMove }: Props) {
   const router = useRouter();
 
   return (
-    <tr
-      key={stack.id}
-      className="hover cursor-pointer"
+    <Row
       onClick={() => router.push("/library/stack?id=" + stack.id)}
-    >
-      <td className="text-lg">
-        <FaStackOverflow />
-      </td>
-      <td className="text-lg">{stack.name}</td>
-      <td className="text-lg">todo</td>
-      <td>
+      elements={[
+        <FaStackOverflow />,
+        <>{stack.name}</>,
         <div className="dropdown">
           <div
             tabIndex={0}
@@ -74,9 +69,9 @@ function Stack({ stack, onRename, onDelete, onMove }: Props) {
               </button>
             </li>
           </ul>
-        </div>
-      </td>
-    </tr>
+        </div>,
+      ]}
+    />
   );
 }
 

@@ -2,7 +2,7 @@ import React from "react";
 
 import { getStackData } from "@/actions/library/server/getStackData";
 import StackSettings from "./StackSettings";
-import BackgroundBox from "@/components/BackgroundBox";
+import BackgroundBox from "@/components/ui/BackgroundBox";
 import Link from "next/link";
 import EditCards from "./EditCards";
 
