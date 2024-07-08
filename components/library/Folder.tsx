@@ -12,11 +12,13 @@ interface Props {
   onRename: () => void;
   onDelete: () => void;
   onMove: () => void;
+  key?: any;
 }
 
-function Folder({ folder, onSelect, onRename, onDelete, onMove }: Props) {
+function Folder({ folder, onSelect, onRename, onDelete, onMove, key }: Props) {
   return (
     <Row
+      key={key}
       elements={[
         <FaFolder />,
         <>{folder.name}</>,
