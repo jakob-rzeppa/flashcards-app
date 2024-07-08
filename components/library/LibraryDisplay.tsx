@@ -11,15 +11,19 @@ import DeleteModal, { DeleteData } from "./modals/DeleteModal";
 import MoveModal, { MoveData } from "./modals/MoveModal";
 import Table from "../ui/Table";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface Props {
   stacks: typeStack[];
   folders: typeFolder[];
   path: string[];
+  userId: string | undefined;
 }
 
-function LibraryDisplay({ stacks, folders, path }: Props) {
+function LibraryDisplay({ stacks, folders, path, userId }: Props) {
   const router = useRouter();
+
+  const urlSearchParams = userId ? "?user=" + userId : "";
 
   // Modals
   const [newStackModal, setNewStackModal] = useState<NewStackModalData>(null);
@@ -43,6 +47,8 @@ function LibraryDisplay({ stacks, folders, path }: Props) {
       });
     p += folderId;
 
+    p += urlSearchParams;
+
     router.push(p);
   };
 
@@ -51,18 +57,19 @@ function LibraryDisplay({ stacks, folders, path }: Props) {
       <div className="breadcrumbs text-sm w-4/5 mx-auto">
         <ul>
           <li>
-            <a href={"/library/"}>/</a>
+            <Link href={"/library" + urlSearchParams}>/</Link>
           </li>
           {prevFolderIds.map((folderId, index) => {
             let folderPath = "/library/";
             for (let i = 0; i <= index; i++) {
               folderPath += "/" + prevFolderIds[i];
             }
+            folderPath += urlSearchParams;
             return (
               <li key={folderId}>
-                <a href={folderPath}>
+                <Link href={folderPath}>
                   {folders.find((folder) => folder.id === folderId)?.name}
-                </a>
+                </Link>
               </li>
             );
           })}
