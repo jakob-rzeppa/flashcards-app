@@ -1,5 +1,5 @@
 import React from "react";
-import { dir } from "./BrowserCards";
+import { dir } from "./Cards";
 import { FaArrowDown, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 interface Props {
