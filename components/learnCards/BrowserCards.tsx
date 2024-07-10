@@ -1,23 +1,29 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
-import { FaArrowLeft, FaArrowRight, FaArrowDown } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 
 import "./rotate.css";
 import "./animation.css";
 import { typeCards } from "@/types";
-import useCurrentCardsContext from "@/hooks/useCurrentCardsContext";
 import CardSwipeButtons from "./CardSwipeButtons";
+import shuffleCards from "@/actions/cards/client/shuffleCards";
+import Loading from "../ui/Loading";
 
 interface Props {
-  onFinished: () => void;
+  onFinished: (nextCards: typeCards) => void;
+  currentCards: typeCards;
 }
 
 export type dir = "right" | "left" | "down";
 
-function BrowserCards({ onFinished }: Props) {
-  const { currentCards, setCurrentCards } = useCurrentCardsContext();
+function BrowserCards({ onFinished, currentCards }: Props) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  const shuffledCurrentCards = useMemo(() => {
+    return shuffleCards(currentCards);
+  }, [currentCards]);
 
   const [index, setIndex] = useState(0);
   const [prevCards, setPrevCards] = useState<
@@ -30,7 +36,7 @@ function BrowserCards({ onFinished }: Props) {
   const [visible, setVisible] = useState(true);
 
   const rotateCard = () => {
-    setRotated(rotated ? false : true);
+    setRotated((rotated) => !rotated);
   };
 
   const nextCard = (dir: dir) => {
@@ -38,20 +44,19 @@ function BrowserCards({ onFinished }: Props) {
 
     let nextIndex = index + 1;
 
-    if (nextIndex >= currentCards.length) {
+    if (nextIndex >= shuffledCurrentCards.length) {
       setIndex(0);
 
       // update current cards
       const nextCards: typeCards = [];
       nextPrevCards.forEach((card) => {
         if (!card.right) {
-          nextCards.push(currentCards[card.index]);
+          nextCards.push(shuffledCurrentCards[card.index]);
         }
       });
-      setCurrentCards(nextCards);
 
+      onFinished(nextCards);
       setPrevCards([]);
-      onFinished();
       return;
     }
     setPrevCards(nextPrevCards);
@@ -74,7 +79,6 @@ function BrowserCards({ onFinished }: Props) {
     }, 200);
   };
 
-  // TODO use stopPropagation instead of two rotating cards
   const back = () => {
     const updatedPrevCards = [...prevCards];
 
@@ -84,7 +88,7 @@ function BrowserCards({ onFinished }: Props) {
       return;
     }
 
-    if (prevCard.index < 0) prevCard.index = currentCards.length - 1;
+    if (prevCard.index < 0) prevCard.index = shuffledCurrentCards.length - 1;
 
     // TODO change in databse
 
@@ -118,14 +122,22 @@ function BrowserCards({ onFinished }: Props) {
     return () => {
       document.removeEventListener("keydown", onKeyDown);
     };
-  });
+  }, [onKeyDown]);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (shuffledCurrentCards.length <= 0) return <div>No cards found</div>;
+
+  if (!isMounted) return <Loading />;
 
   return (
     <div className="w-screen h-screen overflow-hidden">
       <progress
         className="progress w-2/3 absolute top-8 left-1/2 -translate-x-1/2"
         value={prevCards.length}
-        max={currentCards.length}
+        max={shuffledCurrentCards.length}
       ></progress>
 
       <div
@@ -154,8 +166,8 @@ function BrowserCards({ onFinished }: Props) {
               <FaArrowLeft size={20} />
             </button>
             <p className="text-3xl absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
-              {currentCards[index]
-                ? currentCards[index].front
+              {shuffledCurrentCards[index]
+                ? shuffledCurrentCards[index].front
                 : "Something went wrong"}
             </p>
           </div>
@@ -173,8 +185,8 @@ function BrowserCards({ onFinished }: Props) {
               <FaArrowLeft size={20} />
             </button>
             <p className="text-3xl absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
-              {currentCards[index]
-                ? currentCards[index].back
+              {shuffledCurrentCards[index]
+                ? shuffledCurrentCards[index].back
                 : "Something went wrong"}
             </p>
           </div>

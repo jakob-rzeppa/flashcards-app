@@ -12,11 +12,6 @@ interface Props {
   prevHref: string;
 }
 
-export const currentCardsContext = createContext<{
-  currentCards: typeCards;
-  setCurrentCards: React.Dispatch<React.SetStateAction<typeCards>>;
-} | null>(null);
-
 function CardsManager({ cards, prevHref }: Props) {
   const router = useRouter();
 
@@ -24,14 +19,15 @@ function CardsManager({ cards, prevHref }: Props) {
 
   useEffect(() => {
     if (currentCards.length <= 0) {
-      router.push(prevHref);
+      return router.push(prevHref);
     }
   }, [currentCards, prevHref, router]);
 
   const [isFinished, setIsFinished] = useState(false);
 
-  const onFinished = () => {
+  const onFinished = (nextCards: typeCards) => {
     setIsFinished(true);
+    setCurrentCards(nextCards);
   };
 
   const onLearnWrongCards = () => {
@@ -47,9 +43,7 @@ function CardsManager({ cards, prevHref }: Props) {
     <>
       <NavButton href={prevHref} className="absolute top-4 left-4" />
       {!isFinished ? (
-        <currentCardsContext.Provider value={{ currentCards, setCurrentCards }}>
-          <BrowserCards onFinished={onFinished} />
-        </currentCardsContext.Provider>
+        <BrowserCards onFinished={onFinished} currentCards={currentCards} />
       ) : (
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center gap-8">
           <p>
