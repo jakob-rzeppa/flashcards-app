@@ -3,7 +3,7 @@
 import React, { createContext, useEffect, useState } from "react";
 
 import NavButton from "../navigation/NavButton";
-import BrowserCards from "./BrowserCards";
+import Cards from "./Cards";
 import { useRouter } from "next/navigation";
 import { typeCards } from "@/types";
 
