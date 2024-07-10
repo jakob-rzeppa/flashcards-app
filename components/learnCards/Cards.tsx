@@ -1,25 +1,32 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
-import { FaArrowLeft, FaArrowRight, FaArrowDown } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 
 import "./rotate.css";
 import "./animation.css";
 import { typeCards } from "@/types";
-import useCurrentCardsContext from "@/hooks/useCurrentCardsContext";
 import CardSwipeButtons from "./CardSwipeButtons";
 import EditCardModal, { EditCardData } from "./EditCardModal";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import shuffleCards from "@/actions/cards/client/shuffleCards";
+import Loading from "../ui/Loading";
 
 interface Props {
-  onFinished: () => void;
+  onFinished: (nextCards: typeCards) => void;
+  currentCards: typeCards;
 }
 
 export type dir = "right" | "left" | "down";
 
-function Cards({ onFinished }: Props) {
-  const { currentCards, setCurrentCards } = useCurrentCardsContext();
+function Cards({ onFinished, currentCards }: Props) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  const shuffledCurrentCards = useMemo(() => {
+    return shuffleCards(currentCards);
+  }, [currentCards]);
+
   const [editCardData, setEditCardData] = useState<EditCardData>(null);
 
   const [index, setIndex] = useState(0);
@@ -33,7 +40,7 @@ function Cards({ onFinished }: Props) {
   const [visible, setVisible] = useState(true);
 
   const rotateCard = () => {
-    setRotated(rotated ? false : true);
+    setRotated((rotated) => !rotated);
   };
 
   const nextCard = (dir: dir) => {
@@ -51,10 +58,9 @@ function Cards({ onFinished }: Props) {
           nextCards.push(currentCards[card.index]);
         }
       });
-      setCurrentCards(nextCards);
 
+      onFinished(nextCards);
       setPrevCards([]);
-      onFinished();
       return;
     }
     setPrevCards(nextPrevCards);
@@ -77,7 +83,6 @@ function Cards({ onFinished }: Props) {
     }, 200);
   };
 
-  // TODO use stopPropagation instead of two rotating cards
   const back = () => {
     const updatedPrevCards = [...prevCards];
 
@@ -115,14 +120,6 @@ function Cards({ onFinished }: Props) {
     }
   };
 
-  useEffect(() => {
-    document.addEventListener("keydown", onKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  });
-
   const onEditCards = () => {
     setEditCardData({
       id: currentCards[index].id,
@@ -130,6 +127,22 @@ function Cards({ onFinished }: Props) {
       back: currentCards[index].back,
     });
   };
+
+  useEffect(() => {
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [onKeyDown]);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (shuffledCurrentCards.length <= 0) return <div>No cards found</div>;
+
+  if (!isMounted) return <Loading />;
 
   return (
     <>

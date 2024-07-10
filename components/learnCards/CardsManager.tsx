@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import NavButton from "../navigation/NavButton";
 import Cards from "./Cards";
@@ -43,7 +43,7 @@ function CardsManager({ cards, prevHref }: Props) {
     <>
       <NavButton href={prevHref} className="absolute top-4 left-4" />
       {!isFinished ? (
-        <BrowserCards onFinished={onFinished} currentCards={currentCards} />
+        <Cards onFinished={onFinished} currentCards={currentCards} />
       ) : (
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center gap-8">
           <p>
