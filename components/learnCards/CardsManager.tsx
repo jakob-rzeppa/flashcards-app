@@ -3,7 +3,7 @@
 import React, { createContext, useEffect, useState } from "react";
 
 import NavButton from "../navigation/NavButton";
-import BrowserCards from "./BrowserCards";
+import Cards from "./Cards";
 import { useRouter } from "next/navigation";
 import { typeCards } from "@/types";
 
@@ -48,7 +48,7 @@ function CardsManager({ cards, prevHref }: Props) {
       <NavButton href={prevHref} className="absolute top-4 left-4" />
       {!isFinished ? (
         <currentCardsContext.Provider value={{ currentCards, setCurrentCards }}>
-          <BrowserCards onFinished={onFinished} />
+          <Cards onFinished={onFinished} />
         </currentCardsContext.Provider>
       ) : (
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center gap-8">
