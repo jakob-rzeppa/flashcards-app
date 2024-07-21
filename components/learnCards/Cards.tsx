@@ -101,7 +101,9 @@ function Cards({ onFinished, currentCards }: Props) {
   };
 
   const onKeyDown = (event: KeyboardEvent) => {
-    //console.log(event.key);
+    // Stop navigation when in edit cards modal
+    if (editCardData != null) return;
+
     switch (event.key) {
       case "ArrowRight":
         onSwipe("right");
