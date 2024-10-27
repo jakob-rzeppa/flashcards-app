@@ -1,6 +1,7 @@
 # Flashcards-App
 
-The Branch "google-drive-like-file-system" contains the latest changes, but still does not have a way to update and delete folders and stacks.
+A browser application to learn a. o. vocabulary.
+Uses Next.js (frontend) and Supabase (backend).
 
 ## Requirements
 
