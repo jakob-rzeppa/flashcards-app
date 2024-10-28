@@ -1,5 +1,3 @@
-# Flashcards-App
-
 A browser application to learn a. o. vocabulary.
 Uses Next.js (frontend) and Supabase (backend).
 
